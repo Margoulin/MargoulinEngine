@@ -1,0 +1,3 @@
+[submodule "MargoulinEngineUWP/MUtils"]
+	path = MargoulinEngineUWP/MUtils
+	url = https://github.com/Margoulin/MUtils.git

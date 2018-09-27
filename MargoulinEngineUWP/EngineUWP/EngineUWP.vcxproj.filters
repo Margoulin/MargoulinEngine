@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ImGui">
+      <UniqueIdentifier>{a72c8952-233f-4c96-8470-e0a3497508b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{78f33411-3c85-4220-a44c-03cf340a43c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{43613d09-dfed-4845-b7a6-a166bc75b884}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenFBX">
+      <UniqueIdentifier>{ec44d932-81f7-486e-ae19-fc89369840a4}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Engine\ImGui\imconfig.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\ImGui\imgui.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\ImGui\imgui_impl_dx11.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\ImGui\imgui_internal.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\ImGui\stb_rect_pack.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\ImGui\stb_textedit.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\ImGui\stb_truetype.h">
+      <Filter>ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\OpenFBX\miniz.h">
+      <Filter>OpenFBX</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\OpenFBX\ofbx.h">
+      <Filter>OpenFBX</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\Camera.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\Clock.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\Component.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\Context.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\D3D11Context.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\D3D11Renderer.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\Debug.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\DirectXHelper.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\Engine.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\FBXLoader.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\Gamepad.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\GraphicalLibrary.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\GraphicComponent.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\InputManager.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\Logger.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\Material.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\MaterialResource.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\Mesh.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\MeshComponent.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\MeshResource.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\Node.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\Object.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\ObjectManager.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\ObjectTypes.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\ObjLoader.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\PolygonRenderResource.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\Renderer2DComponent.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\RendererPipeline.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\Resource.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\ResourcesManager.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\Scene.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\Service.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\Shader.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\SubMeshData.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\Timer.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\Transform.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\Window.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Engine\ImGui\imgui.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\ImGui\imgui_draw.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\ImGui\imgui_impl_dx11.cpp">
+      <Filter>ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\OpenFBX\miniz.c">
+      <Filter>OpenFBX</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\OpenFBX\ofbx.cpp">
+      <Filter>OpenFBX</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\Camera.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\Clock.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\D3D11Context.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\D3D11Renderer.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\Debug.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\Engine.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\FBXLoader.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\Gamepad.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\GraphicalLibrary.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\InputManager.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\Logger.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\Material.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\MaterialResource.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\Mesh.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\MeshComponent.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\MeshResource.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\Node.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\Object.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\ObjectManager.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\ObjLoader.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\PolygonRenderResource.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\Renderer2DComponent.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\RendererPipeline.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\ResourcesManager.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\Scene.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\Shader.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\Timer.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\Transform.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\Window.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

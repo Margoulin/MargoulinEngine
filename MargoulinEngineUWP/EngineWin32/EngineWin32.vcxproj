@@ -1,0 +1,342 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="DebugXboxOne|Win32">
+      <Configuration>DebugXboxOne</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugXboxOne|x64">
+      <Configuration>DebugXboxOne</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseXboxOne|Win32">
+      <Configuration>ReleaseXboxOne</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="ReleaseXboxOne|x64">
+      <Configuration>ReleaseXboxOne</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E4F0ED81-E3A5-48F6-A9D9-87BA1D809203}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>EngineWin32</RootNamespace>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugXboxOne|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseXboxOne|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugXboxOne|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseXboxOne|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugXboxOne|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseXboxOne|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugXboxOne|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseXboxOne|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\shared;../Engine/ImGui;../Engine/headers;../MUtils/MUtils;../Engine/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugXboxOne|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\shared;../Engine/ImGui;../Math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\shared;../Engine/ImGui;../Engine/headers;../MUtils/MUtils;../Engine/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugXboxOne|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\shared;../Engine/ImGui;../Math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\shared;../Engine/ImGui;../Engine/headers;../MUtils/MUtils;../Engine/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseXboxOne|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\shared;../Engine/ImGui;../Math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\shared;../Engine/ImGui;../Engine/headers;../MUtils/MUtils;../Engine/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseXboxOne|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\shared;../Engine/ImGui;../Math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Engine\headers\Camera.hpp" />
+    <ClInclude Include="..\Engine\headers\Clock.hpp" />
+    <ClInclude Include="..\Engine\headers\Component.hpp" />
+    <ClInclude Include="..\Engine\headers\Context.hpp" />
+    <ClInclude Include="..\Engine\headers\D3D11Context.hpp" />
+    <ClInclude Include="..\Engine\headers\D3D11Renderer.hpp" />
+    <ClInclude Include="..\Engine\headers\Debug.hpp" />
+    <ClInclude Include="..\Engine\headers\DirectXHelper.hpp" />
+    <ClInclude Include="..\Engine\headers\Engine.hpp" />
+    <ClInclude Include="..\Engine\headers\FBXLoader.hpp" />
+    <ClInclude Include="..\Engine\headers\Gamepad.hpp" />
+    <ClInclude Include="..\Engine\headers\GraphicalLibrary.hpp" />
+    <ClInclude Include="..\Engine\headers\GraphicComponent.hpp" />
+    <ClInclude Include="..\Engine\headers\InputManager.hpp" />
+    <ClInclude Include="..\Engine\headers\Logger.hpp" />
+    <ClInclude Include="..\Engine\headers\Material.hpp" />
+    <ClInclude Include="..\Engine\headers\MaterialResource.hpp" />
+    <ClInclude Include="..\Engine\headers\Mesh.hpp" />
+    <ClInclude Include="..\Engine\headers\MeshComponent.hpp" />
+    <ClInclude Include="..\Engine\headers\MeshResource.hpp" />
+    <ClInclude Include="..\Engine\headers\Node.hpp" />
+    <ClInclude Include="..\Engine\headers\Object.hpp" />
+    <ClInclude Include="..\Engine\headers\ObjectManager.hpp" />
+    <ClInclude Include="..\Engine\headers\ObjectTypes.hpp" />
+    <ClInclude Include="..\Engine\headers\ObjLoader.hpp" />
+    <ClInclude Include="..\Engine\headers\PolygonRenderResource.hpp" />
+    <ClInclude Include="..\Engine\headers\Renderer2DComponent.hpp" />
+    <ClInclude Include="..\Engine\headers\RendererPipeline.hpp" />
+    <ClInclude Include="..\Engine\headers\Resource.hpp" />
+    <ClInclude Include="..\Engine\headers\ResourcesManager.hpp" />
+    <ClInclude Include="..\Engine\headers\Scene.hpp" />
+    <ClInclude Include="..\Engine\headers\Service.hpp" />
+    <ClInclude Include="..\Engine\headers\Shader.hpp" />
+    <ClInclude Include="..\Engine\headers\SubMeshData.hpp" />
+    <ClInclude Include="..\Engine\headers\Timer.h" />
+    <ClInclude Include="..\Engine\headers\Transform.hpp" />
+    <ClInclude Include="..\Engine\headers\Window.hpp" />
+    <ClInclude Include="..\Engine\ImGui\imconfig.h" />
+    <ClInclude Include="..\Engine\ImGui\imgui.h" />
+    <ClInclude Include="..\Engine\ImGui\imgui_impl_dx11.h" />
+    <ClInclude Include="..\Engine\ImGui\imgui_internal.h" />
+    <ClInclude Include="..\Engine\ImGui\stb_rect_pack.h" />
+    <ClInclude Include="..\Engine\ImGui\stb_textedit.h" />
+    <ClInclude Include="..\Engine\ImGui\stb_truetype.h" />
+    <ClInclude Include="..\Engine\OpenFBX\miniz.h" />
+    <ClInclude Include="..\Engine\OpenFBX\ofbx.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Engine\ImGui\imgui.cpp" />
+    <ClCompile Include="..\Engine\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="..\Engine\ImGui\imgui_impl_dx11.cpp" />
+    <ClCompile Include="..\Engine\OpenFBX\miniz.c" />
+    <ClCompile Include="..\Engine\OpenFBX\ofbx.cpp" />
+    <ClCompile Include="..\Engine\src\Camera.cpp" />
+    <ClCompile Include="..\Engine\src\Clock.cpp" />
+    <ClCompile Include="..\Engine\src\D3D11Context.cpp" />
+    <ClCompile Include="..\Engine\src\D3D11Renderer.cpp" />
+    <ClCompile Include="..\Engine\src\Debug.cpp" />
+    <ClCompile Include="..\Engine\src\Engine.cpp" />
+    <ClCompile Include="..\Engine\src\FBXLoader.cpp" />
+    <ClCompile Include="..\Engine\src\Gamepad.cpp" />
+    <ClCompile Include="..\Engine\src\GraphicalLibrary.cpp" />
+    <ClCompile Include="..\Engine\src\InputManager.cpp" />
+    <ClCompile Include="..\Engine\src\Logger.cpp" />
+    <ClCompile Include="..\Engine\src\Material.cpp" />
+    <ClCompile Include="..\Engine\src\MaterialResource.cpp" />
+    <ClCompile Include="..\Engine\src\Mesh.cpp" />
+    <ClCompile Include="..\Engine\src\MeshComponent.cpp" />
+    <ClCompile Include="..\Engine\src\MeshResource.cpp" />
+    <ClCompile Include="..\Engine\src\Node.cpp" />
+    <ClCompile Include="..\Engine\src\Object.cpp" />
+    <ClCompile Include="..\Engine\src\ObjectManager.cpp" />
+    <ClCompile Include="..\Engine\src\ObjLoader.cpp" />
+    <ClCompile Include="..\Engine\src\PolygonRenderResource.cpp" />
+    <ClCompile Include="..\Engine\src\Renderer2DComponent.cpp" />
+    <ClCompile Include="..\Engine\src\RendererPipeline.cpp" />
+    <ClCompile Include="..\Engine\src\ResourcesManager.cpp" />
+    <ClCompile Include="..\Engine\src\Scene.cpp" />
+    <ClCompile Include="..\Engine\src\Shader.cpp" />
+    <ClCompile Include="..\Engine\src\Timer.cpp" />
+    <ClCompile Include="..\Engine\src\Transform.cpp" />
+    <ClCompile Include="..\Engine\src\Window.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MUtils\MUtils\MUtils.vcxproj">
+      <Project>{84c4c6f2-af1f-4d38-82df-93f6ed73e1c0}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

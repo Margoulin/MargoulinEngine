@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tga;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\MUtils\MUtils\String.hpp" />
+    <ClInclude Include="..\MUtils\MUtils\Maths\Math.hpp" />
+    <ClInclude Include="..\MUtils\MUtils\Maths\Matrix.hpp" />
+    <ClInclude Include="..\MUtils\MUtils\Maths\Quaternion.hpp" />
+    <ClInclude Include="..\MUtils\MUtils\Maths\Transform.hpp" />
+    <ClInclude Include="..\MUtils\MUtils\Maths\Vector.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\MUtils\MUtils\Maths\Math.cpp" />
+    <ClCompile Include="..\MUtils\MUtils\Maths\Matrix.cpp" />
+    <ClCompile Include="..\MUtils\MUtils\Maths\Quaternion.cpp" />
+    <ClCompile Include="..\MUtils\MUtils\Maths\Transform.cpp" />
+    <ClCompile Include="..\MUtils\MUtils\Maths\Vector.cpp" />
+  </ItemGroup>
+</Project>
