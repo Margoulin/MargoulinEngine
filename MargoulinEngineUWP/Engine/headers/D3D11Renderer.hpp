@@ -38,7 +38,7 @@ public:
 protected:
 
 private:
-	virtual auto	drawData(Mesh* mesh, Material* mat, DirectX::XMMATRIX const& modelMat) -> void;
+	virtual auto	drawData(Mesh* mesh, Material* mat, Matrix4x4F const& modelMat) -> void;
 
 	virtual auto	DrawRectangle(Vector2F const& screenPosition, Vector2F const& size, Vector4F const& color) -> void;
 	virtual auto	DrawFilledRectangle(Vector2F const& screenPosition, Vector2F const& size, Vector4F const& color) -> void;

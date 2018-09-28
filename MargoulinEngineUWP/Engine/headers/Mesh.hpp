@@ -9,20 +9,6 @@
 
 struct SerializeMesh
 {
-	template<class Archive>
-	void serialize(Archive & archive,
-		DirectX::XMFLOAT3& vec)
-	{
-		archive(vec.x, vec.y, vec.z);
-	}
-
-	template<class Archive>
-	void serialize(Archive & archive,
-		DirectX::XMFLOAT2& vec)
-	{
-		archive(vec.x, vec.y);
-	}
-
 	std::vector<SSubMesh>	meshes;
 
 	template<class Archive>

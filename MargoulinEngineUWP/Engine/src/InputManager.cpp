@@ -111,22 +111,22 @@ auto	InputManager::MessageHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPa
 		if (wParam == 87)
 		{
 			GraphicalLibrary* lib = Engine::GetInstance()->GetService<GraphicalLibrary>("Renderer");
-			lib->GetRenderPipeline()->GetEditorCamera()->ProcessKeyboard(Camera::DIRECTION::FRONT);
+			lib->GetRenderPipeline()->GetEditorCamera()->Translate(Vector3F::back * 0.2f);
 		}
 		if (wParam == 65)
 		{
 			GraphicalLibrary* lib = Engine::GetInstance()->GetService<GraphicalLibrary>("Renderer");
-			lib->GetRenderPipeline()->GetEditorCamera()->ProcessKeyboard(Camera::DIRECTION::LEFT);
+			lib->GetRenderPipeline()->GetEditorCamera()->Translate(Vector3F::left * 0.2f);
 		}
 		if (wParam == 83)
 		{
 			GraphicalLibrary* lib = Engine::GetInstance()->GetService<GraphicalLibrary>("Renderer");
-			lib->GetRenderPipeline()->GetEditorCamera()->ProcessKeyboard(Camera::DIRECTION::BACK);
+			lib->GetRenderPipeline()->GetEditorCamera()->Translate(Vector3F::forward * 0.2f);
 		}
 		if (wParam == 68)
 		{
 			GraphicalLibrary* lib = Engine::GetInstance()->GetService<GraphicalLibrary>("Renderer");
-			lib->GetRenderPipeline()->GetEditorCamera()->ProcessKeyboard(Camera::DIRECTION::RIGHT);
+			lib->GetRenderPipeline()->GetEditorCamera()->Translate(Vector3F::right * 0.2f);
 		}
 		return true;
 	case WM_KEYUP:

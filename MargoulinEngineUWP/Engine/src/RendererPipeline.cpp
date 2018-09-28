@@ -5,7 +5,7 @@
 #include "MaterialResource.hpp"
 #include "MeshResource.hpp"
 
-auto	RendererPipeline::DrawCube(unsigned int const& materialID, DirectX::XMMATRIX const& modelMatrix) -> void
+auto	RendererPipeline::DrawCube(unsigned int const& materialID, Matrix4x4F const& modelMatrix) -> void
 {
 	ResourcesManager* rsmgr = Engine::GetInstance()->GetService<ResourcesManager>("Resources Manager");
 	Resource* matRes = rsmgr->GetResource(materialID);
@@ -17,7 +17,7 @@ auto	RendererPipeline::DrawCube(unsigned int const& materialID, DirectX::XMMATRI
 	drawData(cubeRes->GetMeshData(), ((MaterialResource*)matRes)->GetMaterialData(), modelMatrix);
 }
 
-auto	RendererPipeline::DrawCustomMesh(unsigned int const& modelID, unsigned int const& materialID, DirectX::XMMATRIX const& modelMatrix) -> void
+auto	RendererPipeline::DrawCustomMesh(unsigned int const& modelID, unsigned int const& materialID, Matrix4x4F const& modelMatrix) -> void
 {
 	ResourcesManager* rsmgr = Engine::GetInstance()->GetService<ResourcesManager>("Resources Manager");
 	Resource* matRes = rsmgr->GetResource(materialID);

@@ -1,7 +1,6 @@
 #ifndef __RENDERERPIPELINE_HPP__
 #define __RENDERERPIPELINE_HPP__
 
-#include <DirectXMath.h>
 #include "Camera.hpp"
 #include "Maths/Vector.hpp"
 
@@ -21,8 +20,8 @@ public:
 	virtual auto	EndRender() -> void = 0;
 	virtual auto	Present() -> void = 0;
 
-	auto	DrawCustomMesh(unsigned int const& meshID, unsigned int const& matID, DirectX::XMMATRIX const& modelMat) -> void;
-	auto	DrawCube(unsigned int const& matID, DirectX::XMMATRIX const& modelMat) -> void;
+	auto	DrawCustomMesh(unsigned int const& meshID, unsigned int const& matID, Matrix4x4F const& modelMat) -> void;
+	auto	DrawCube(unsigned int const& matID, Matrix4x4F const& modelMat) -> void;
 	
 	virtual auto	DrawRectangle(Vector2F const& screenPosition, Vector2F const& size, Vector4F const& color) -> void = 0;
 	virtual auto	DrawFilledRectangle(Vector2F const& screenPosition, Vector2F const& size, Vector4F const& color) -> void = 0;
@@ -40,7 +39,7 @@ public:
 	auto	operator = (RendererPipeline&&)->RendererPipeline& = delete;
 
 protected:
-	virtual auto	drawData(Mesh* mesh, Material* mat, DirectX::XMMATRIX const& modelMat) -> void = 0;
+	virtual auto	drawData(Mesh* mesh, Material* mat, Matrix4x4F const& modelMat) -> void = 0;
 
 	float									clearColor[4] = {0.5f, 0.5f, 0.5f, 1.0f};
 	Camera									editorCamera;

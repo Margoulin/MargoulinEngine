@@ -1,7 +1,7 @@
 #ifndef __NODE_HPP__
 #define __NODE_HPP__
 
-#include "Transform.hpp"
+#include "NodeTransform.hpp"
 #include "Object.hpp"
 
 #include <string>

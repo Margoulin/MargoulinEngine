@@ -13,14 +13,14 @@ auto	ResourcesManager::Initialize() -> void
 	Mesh* cubeMesh = new Mesh();
 	defaultMeshes[0].SetMeshData(cubeMesh);
 	SubMeshData* cubeData = new SubMeshData();
-	cubeData->AddVertice(DirectX::XMFLOAT3(-0.5f, -0.5f, -0.5f));
-	cubeData->AddVertice(DirectX::XMFLOAT3(-0.5f, -0.5f, 0.5f));
-	cubeData->AddVertice(DirectX::XMFLOAT3(-0.5f, 0.5f, -0.5f));
-	cubeData->AddVertice(DirectX::XMFLOAT3(-0.5f, 0.5f, 0.5f));
-	cubeData->AddVertice(DirectX::XMFLOAT3(0.5f, -0.5f, -0.5f));
-	cubeData->AddVertice(DirectX::XMFLOAT3(0.5f, -0.5f, 0.5f));
-	cubeData->AddVertice(DirectX::XMFLOAT3(0.5f, 0.5f, -0.5f));
-	cubeData->AddVertice(DirectX::XMFLOAT3(0.5f, 0.5f, 0.5f));
+	cubeData->AddVertice(Vector3F(-0.5f, -0.5f, -0.5f));
+	cubeData->AddVertice(Vector3F(-0.5f, -0.5f, 0.5f));
+	cubeData->AddVertice(Vector3F(-0.5f, 0.5f, -0.5f));
+	cubeData->AddVertice(Vector3F(-0.5f, 0.5f, 0.5f));
+	cubeData->AddVertice(Vector3F(0.5f, -0.5f, -0.5f));
+	cubeData->AddVertice(Vector3F(0.5f, -0.5f, 0.5f));
+	cubeData->AddVertice(Vector3F(0.5f, 0.5f, -0.5f));
+	cubeData->AddVertice(Vector3F(0.5f, 0.5f, 0.5f));
 
 	cubeData->AddIndice(0);
 	cubeData->AddIndice(2);

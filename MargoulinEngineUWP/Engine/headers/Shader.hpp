@@ -3,7 +3,7 @@
 
 #include <d3d11.h>
 #include <wrl/client.h>
-#include <DirectXMath.h>
+#include "Maths/Vector.hpp"
 
 class Shader
 {
@@ -22,7 +22,7 @@ public:
 	auto	Initialize(ID3D11Device* rend) -> void;
 	auto	Shutdown() -> void;
 
-	auto	SetColor(DirectX::XMFLOAT4 const value) -> void { unlitColorData = value; }
+	auto	SetColor(Vector4F const& value) -> void { unlitColorData = value; }
 
 	auto	SetCurrent(ID3D11DeviceContext* context) -> void;
 
@@ -37,7 +37,7 @@ private:
 	ID3D11VertexShader*						g_VertexShader = nullptr;
 	ID3D11PixelShader*						g_PixelShader = nullptr;
 	Microsoft::WRL::ComPtr<ID3D11Buffer>	unlitColorConstantBuffer;
-	DirectX::XMFLOAT4						unlitColorData = {1.0f, 1.0f, 1.0f, 1.0f};
+	Vector4F								unlitColorData = Vector4F::one;
 	ShaderType								type = ShaderType::UNLIT_COLOR;
 
 #ifdef _DEBUG

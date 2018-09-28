@@ -151,10 +151,10 @@
     <ClInclude Include="..\Engine\headers\Timer.h">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="..\Engine\headers\Transform.hpp">
+    <ClInclude Include="..\Engine\headers\Window.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="..\Engine\headers\Window.hpp">
+    <ClInclude Include="..\Engine\headers\NodeTransform.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
@@ -255,10 +255,10 @@
     <ClCompile Include="..\Engine\src\Timer.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\Engine\src\Transform.cpp">
+    <ClCompile Include="..\Engine\src\Window.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\Engine\src\Window.cpp">
+    <ClCompile Include="..\Engine\src\NodeTransform.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,8 +1,8 @@
 #ifndef __CAMERA_HPP__
 #define __CAMERA_HPP__
 
-#include <DirectXMath.h>
-#include "../MUtils/MUtils/Maths/Vector.hpp"
+#include "Maths/Matrix.hpp"
+#include "Maths/Vector.hpp"
 
 class Camera
 {
@@ -12,15 +12,10 @@ public:
 	Camera(Camera&&) = delete;
 	~Camera() = default;
 
-	enum DIRECTION
-	{
-		FRONT, BACK, LEFT, RIGHT, UP, DOWN
-	};
-
-	auto	ProcessKeyboard(DIRECTION const dir) -> void;
+	auto	Translate(Vector3F const& offset) -> void;
 
 	auto	GetPosition() const -> Vector3F const& { return position; }
-	auto	GetLocalMatrix() const -> DirectX::XMMATRIX const;
+	auto	GetViewMatrix() -> Matrix4x4F const&;
 
 	auto	operator = (const Camera&)->Camera& = delete;
 	auto	operator = (Camera&&)->Camera& = delete;
@@ -28,7 +23,9 @@ public:
 protected:
 
 private:
-	Vector3F			position;
+	Matrix4x4F	viewMatrix;
+	Vector3F	position;
+	bool		viewMatrixDirty = true;
 
 #ifdef _DEBUG
 public:

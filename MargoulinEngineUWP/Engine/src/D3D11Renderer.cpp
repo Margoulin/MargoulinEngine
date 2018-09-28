@@ -5,6 +5,8 @@
 #include "Material.hpp"
 #include "PolygonRenderResource.hpp"
 
+#include "./Logger.hpp"
+
 auto	D3D11Renderer::Initialize() -> void
 {
 	CD3D11_BUFFER_DESC viewProjConstantBufferDesc(sizeof(ViewProjectionConstantBuffer), D3D11_BIND_CONSTANT_BUFFER);
@@ -14,20 +16,8 @@ auto	D3D11Renderer::Initialize() -> void
 	context->GetDevice()->CreateBuffer(&modelConstantBufferDesc, nullptr, &modelConstantBuffer);
 
 	float aspectRatio = 16.0f / 9.0f;//1280 / 720;
-	float fovAngleY = 70.0f * DirectX::XM_PI / 180.0f;
 
-	if (aspectRatio < 1.0f)
-		fovAngleY *= 2.0f;
-	DirectX::XMMATRIX perspectiveMatrix = DirectX::XMMatrixPerspectiveFovRH(
-		fovAngleY, aspectRatio, 0.01f, 100.0f);
-	perspectiveMatrix = DirectX::XMMatrixTranspose(perspectiveMatrix);
-
-	for (unsigned int pos = 0; pos < 4; pos++)
-	{
-		for (unsigned int pos2 = 0; pos2 < 4; pos2++)
-			viewProjBufferData.Projection[pos * 4 + pos2] = perspectiveMatrix.r[pos].m128_f32[pos2];
-	}
-	//DirectX::XMStoreFloat4x4(&viewProjBufferData.projection, perspectiveMatrix);
+	viewProjBufferData.Projection = Matrix4x4F::Transpose(Matrix4x4F::Perspective(90.0f, aspectRatio, 0.01f, 100.0f));
 
 	context->GetDeviceContext()->UpdateSubresource(viewProjConstantBuffer.Get(), 0, NULL,
 		&viewProjBufferData, 0, 0);
@@ -56,13 +46,7 @@ auto	D3D11Renderer::BeginRender() -> void
 	context->GetDeviceContext()->ClearRenderTargetView(context->GetRenderTarget(), clearColor);
 	context->GetDeviceContext()->ClearDepthStencilView(context->GetDepthStencilView(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
-	for (unsigned int pos = 0; pos < 4; pos++)
-	{
-		for (unsigned int pos2 = 0; pos2 < 4; pos2++)
-			viewProjBufferData.View[pos * 4 + pos2] = editorCamera.GetLocalMatrix().r[pos].m128_f32[pos2];
-	}
-
-	//DirectX::XMStoreFloat4x4(&viewProjBufferData.view, editorCamera.GetLocalMatrix());
+	viewProjBufferData.View = editorCamera.GetViewMatrix();
 	context->GetDeviceContext()->UpdateSubresource(viewProjConstantBuffer.Get(), 0, NULL,
 		&viewProjBufferData, 0, 0);
 
@@ -81,18 +65,12 @@ auto	D3D11Renderer::Present() -> void
 	context->Swap();
 }
 	
-auto	D3D11Renderer::drawData(Mesh* mesh, Material* mat, DirectX::XMMATRIX const& modelMat) -> void
+auto	D3D11Renderer::drawData(Mesh* mesh, Material* mat, Matrix4x4F const& modelMat) -> void
 {
 	mat->Bind(context->GetDeviceContext());
 
-	Matrix4x4F model;
-	for (unsigned int pos = 0; pos < 4; pos++)
-	{
-		for (unsigned int pos2 = 0; pos2 < 4; pos2++)
-			model[pos * 4 + pos2] = modelMat.r[pos].m128_f32[pos2];
-	}
 	context->GetDeviceContext()->UpdateSubresource(modelConstantBuffer.Get(), 0, NULL,
-		model.GetArray(), 0, 0);
+		Matrix4x4F::Transpose(modelMat).GetArray(), 0, 0);
 
 	SubMeshData** subMeshes = mesh->GetSubMeshTab();
 	for (unsigned int pos = 0; pos < mesh->GetSubMeshNbr(); pos++)
@@ -102,7 +80,7 @@ auto	D3D11Renderer::drawData(Mesh* mesh, Material* mat, DirectX::XMMATRIX const&
 			subMesh->UploadInVRAM(context->GetDevice());
 		UINT offset = 0;
 
-		UINT stride = sizeof(DirectX::XMFLOAT3);
+		UINT stride = sizeof(Vector3F);
 		context->GetDeviceContext()->IASetVertexBuffers(0, 1, subMesh->GetVertexBuffer(), &stride, &offset);
 		context->GetDeviceContext()->IASetIndexBuffer(subMesh->GetIndexBuffer(),
 			DXGI_FORMAT_R32_UINT, 0);

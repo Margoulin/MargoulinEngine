@@ -2,23 +2,10 @@
 #define __SUBMESHDATA_HPP__
 
 #include <vector>
-#include <DirectXMath.h>
 #include "DirectXHelper.hpp"
 #include <d3d11.h>
 
-struct SSubMesh
-{
-	std::vector<DirectX::XMFLOAT3>	Vertices;
-	std::vector<DirectX::XMFLOAT3>	Normals;
-	std::vector<DirectX::XMFLOAT2>	UV;
-	std::vector<unsigned int>		Indices;
-
-	template<class Archive>
-	void serialize(Archive & archive)
-	{
-		archive(Vertices, Normals, UV, Indices);
-	}
-};
+#include "cereal/CustomTypes.hpp"
 
 class SubMeshData
 {
@@ -34,7 +21,7 @@ public:
 		vertexBufferData.pSysMem = &vertices[0];
 		vertexBufferData.SysMemPitch = 0;
 		vertexBufferData.SysMemSlicePitch = 0;
-		CD3D11_BUFFER_DESC vertexBufferDesc((unsigned int)vertices.size() * (unsigned int)(sizeof(DirectX::XMFLOAT3)), D3D11_BIND_VERTEX_BUFFER);
+		CD3D11_BUFFER_DESC vertexBufferDesc((unsigned int)vertices.size() * (unsigned int)(sizeof(Vector3F)), D3D11_BIND_VERTEX_BUFFER);
 		device->CreateBuffer(&vertexBufferDesc, &vertexBufferData, &g_VertexBuffer);
 
 		D3D11_SUBRESOURCE_DATA indexBufferData = { 0 };
@@ -49,9 +36,9 @@ public:
 
 	auto	Shutdown() -> void { SAFE_RELEASE(g_IndexBuffer);  SAFE_RELEASE(g_VertexBuffer); }
 
-	auto	AddVertice(DirectX::XMFLOAT3 val) -> void { vertices.push_back(val); }
-	auto	AddNormal(DirectX::XMFLOAT3 val) -> void { normals.push_back(val); }
-	auto	AddTexCoords(DirectX::XMFLOAT2 val) -> void { uv.push_back(val); }
+	auto	AddVertice(Vector3F val) -> void { vertices.push_back(val); }
+	auto	AddNormal(Vector3F val) -> void { normals.push_back(val); }
+	auto	AddTexCoords(Vector2F val) -> void { uv.push_back(val); }
 	auto	AddIndice(unsigned int const& val) -> void { indices.push_back(val); }
 
 	auto	IsInVRAM() const -> bool const { return inVRAM; }
@@ -62,7 +49,7 @@ public:
 	auto	GetVerticesCount() const -> unsigned int const { return (unsigned int)vertices.size(); }
 	auto	GetNormalsCount() const -> unsigned int const { return (unsigned int)normals.size(); }
 	auto	GetIndicesCount() const -> unsigned int const { return (unsigned int)indices.size(); }
-	auto	GetVertices() -> DirectX::XMFLOAT3* { return &vertices[0]; }
+	auto	GetVertices() -> Vector3F* { return &vertices[0]; }
 	auto	GetIndices() -> unsigned int* { return &indices[0]; }
 	auto	GetSerializeData() const -> SSubMesh
 	{
@@ -80,10 +67,10 @@ public:
 protected:
 
 private:
-	std::vector<DirectX::XMFLOAT3>	vertices;
-	std::vector<DirectX::XMFLOAT3>	normals;
-	std::vector<DirectX::XMFLOAT2>	uv;
-	std::vector<unsigned int>		indices;
+	std::vector<Vector3F>		vertices;
+	std::vector<Vector3F>		normals;
+	std::vector<Vector2F>		uv;
+	std::vector<unsigned int>	indices;
 
 	bool inVRAM = false;
 	ID3D11Buffer*	g_VertexBuffer = nullptr;

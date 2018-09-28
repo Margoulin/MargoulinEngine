@@ -22,6 +22,9 @@
     <Filter Include="OpenFBX">
       <UniqueIdentifier>{bb80e161-4dbf-463a-b494-f25fb051f5f9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\cereal">
+      <UniqueIdentifier>{4fd5be41-f93b-4bcd-a267-b4f2a2ca6ab9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -159,11 +162,14 @@
     <ClInclude Include="..\Engine\headers\Timer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Engine\headers\Transform.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\Engine\headers\Window.hpp">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\NodeTransform.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\cereal\CustomTypes.hpp">
+      <Filter>Header Files\cereal</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -263,10 +269,10 @@
     <ClCompile Include="..\Engine\src\Timer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Engine\src\Transform.cpp">
+    <ClCompile Include="..\Engine\src\Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Engine\src\Window.cpp">
+    <ClCompile Include="..\Engine\src\NodeTransform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

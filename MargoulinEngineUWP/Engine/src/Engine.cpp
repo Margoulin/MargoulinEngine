@@ -46,12 +46,13 @@ auto	Engine::Initialize(Window* window) -> void
 	rManager->SetShutdownOrderIndex(1);
 	AddService("Resources Manager", (Service*)rManager);
 
+	Logger* logger = new Logger();
+	AddService("Logger", (Service*)logger);
+
 	GraphicalLibrary* renderer = new GraphicalLibrary();
 	renderer->Initialize(window);
 	AddService("Renderer", (Service*)renderer);
-	
-	Logger* logger = new Logger();
-	AddService("Logger", (Service*)logger);
+		
 	InputManager* inputManager = new InputManager();
 	AddService("Input Manager", (Service*)inputManager);
 #ifndef UWP

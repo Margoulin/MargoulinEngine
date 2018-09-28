@@ -2,7 +2,6 @@
 #define __SCENE_HPP__
 
 #include <d3d11.h>
-#include <DirectXMath.h>
 
 class Node;
 

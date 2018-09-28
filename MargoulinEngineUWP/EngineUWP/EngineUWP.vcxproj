@@ -403,6 +403,7 @@
     <ClInclude Include="..\Engine\headers\MeshComponent.hpp" />
     <ClInclude Include="..\Engine\headers\MeshResource.hpp" />
     <ClInclude Include="..\Engine\headers\Node.hpp" />
+    <ClInclude Include="..\Engine\headers\NodeTransform.hpp" />
     <ClInclude Include="..\Engine\headers\Object.hpp" />
     <ClInclude Include="..\Engine\headers\ObjectManager.hpp" />
     <ClInclude Include="..\Engine\headers\ObjectTypes.hpp" />
@@ -417,7 +418,6 @@
     <ClInclude Include="..\Engine\headers\Shader.hpp" />
     <ClInclude Include="..\Engine\headers\SubMeshData.hpp" />
     <ClInclude Include="..\Engine\headers\Timer.h" />
-    <ClInclude Include="..\Engine\headers\Transform.hpp" />
     <ClInclude Include="..\Engine\headers\Window.hpp" />
     <ClInclude Include="..\Engine\ImGui\imconfig.h" />
     <ClInclude Include="..\Engine\ImGui\imgui.h" />
@@ -452,6 +452,7 @@
     <ClCompile Include="..\Engine\src\MeshComponent.cpp" />
     <ClCompile Include="..\Engine\src\MeshResource.cpp" />
     <ClCompile Include="..\Engine\src\Node.cpp" />
+    <ClCompile Include="..\Engine\src\NodeTransform.cpp" />
     <ClCompile Include="..\Engine\src\Object.cpp" />
     <ClCompile Include="..\Engine\src\ObjectManager.cpp" />
     <ClCompile Include="..\Engine\src\ObjLoader.cpp" />
@@ -462,7 +463,6 @@
     <ClCompile Include="..\Engine\src\Scene.cpp" />
     <ClCompile Include="..\Engine\src\Shader.cpp" />
     <ClCompile Include="..\Engine\src\Timer.cpp" />
-    <ClCompile Include="..\Engine\src\Transform.cpp" />
     <ClCompile Include="..\Engine\src\Window.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

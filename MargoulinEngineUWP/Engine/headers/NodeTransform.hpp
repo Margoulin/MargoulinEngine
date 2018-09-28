@@ -1,11 +1,11 @@
-#ifndef __TRANSFORM_HPP__
-#define __TRANSFORM_HPP__
+#ifndef __NODETRANSFORM_HPP__
+#define __NODETRANSFORM_HPP__
 
-#include <DirectXMath.h>
+#include "Maths/Transform.hpp"
 
 class Node;
 
-class Transform
+class Transform : public MTransform
 {
 public:
 	Transform(Node* nd);
@@ -13,8 +13,7 @@ public:
 	Transform(Transform&&) = delete;
 	~Transform() = default;
 
-	auto	GetLocalMatrix() -> DirectX::XMMATRIX;
-	auto	GetGlobalMatrix() -> DirectX::XMMATRIX;
+	auto	GetGlobalMatrix() -> Matrix4x4F;
 
 	auto	operator = (const Transform&)->Transform& = delete;
 	auto	operator = (Transform&&)->Transform& = delete;
@@ -22,12 +21,10 @@ public:
 //protected:
 
 private:
-	DirectX::XMFLOAT3	position;
-	DirectX::XMFLOAT3	scale;
-	DirectX::XMFLOAT3	eulerAngles;
-	DirectX::XMFLOAT4	rotation;
-	DirectX::XMMATRIX	localMatrix;
-	Node*				attachedNode = nullptr;
+#ifdef _DEBUG
+	Vector3F	eulerAngles;
+#endif
+	Node*		attachedNode = nullptr;
 
 #ifdef _DEBUG
 public:

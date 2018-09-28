@@ -106,7 +106,7 @@ auto	Shader::Initialize(ID3D11Device* device) -> void
 		, nullptr, &g_PixelShader);
 	SAFE_RELEASE(g_ShaderBlob);
 
-	CD3D11_BUFFER_DESC unlitColorConstantBufferDesc(sizeof(DirectX::XMFLOAT4), D3D11_BIND_CONSTANT_BUFFER);
+	CD3D11_BUFFER_DESC unlitColorConstantBufferDesc(sizeof(Vector4F), D3D11_BIND_CONSTANT_BUFFER);
 	device->CreateBuffer(&unlitColorConstantBufferDesc, nullptr, &unlitColorConstantBuffer);
 }
 
