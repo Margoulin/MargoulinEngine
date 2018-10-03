@@ -49,6 +49,7 @@ auto	MeshComponent::Shutdown() -> void
 
 auto	MeshComponent::ImGuiUpdate() -> void
 {
+	Component::ImGuiUpdate();
 	ImGui::Text("Component Type : Mesh Component");
 	ImGui::Combo("Mesh Type", (int*)&MType, "Cube\0Pyramid\0Sphere\0Custom\0");
 	if (MType == MESH_TYPE::CUSTOM)

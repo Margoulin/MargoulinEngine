@@ -26,6 +26,8 @@ public:
 	virtual auto	Initialize() -> void {}
 	virtual auto	Shutdown() -> void;
 
+	auto	Update() -> void;
+
 	template<typename T>
 	T*	Create()
 	{

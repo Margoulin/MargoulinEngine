@@ -157,6 +157,9 @@
     <ClInclude Include="..\Engine\headers\NodeTransform.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="..\Engine\headers\CameraComponent.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Engine\ImGui\imgui.cpp">
@@ -259,6 +262,9 @@
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\Engine\src\NodeTransform.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\CameraComponent.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
   </ItemGroup>

@@ -26,6 +26,7 @@ public:
 	virtual auto	BeginRender() -> void;
 	virtual auto	EndRender() -> void;
 	virtual auto	Present() -> void;
+	virtual auto	BindCamera(Matrix4x4F const& projectionMatrix, Matrix4x4F const& viewMatrix) -> void;
 
 	auto	SetContext(D3D11Context* value) -> void { context = value; }
 

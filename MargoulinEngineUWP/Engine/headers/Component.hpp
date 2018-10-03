@@ -15,13 +15,14 @@ public:
 
 	enum COMPONENT_TYPE
 	{
-		GRAPHIC
+		GRAPHIC,
+		CAMERA
 	};
 
 	virtual auto	Shutdown() -> void = 0;
 
 	virtual auto	SetNode(Node* value) -> void { attachedNode = value; }
-	virtual auto	GetType() const -> COMPONENT_TYPE const { return type; }
+	virtual auto	GetComponentType() const -> COMPONENT_TYPE const = 0;
 	
 	virtual auto	GetObjectType() const -> ObjectType const { return COMPONENT; }
 
@@ -29,7 +30,6 @@ public:
 	auto	operator = (Component&&)->Component& = delete;
 
 protected:
-	COMPONENT_TYPE	type;
 	Node*			attachedNode = nullptr;
 
 private:
@@ -37,7 +37,7 @@ private:
 #ifdef _DEBUG
 
 public:
-	virtual auto	ImGuiUpdate() -> void {}
+	virtual auto	ImGuiUpdate() -> void;
 
 	virtual auto	GetComponentTypeName() -> char* = 0;
 

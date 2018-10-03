@@ -15,10 +15,6 @@ auto	D3D11Renderer::Initialize() -> void
 	CD3D11_BUFFER_DESC modelConstantBufferDesc(sizeof(Matrix4x4F), D3D11_BIND_CONSTANT_BUFFER);
 	context->GetDevice()->CreateBuffer(&modelConstantBufferDesc, nullptr, &modelConstantBuffer);
 
-	float aspectRatio = 16.0f / 9.0f;//1280 / 720;
-
-	viewProjBufferData.Projection = Matrix4x4F::Transpose(Matrix4x4F::Perspective(90.0f, aspectRatio, 0.01f, 100.0f));
-
 	context->GetDeviceContext()->UpdateSubresource(viewProjConstantBuffer.Get(), 0, NULL,
 		&viewProjBufferData, 0, 0);
 }
@@ -46,11 +42,6 @@ auto	D3D11Renderer::BeginRender() -> void
 	context->GetDeviceContext()->ClearRenderTargetView(context->GetRenderTarget(), clearColor);
 	context->GetDeviceContext()->ClearDepthStencilView(context->GetDepthStencilView(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
-	viewProjBufferData.View = editorCamera.GetViewMatrix();
-	context->GetDeviceContext()->UpdateSubresource(viewProjConstantBuffer.Get(), 0, NULL,
-		&viewProjBufferData, 0, 0);
-
-	context->GetDeviceContext()->VSSetConstantBuffers(0, 1, viewProjConstantBuffer.GetAddressOf());
 	context->GetDeviceContext()->VSSetConstantBuffers(1, 1, modelConstantBuffer.GetAddressOf());
 }
 
@@ -63,6 +54,18 @@ auto	D3D11Renderer::EndRender() -> void
 auto	D3D11Renderer::Present() -> void
 {
 	context->Swap();
+}
+	
+auto	D3D11Renderer::BindCamera(Matrix4x4F const& projectionMatrix, Matrix4x4F const& viewMatrix) -> void
+{
+	viewProjBufferData.View = Matrix4x4F::Transpose(viewMatrix);
+	
+	viewProjBufferData.Projection = Matrix4x4F::Transpose(projectionMatrix);
+
+	context->GetDeviceContext()->UpdateSubresource(viewProjConstantBuffer.Get(), 0, NULL,
+		&viewProjBufferData, 0, 0);
+
+	context->GetDeviceContext()->VSSetConstantBuffers(0, 1, viewProjConstantBuffer.GetAddressOf());
 }
 	
 auto	D3D11Renderer::drawData(Mesh* mesh, Material* mat, Matrix4x4F const& modelMat) -> void

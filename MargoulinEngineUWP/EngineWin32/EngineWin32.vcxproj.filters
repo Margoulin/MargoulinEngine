@@ -171,6 +171,9 @@
     <ClInclude Include="..\Engine\cereal\CustomTypes.hpp">
       <Filter>Header Files\cereal</Filter>
     </ClInclude>
+    <ClInclude Include="..\Engine\headers\CameraComponent.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Engine\ImGui\imgui.cpp">
@@ -273,6 +276,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Engine\src\NodeTransform.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\CameraComponent.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\Component.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

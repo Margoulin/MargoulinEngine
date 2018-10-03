@@ -14,6 +14,8 @@ public:
 	virtual auto	Initialize() -> void {}
 	virtual auto	Shutdown() -> void {}
 
+	virtual auto	Update() -> void {}
+
 	auto	SetID(unsigned int const& value) -> void { ID = value; }
 
 	auto	GetID() const -> unsigned int { return ID; }

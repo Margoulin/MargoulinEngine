@@ -53,6 +53,8 @@ auto	Renderer2DComponent::Draw() -> void
 
 auto	Renderer2DComponent::ImGuiUpdate() -> void
 {
+	Component::ImGuiUpdate();
+
 	ImGui::Combo("2D Type", (int*)&currentType, "None\0Rectangle\0\Circle\0Line\0Polygon\0");
 	ImGui::ColorEdit4("Color", (float*)&color.x);
 	ImGui::Checkbox("Filled", &filled);

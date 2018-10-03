@@ -250,6 +250,7 @@
   <ItemGroup>
     <ClInclude Include="..\Engine\cereal\CustomTypes.hpp" />
     <ClInclude Include="..\Engine\headers\Camera.hpp" />
+    <ClInclude Include="..\Engine\headers\CameraComponent.hpp" />
     <ClInclude Include="..\Engine\headers\Clock.hpp" />
     <ClInclude Include="..\Engine\headers\Component.hpp" />
     <ClInclude Include="..\Engine\headers\Context.hpp" />
@@ -303,7 +304,9 @@
     <ClCompile Include="..\Engine\OpenFBX\miniz.c" />
     <ClCompile Include="..\Engine\OpenFBX\ofbx.cpp" />
     <ClCompile Include="..\Engine\src\Camera.cpp" />
+    <ClCompile Include="..\Engine\src\CameraComponent.cpp" />
     <ClCompile Include="..\Engine\src\Clock.cpp" />
+    <ClCompile Include="..\Engine\src\Component.cpp" />
     <ClCompile Include="..\Engine\src\D3D11Context.cpp" />
     <ClCompile Include="..\Engine\src\D3D11Renderer.cpp" />
     <ClCompile Include="..\Engine\src\Debug.cpp" />

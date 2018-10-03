@@ -6,7 +6,7 @@
 class GraphicComponent : public Component
 {
 public:
-	GraphicComponent() { type = GRAPHIC; }
+	GraphicComponent() = default;
 	GraphicComponent(const GraphicComponent&) = delete;
 	GraphicComponent(GraphicComponent&&) = delete;
 	~GraphicComponent() = default;
@@ -15,6 +15,7 @@ public:
 	
 	virtual	auto	Draw() -> void = 0;
 	
+	virtual auto	GetComponentType() const -> COMPONENT_TYPE const { return COMPONENT_TYPE::GRAPHIC; }
 	virtual auto	GetObjectType() const -> ObjectType const { return GRAPHIC_COMPONENT; }
 	virtual auto	GetObjectTypeName() const -> std::string const override { return "Graphic Component"; }
 

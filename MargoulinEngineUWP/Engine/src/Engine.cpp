@@ -23,6 +23,7 @@
 #include "ObjectManager.hpp"
 #include "MeshComponent.hpp"
 #include "Renderer2DComponent.hpp"
+#include "CameraComponent.hpp"
 
 #include "FBXLoader.hpp"
 
@@ -110,6 +111,8 @@ auto	Engine::Update() -> bool
 	InputManager* mgr = GetService<InputManager>("Input Manager");
 	mgr->Update();
 
+	GetService<ObjectManager>("Object Manager")->Update();
+
 #ifdef _DEBUG
 	if (!xboxOneDebug)
 		return true;
@@ -144,14 +147,29 @@ auto	Engine::Draw() -> void
 	rend->GetRenderPipeline()->BeginRender();
 
 	ObjectManager* objMgr = GetService<ObjectManager>("Object Manager");
-	std::vector<Object*> objects = objMgr->GetObjectsOfType(ObjectType::MESH_COMPONENT);
-	for (auto& obj : objects)
-		((MeshComponent*)obj)->Draw();
-	std::vector<Object*> objects2D = objMgr->GetObjectsOfType(ObjectType::RENDERER_2D_COMPONENT);
-	for (auto& obj : objects2D)
-		((Renderer2DComponent*)obj)->Draw();
+
+	std::vector<Object*> cameras = objMgr->GetObjectsOfType(ObjectType::CAMERA_COMPONENT);
+	
+	for (auto& camObj : cameras)
+	{
+		CameraComponent* camComp = (CameraComponent*)camObj;
+		rend->GetRenderPipeline()->BindCamera(camComp->GetProjectionMatrix(rend->GetWindow()->GetSize()), camComp->GetViewMatrix());
+
+		std::vector<Object*> objects = objMgr->GetObjectsOfType(ObjectType::MESH_COMPONENT);
+		for (auto& obj : objects)
+			((MeshComponent*)obj)->Draw();
+		std::vector<Object*> objects2D = objMgr->GetObjectsOfType(ObjectType::RENDERER_2D_COMPONENT);
+		for (auto& obj : objects2D)
+			((Renderer2DComponent*)obj)->Draw();
+	}
 
 #ifdef _DEBUG
+
+	if (cameras.empty())
+	{
+
+	}
+
 	DrawImGui();
 #endif
 	rend->GetRenderPipeline()->EndRender();

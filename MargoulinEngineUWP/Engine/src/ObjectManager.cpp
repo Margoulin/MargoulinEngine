@@ -11,6 +11,11 @@ auto	ObjectManager::Shutdown() -> void
 	}
 }
 
+auto	ObjectManager::Update() -> void
+{
+	GarbageCollection();
+}
+
 auto	ObjectManager::GarbageCollection() -> void
 {
 	for (auto& obj : objectsToDelete)

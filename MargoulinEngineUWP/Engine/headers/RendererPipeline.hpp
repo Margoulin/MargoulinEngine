@@ -19,6 +19,7 @@ public:
 	virtual auto	BeginRender() -> void = 0;
 	virtual auto	EndRender() -> void = 0;
 	virtual auto	Present() -> void = 0;
+	virtual auto	BindCamera(Matrix4x4F const& projectionMatrix, Matrix4x4F const& viewMatrix) -> void = 0;
 
 	auto	DrawCustomMesh(unsigned int const& meshID, unsigned int const& matID, Matrix4x4F const& modelMat) -> void;
 	auto	DrawCube(unsigned int const& matID, Matrix4x4F const& modelMat) -> void;
