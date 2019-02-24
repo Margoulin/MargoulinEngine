@@ -4,15 +4,15 @@
 #include "Mesh.hpp"
 #include "SubMeshData.hpp"
 #include "MaterialResource.hpp"
-
+#include "SkeletalMeshResource.hpp"
 
 auto	ResourcesManager::Initialize() -> void
 {
-	defaultMeshes = new MeshResource[1];
+	defaultMeshes = NEW MeshResource[1];
 #pragma region CUBE
-	Mesh* cubeMesh = new Mesh();
+	Mesh* cubeMesh = NEW Mesh();
 	defaultMeshes[0].SetMeshData(cubeMesh);
-	SubMeshData* cubeData = new SubMeshData();
+	SubMeshData* cubeData = NEW SubMeshData();
 	cubeData->AddVertice(Vector3F(-0.5f, -0.5f, -0.5f));
 	cubeData->AddVertice(Vector3F(-0.5f, -0.5f, 0.5f));
 	cubeData->AddVertice(Vector3F(-0.5f, 0.5f, -0.5f));
@@ -65,6 +65,7 @@ auto	ResourcesManager::Initialize() -> void
 	cubeData->AddIndice(5);
 	cubeMesh->AddMesh(cubeData);
 #pragma endregion
+	Service::Initialize();
 }
 
 auto	ResourcesManager::Shutdown() -> void
@@ -72,22 +73,29 @@ auto	ResourcesManager::Shutdown() -> void
 	for (auto&& resource : resources)
 	{
 		resource.second->Shutdown();
-		delete resource.second;
+		DEL(resource.second);
 	}
 
 	for (unsigned int pos = 0; pos < 1; pos++)
 		defaultMeshes[pos].Shutdown();
+	DELARRAY(defaultMeshes);
 }
 
 auto	ResourcesManager::CreateMeshResource() -> unsigned int
 {
-	MeshResource* meshResource = new MeshResource();
+	MeshResource* meshResource = NEW MeshResource();
 	return addResource((Resource*)meshResource);
+}
+
+auto	ResourcesManager::CreateSkeletalMeshResource() -> unsigned int
+{
+	SkeletalMeshResource* skelResource = NEW SkeletalMeshResource();
+	return addResource((Resource*)skelResource);
 }
 
 auto	ResourcesManager::CreateMaterialResource() -> unsigned int
 {
-	MaterialResource* matRes = new MaterialResource();
+	MaterialResource* matRes = NEW MaterialResource();
 	return addResource((Resource*)matRes);
 }
 
@@ -117,7 +125,7 @@ auto	ResourcesManager::ImGuiUpdate() -> void
 	{
 		for (auto& resource : resources)
 		{
-			if (ImGui::TreeNode(resource.second->GetName().c_str()))
+			if (ImGui::TreeNode(resource.second->GetName().Str()))
 			{
 				ImGui::Value("Resource ID", resource.first);
 				resource.second->ImGuiUpdate();
@@ -130,7 +138,7 @@ auto	ResourcesManager::ImGuiUpdate() -> void
 	{
 		ImGui::InputText("Obj file path", objFilepath, 128, ImGuiInputTextFlags_CharsNoBlank);
 		if (ImGui::Button("Load object"))
-			ObjLoader::LoadObjFromFile(std::string(objFilepath));
+			ObjLoader::LoadObjFromFile(MString(objFilepath));
 		ImGui::TreePop();
 	}
 }

@@ -3,6 +3,7 @@
 
 #include <vector>
 #include "SubMeshData.hpp"
+#include "CoreMinimal.hpp"
 
 #include "cereal/archives/binary.hpp"
 #include "cereal/types/vector.hpp"
@@ -34,7 +35,7 @@ public:
 	auto	AddMesh(SubMeshData* val) -> void { meshes.push_back(val); }
 
 	auto	GetSubMeshNbr() const -> unsigned int { return (unsigned int)meshes.size(); }
-	auto	GetSubMeshTab() -> SubMeshData** { return &meshes[0]; }
+	auto	GetSubMeshTab() -> SubMeshData** { return meshes.data(); }
 
 	auto	operator = (const Mesh&)->Mesh& = delete;
 	auto	operator = (Mesh&&)->Mesh& = delete;

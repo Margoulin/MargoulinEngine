@@ -4,7 +4,7 @@
 
 auto	MaterialResource::Shutdown() -> void
 {
-	delete materialData;
+	DEL(materialData);
 }
 
 #include <imgui.h>

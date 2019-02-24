@@ -1,13 +1,14 @@
 #include "ObjectManager.hpp"
 
 #include "Object.hpp"
+#include "MemoryMacro.hpp"
 
 auto	ObjectManager::Shutdown() -> void
 {
 	for (auto& obj : objects)
 	{
 		obj->Shutdown();
-		delete obj;
+		DEL(obj);
 	}
 }
 
@@ -81,15 +82,16 @@ auto	ObjectManager::addObjectToDatabase(Object* objToAdd) -> void
 
 auto	ObjectManager::removeObject(Object* obj) -> void
 {
-	obj->Shutdown();
-
 	for (Object* relatedObject : relationTable[obj])
 	{
 		auto it = relationTable[relatedObject].begin();
 		for (it; it != relationTable[relatedObject].end(); ++it)
 		{
 			if (*it == obj)
+			{
 				relationTable[relatedObject].erase(it);
+				break;
+			}
 		}
 	}
 	for (auto it = typeTableObjects[obj->GetObjectType()].begin();
@@ -105,7 +107,7 @@ auto	ObjectManager::removeObject(Object* obj) -> void
 	{
 		if ((*it) == obj)
 		{
-			delete obj;
+			DEL(obj);
 			objects.erase(it);
 			break;
 		}
@@ -120,8 +122,8 @@ auto	ObjectManager::ImGuiUpdate() -> void
 	for (auto& obj : objects)
 	{
 		ImGui::Value("ID", obj->GetID());
-		std::string temp = "Type : " + obj->GetObjectTypeName();
-		ImGui::Text(temp.c_str());
+		MString temp = "Type : " + obj->GetObjectTypeName();
+		ImGui::Text(temp.Str());
 	}
 }
 

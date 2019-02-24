@@ -1,8 +1,8 @@
 #include "Engine.hpp"
 
 #include "Scene.hpp"
-#include "Node.hpp"
 #include "Service.hpp"
+#include "ServiceApplication.hpp"
 #include "GraphicalLibrary.hpp"
 #include "ResourcesManager.hpp"
 #include "InputManager.hpp"
@@ -11,21 +11,19 @@
 #include <imgui.h>
 
 #include "imgui_impl_dx11.h"
-#include "Timer.h"
+#include "Timer.hpp"
 
-#include "ObjLoader.hpp"
-#include "D3D11Context.hpp"
 #include <algorithm>
 #include "Logger.hpp"
 #include "RendererPipeline.hpp"
 #include "Window.hpp"
 #include "Gamepad.hpp"
 #include "ObjectManager.hpp"
-#include "MeshComponent.hpp"
 #include "Renderer2DComponent.hpp"
 #include "CameraComponent.hpp"
+#include "Profiler.hpp"
 
-#include "FBXLoader.hpp"
+#include "Maths/Math.hpp"
 
 Engine* Engine::instance = nullptr;
 
@@ -38,34 +36,36 @@ auto	Engine::GetInstance() -> Engine*
 
 auto	Engine::Initialize(Window* window) -> void
 {
-	ObjectManager*	objMgr = new ObjectManager();
+	Profiler*	profiler = new Profiler();
+	profiler->Initialize();
+	AddService("Profiler", profiler);
+
+	ObjectManager*	objMgr = NEW ObjectManager();
 	objMgr->Initialize();
+	objMgr->SetUpdateOrderIndex(1);
 	AddService("Object Manager", (Service*)objMgr);
 
-	ResourcesManager*	rManager = new ResourcesManager();
+	ResourcesManager*	rManager = NEW ResourcesManager();
 	rManager->Initialize();
-	rManager->SetShutdownOrderIndex(1);
+	rManager->SetShutdownOrderIndex(2);
 	AddService("Resources Manager", (Service*)rManager);
 
-	Logger* logger = new Logger();
+	Logger* logger = NEW Logger();
 	AddService("Logger", (Service*)logger);
 
-	GraphicalLibrary* renderer = new GraphicalLibrary();
+	GraphicalLibrary* renderer = NEW GraphicalLibrary();
 	renderer->Initialize(window);
 	AddService("Renderer", (Service*)renderer);
 		
-	InputManager* inputManager = new InputManager();
+	InputManager* inputManager = NEW InputManager();
+	inputManager->SetUpdateOrderIndex(2);
 	AddService("Input Manager", (Service*)inputManager);
+
 #ifndef UWP
 	Window::eventCallback = [&value = (*inputManager)](HWND hwnd, UINT uint, WPARAM wparam, LPARAM lparam) { return value.MessageHandler(hwnd, uint, wparam, lparam);};
 #endif
 
-	currentScene = new Scene();
-
-	ObjLoader::LoadObjFromFile("Sherlock.objfile");
-	ObjLoader::LoadObjFromFile("23FEF89A_FFFF_00000E11.objfile");
-
-	FBXLoader::LoadFBXFromFile("sherlock.fbx");
+	currentScene = NEW Scene();	
 
 	engineClock.SetFramerateLimit(60);
 	initialized = true;
@@ -82,6 +82,13 @@ auto	Engine::Initialize(Window* window) -> void
 auto	Engine::Shutdown() -> void
 {
 	ImGui_ImplDX11_Shutdown();
+	
+	if (currentScene)
+	{
+		currentScene->Shutdown();
+		DEL(currentScene);
+	}
+
 	std::vector<Service*>	tempServices;
 	for (auto&& serv : services)
 		tempServices.push_back(serv.second);
@@ -92,14 +99,9 @@ auto	Engine::Shutdown() -> void
 	for (auto&& serv : tempServices)
 	{
 		serv->Shutdown();
-		delete serv;
+		DEL(serv);
 	}
 
-	if (currentScene)
-	{
-		currentScene->Shutdown();
-		delete currentScene;
-	}
 	delete instance;
 }
 
@@ -108,38 +110,17 @@ auto	Engine::Update() -> bool
 	if (!engineClock.CanUpdate())
 		return false;
 
-	InputManager* mgr = GetService<InputManager>("Input Manager");
-	mgr->Update();
+	std::vector<Service*>	tempServices;
+	for (auto&& serv : services)
+		tempServices.push_back(serv.second);
+	std::sort(tempServices.begin(), tempServices.end(),
+		[](Service* lhs, Service* rhs) { return lhs->GetUpdateOrderIndex() > rhs->GetUpdateOrderIndex(); });
 
-	GetService<ObjectManager>("Object Manager")->Update();
+	for (auto& service : tempServices)
+		service->Update();
 
-#ifdef _DEBUG
-	if (!xboxOneDebug)
-		return true;
-	Gamepad* gamepad = mgr->GetGamepad(0);
-	if (gamepad)
-	{
-		ImGuiIO& io = ImGui::GetIO();
-		io.MouseDown[0] = gamepad->GetCurrentState().aButton;
-
-		imGuiCursor.x += gamepad->GetCurrentState().leftStickXAxis * 2.0f;
-		imGuiCursor.y -= gamepad->GetCurrentState().leftStickYAxis * 2.0f;
-
-		if (imGuiCursor.x < 0.0f)
-			imGuiCursor.x = 0.0f;
-		else if (imGuiCursor.x > 1920.0f)
-			imGuiCursor.x = 1920.0f;
-		if (imGuiCursor.y < 0.0f)
-			imGuiCursor = 0.0f;
-		else if (imGuiCursor.y > 1080.0f)
-			imGuiCursor = 1080.0f;
-	}
-
-#endif // XBOXONE
 	return true;
 }
-
-#include "Debug.hpp"
 
 auto	Engine::Draw() -> void
 {
@@ -163,37 +144,64 @@ auto	Engine::Draw() -> void
 			((Renderer2DComponent*)obj)->Draw();
 	}
 
+	std::vector<ServiceApplication*>	apps = GetApplicationServices();
+	for (auto& serv : apps)
+		serv->Draw();
+
 #ifdef _DEBUG
 
 	if (cameras.empty())
 	{
+		Quaternion	quatRot = Quaternion::Euler(editorCameraRotation * degToRad);
+		Vector3F up = quatRot * Vector3F::up;
+		Vector3F forward = quatRot * Vector3F::back;
+		Vector2F windSize = rend->GetWindow()->GetSize();
 
+		Matrix4x4F view =  Matrix4x4F::LookAt(editorCameraPosition, up, editorCameraPosition + forward);
+		Matrix4x4F proj = Matrix4x4F::Perspective(90.0f, windSize.x / windSize.y, 0.01f, 100.0f);
+		rend->GetRenderPipeline()->BindCamera(proj, view);
+		std::vector<Object*> objects = objMgr->GetObjectsOfType(ObjectType::MESH_COMPONENT);
+		for (auto& obj : objects)
+			((MeshComponent*)obj)->Draw();
+		std::vector<Object*> objects2D = objMgr->GetObjectsOfType(ObjectType::RENDERER_2D_COMPONENT);
+		for (auto& obj : objects2D)
+			((Renderer2DComponent*)obj)->Draw();
 	}
 
 	DrawImGui();
 #endif
 	rend->GetRenderPipeline()->EndRender();
 
-#ifdef _DEBUG
-	if (xboxOneDebug)
-	{
+#if defined(_DEBUG) && defined(_XBOX_ONE)
+		Vector2F imGuiCursor = GetService<InputManager>("Input Manager")->imGuiCursor;
 		rend->GetRenderPipeline()->DrawFilledRectangle(imGuiCursor - Vector2F(3.0f, 3.0f), Vector2F(6.0f, 6.0f), Vector4F(0.0f, 0.0f, 0.0f, 1.0f));
 		rend->GetRenderPipeline()->DrawFilledRectangle(imGuiCursor - Vector2F(2.5f, 2.5f), Vector2F(5.0f, 5.0f), Vector4F(1.0f, 1.0f, 1.0f, 1.0f));
-	}
 #endif
 
 	rend->GetRenderPipeline()->Present();
 }
 
-auto	Engine::AddService(std::string const& name, Service* service) -> void
+auto	Engine::AddService(MString const& name, Service* service) -> void
 {
 	services.insert(std::make_pair(name, service));
 #ifdef _DEBUG
 	debugServicesWindows.insert(std::make_pair(name, false));
 #endif // _DEBUG
 }
+	
+auto	Engine::GetApplicationServices() const -> std::vector<ServiceApplication*>
+{
+	std::vector<ServiceApplication*> ret;
+	for (auto& serv : services)
+	{
+		ServiceApplication* app = dynamic_cast<ServiceApplication*>(serv.second);
+		if (app)
+			ret.push_back(app);
+	}
+	return ret;
+}
 
-auto	Engine::RemoveServiceEntry(std::string const& value) -> void
+auto	Engine::RemoveServiceEntry(MString const& value) -> void
 {
 	services.erase(services.find(value));
 #ifdef _DEBUG
@@ -201,11 +209,11 @@ auto	Engine::RemoveServiceEntry(std::string const& value) -> void
 #endif // _DEBUG
 }
 
-auto	Engine::RemoveService(std::string const& value) -> void
+auto	Engine::RemoveService(MString const& value) -> void
 {
 	auto it = services.find(value);
 	it->second->Shutdown();
-	delete it->second;
+	DEL(it->second);
 #ifdef _DEBUG
 	debugServicesWindows.erase(debugServicesWindows.find(value));
 #endif // _DEBUG
@@ -215,16 +223,10 @@ auto	Engine::RemoveService(std::string const& value) -> void
 
 auto	Engine::DrawImGui() -> void
 {
-	CTimer	timer;
+	Timer	timer;
 	timer.Start();
 	ImGui_ImplDX11_NewFrame();
 	ImGuiIO& io = ImGui::GetIO();
-
-	if (xboxOneDebug)
-	{
-		io.MousePos.x = imGuiCursor.x * 2.0f;
-		io.MousePos.y = imGuiCursor.y * 2.0f;
-	}
 
 	for (unsigned int pos = 0; pos < 49; pos++)
 	{
@@ -241,7 +243,7 @@ auto	Engine::DrawImGui() -> void
 		{
 			for (auto& service : services)
 			{
-				if (ImGui::MenuItem(service.first.c_str()))
+				if (ImGui::MenuItem(service.first.Str()))
 				{
 					auto it = debugServicesWindows.find(service.first);
 					if (it != debugServicesWindows.end())
@@ -262,6 +264,10 @@ auto	Engine::DrawImGui() -> void
 	ImGui::Text("ImGui Render Duration %.5f ms", lastImGuiRenderDuration);
 	ImGui::PlotLines("Framerate", framerates, 50, 0, "", 0.0f, 90.0f, ImVec2(0.0f, 80.0f));// , values_offset, "avg 0.0", -1.0f, 1.0f, ImVec2(0, 80));
 	ImGui::PlotLines("FrameTimes", frametimes, 50, 0, "", engineClock.GetMinFrametimeRange() * 1000.0f, engineClock.GetMaxFrametimeRange() * 1000.0f, ImVec2(0.0f, 80.0f));// , values_offset, "avg 0.0", -1.0f, 1.0f, ImVec2(0, 80));
+	
+	ImGui::DragFloat3("Editor Camera Position", &editorCameraPosition.x);
+	ImGui::DragFloat3("Editor Camera Rotation", (float*)(&editorCameraRotation.x), 0.5f, -360.0f, 360.0f);
+
 	ImGui::End();
 	
 	for (auto& service : debugServicesWindows)
@@ -271,7 +277,7 @@ auto	Engine::DrawImGui() -> void
 			auto it = services.find(service.first);
 			if (it != services.end())
 			{
-				ImGui::Begin(service.first.c_str());
+				ImGui::Begin(service.first.Str());
 				(*it).second->ImGuiUpdate();
 				ImGui::End();
 			}

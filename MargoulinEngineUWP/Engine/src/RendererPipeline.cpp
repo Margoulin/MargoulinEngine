@@ -35,10 +35,5 @@ auto	RendererPipeline::DrawCustomMesh(unsigned int const& modelID, unsigned int 
 auto	RendererPipeline::ImGuiUpdate() -> void
 {
 	ImGui::ColorEdit4("Clear color", clearColor);
-	if (ImGui::TreeNode("Camera"))
-	{
-		editorCamera.ImGuiUpdate();
-		ImGui::TreePop();
-	}
 }
 #endif // _DEBUG

@@ -2,6 +2,7 @@
 #define __OBJECT_HPP__
 
 #include "ObjectTypes.hpp"
+#include "CoreMinimal.hpp"
 
 class Object
 {
@@ -11,22 +12,23 @@ public:
 	Object(Object&&) = delete;
 	~Object() = default;
 
-	virtual auto	Initialize() -> void {}
-	virtual auto	Shutdown() -> void {}
+	virtual auto	Initialize() -> void = 0;
+	virtual auto	Shutdown() -> void = 0;
 
-	virtual auto	Update() -> void {}
+	virtual auto	Update() -> void = 0;
 
 	auto	SetID(unsigned int const& value) -> void { ID = value; }
 
 	auto	GetID() const -> unsigned int { return ID; }
 
+	//virtual auto	CanBeGarbageCollected() const -> bool = 0;
 	virtual auto	GetObjectType() const -> ObjectType const { return ObjectType::OBJECT; }
-	virtual auto	GetObjectTypeName() const->std::string const { return ObjectTypeNames[ObjectType::OBJECT]; }
+	virtual auto	GetObjectTypeName() const -> MString const { return ObjectTypeNames[ObjectType::OBJECT]; }
 	auto	operator = (const Object&)->Object& = delete;
 	auto	operator = (Object&&)->Object& = delete;
 
 protected:	
-	unsigned int ID = 0;
+	unsigned int	ID = 0;
 
 private:
 #ifdef _DEBUG

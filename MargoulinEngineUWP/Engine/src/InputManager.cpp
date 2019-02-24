@@ -5,15 +5,34 @@
 #include "GraphicalLibrary.hpp"
 #include "RendererPipeline.hpp"
 #include "Context.hpp"
-#include "Debug.hpp"
 #include "Gamepad.hpp"
-
-#include "Camera.hpp"
 
 auto	InputManager::Update() -> void
 {
 	for (unsigned int pos = 0; pos < gamepadCount; pos++)
 		gamepads[pos]->UpdateValues();
+
+#if defined(_XBOX_ONE) && defined(_DEBUG)
+	if (gamepadCount > 0)
+	{
+		ImGuiIO& io = ImGui::GetIO();
+		io.MouseDown[0] = gamepads[0]->GetCurrentState().aButton;
+
+		imGuiCursor.x += (float)gamepads[0]->GetCurrentState().leftStickXAxis * 2.0f;
+		imGuiCursor.y -= (float)gamepads[0]->GetCurrentState().leftStickYAxis * 2.0f;
+
+		if (imGuiCursor.x < 0.0f)
+			imGuiCursor.x = 0.0f;
+		else if (imGuiCursor.x > 1920.0f)
+			imGuiCursor.x = 1920.0f;
+		if (imGuiCursor.y < 0.0f)
+			imGuiCursor = 0.0f;
+		else if (imGuiCursor.y > 1080.0f)
+			imGuiCursor = 1080.0f;
+		io.MousePos.x = imGuiCursor.x * 2.0f;
+		io.MousePos.y = imGuiCursor.y * 2.0f;
+	}
+#endif
 }
 
 auto	InputManager::AddGamepad(Gamepad* pad) -> void
@@ -30,7 +49,7 @@ auto	InputManager::RemoveGamepad(Gamepad* pad) -> bool
 		{
 			gamepadCount--;
 			gamepads[pos] = nullptr;
-			delete pad;
+			DEL(pad);
 			return true;
 		}
 	}
@@ -108,26 +127,6 @@ auto	InputManager::MessageHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPa
 	case WM_KEYDOWN:
 		if (wParam < 256)
 			io.KeysDown[wParam] = 1;
-		if (wParam == 87)
-		{
-			GraphicalLibrary* lib = Engine::GetInstance()->GetService<GraphicalLibrary>("Renderer");
-			lib->GetRenderPipeline()->GetEditorCamera()->Translate(Vector3F::back * 0.2f);
-		}
-		if (wParam == 65)
-		{
-			GraphicalLibrary* lib = Engine::GetInstance()->GetService<GraphicalLibrary>("Renderer");
-			lib->GetRenderPipeline()->GetEditorCamera()->Translate(Vector3F::left * 0.2f);
-		}
-		if (wParam == 83)
-		{
-			GraphicalLibrary* lib = Engine::GetInstance()->GetService<GraphicalLibrary>("Renderer");
-			lib->GetRenderPipeline()->GetEditorCamera()->Translate(Vector3F::forward * 0.2f);
-		}
-		if (wParam == 68)
-		{
-			GraphicalLibrary* lib = Engine::GetInstance()->GetService<GraphicalLibrary>("Renderer");
-			lib->GetRenderPipeline()->GetEditorCamera()->Translate(Vector3F::right * 0.2f);
-		}
 		return true;
 	case WM_KEYUP:
 		if (wParam < 256)
@@ -169,8 +168,8 @@ auto	InputManager::ImGuiUpdate() -> void
 	{
 		for (unsigned int pos = 0; pos < gamepadCount; pos++)
 		{
-			std::string	temp = "Gamepad " + std::to_string(pos);
-			if (ImGui::TreeNode(temp.c_str()))
+			MString	temp = "Gamepad " + MString::FromInt(pos);
+			if (ImGui::TreeNode(temp.Str()))
 			{
 				gamepads[pos]->ImGuiUpdate();
 				ImGui::TreePop();

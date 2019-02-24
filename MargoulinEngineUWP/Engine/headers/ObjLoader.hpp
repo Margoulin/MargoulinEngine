@@ -1,7 +1,7 @@
 #ifndef __OBJLOADER_HPP__
 #define __OBJLOADER_HPP__
 
-#include <string>
+#include "CoreMinimal.hpp"
 
 class Mesh;
 
@@ -13,11 +13,11 @@ public:
 	ObjLoader(ObjLoader&&) = delete;
 	~ObjLoader() = default;
 
-	static	auto	LoadObjFromFile(std::string const& filename, bool absolutePath = false) -> bool;
-	static	auto	LoadObjFromBinaryFile(std::string const& filepath, bool absolutePath = false) -> bool;
-	static	auto	SaveObjInBinaryFile(Mesh* meshToSerialize, std::string const& filename, bool absolutePath = false) -> bool;
+	static	auto	LoadObjFromFile(MString const& filename, bool absolutePath = false) -> bool;
+	static	auto	LoadObjFromBinaryFile(MString const& filepath, bool absolutePath = false) -> bool;
+	static	auto	SaveObjInBinaryFile(Mesh* meshToSerialize, MString const& filename, bool absolutePath = false) -> bool;
 
-	static	std::string	LocalFolderName;
+	static	MString	LocalFolderName;
 
 	auto	operator = (const ObjLoader&)->ObjLoader& = delete;
 	auto	operator = (ObjLoader&&)->ObjLoader& = delete;

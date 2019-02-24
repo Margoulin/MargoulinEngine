@@ -23,15 +23,15 @@ public:
 		COMPONENT
 	};
 
-	virtual auto	Initialize() -> void {}
+	virtual auto	Initialize() -> void { Service::Initialize(); }
 	virtual auto	Shutdown() -> void;
 
-	auto	Update() -> void;
+	virtual auto	Update() -> void;
 
 	template<typename T>
 	T*	Create()
 	{
-		T*	obj = new T();
+		T*	obj = NEW T();
 		Object* baseObj = (Object*)obj;
 		baseObj->SetID(idTotal);
 		idTotal++;

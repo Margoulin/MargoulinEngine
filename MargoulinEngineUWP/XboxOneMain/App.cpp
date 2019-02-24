@@ -39,19 +39,23 @@ IFrameworkView^ Direct3DApplicationSource::CreateView()
 	return ref new App();
 }
 
+//ENGINE SOME INITIALIZE SHIT
+
 App::App() :
 	m_windowClosed(false),
 	m_windowVisible(true),
 	engine(new Engine)
 {
-#ifndef XBOXONE
+#ifndef _XBOX_ONE
 	Windows::UI::ViewManagement::ApplicationView::PreferredLaunchViewSize = Windows::Foundation::Size(960.0f, 544.0f);
 	Windows::UI::ViewManagement::ApplicationView::PreferredLaunchWindowingMode = Windows::UI::ViewManagement::ApplicationViewWindowingMode::PreferredLaunchViewSize;
 #endif
 	
 	Platform::String^ localfolder = Package::Current->InstalledLocation->Path;//Windows::ApplicationModel::Package::Current->InstalledLocation->Path; // Windows::Storage::ApplicationData::Current->LocalFolder->Path;
-	ObjLoader::LocalFolderName = std::string(localfolder->Begin(), localfolder->End());
+	ObjLoader::LocalFolderName = MString(std::string(localfolder->Begin(), localfolder->End()).c_str());
 }
+
+//ENGINE SETUP
 
 // The first method called when the IFrameworkView is being created.
 void App::Initialize(CoreApplicationView^ applicationView)
@@ -81,9 +85,38 @@ void App::Initialize(CoreApplicationView^ applicationView)
 	engine = Engine::GetInstance();
 	engine->Initialize(new Window);
 
+	HMODULE appHandle = LoadPackagedLibrary(L"Application.dll", 0);
+	bool(*updateEngine)() = nullptr;
+	void(*engineDraw)() = nullptr;
+	void(*engineShutdown)() = nullptr;
+	if (appHandle)
+	{
+		Service*(*createAppService)() = nullptr;
+		Engine*(*createEngine)() = nullptr;
+		void(*initEngine)(Window* win) = nullptr;
+
+		createAppService = (Service*(*)())GetProcAddress(appHandle, "CreateApplicationService");
+		createEngine = (Engine*(*)())GetProcAddress(appHandle, "CreateEngine");
+		initEngine = (void(*)(Window*))GetProcAddress(appHandle, "InitializeEngine");
+		updateEngine = (bool(*)())GetProcAddress(appHandle, "UpdateEngine");
+		engineDraw = (void(*)())GetProcAddress(appHandle, "EngineDraw");
+		engineShutdown = (void(*)())GetProcAddress(appHandle, "EngineShutdown");
+		//windowCallback = (LRESULT(*)(HWND, UINT, WPARAM, LPARAM))GetProcAddress(appHandle, "CallWindowCallback");
+
+		engine = createEngine();
+		//initEngine(window);
+		//Service* appService = nullptr;
+		//appService = createAppService();
+		//appService->Initialize();
+		//engine->AddService("Application", appService);
+		//gameLoaded = true;
+	}
+
 	for (auto iter = Windows::Gaming::Input::Gamepad::Gamepads->First(); iter->HasCurrent; iter->MoveNext())
 		createGamepad(iter->Current);
 }
+
+//ENGINE WINDOW_SETUP
 
 // Called when the CoreWindow object is created (or re-created).
 void App::SetWindow(CoreWindow^ window)
@@ -120,8 +153,7 @@ void App::SetWindow(CoreWindow^ window)
 	//m_deviceResources->SetWindow(window);
 
 	GraphicalLibrary* lib = engine->GetService<GraphicalLibrary>("Renderer");
-#ifdef XBOXONE
-	engine->xboxOneDebug = true;
+#ifdef _XBOX_ONE
 	lib->UpdateWindowHandle((IUnknown*)window, Vector2F(1920.0f, 1080.0f), currentDisplayInformation->LogicalDpi);
 #else
 	lib->UpdateWindowHandle((IUnknown*)window, Vector2F(window->Bounds.Width, window->Bounds.Height), currentDisplayInformation->LogicalDpi);
@@ -137,6 +169,8 @@ void App::Load(Platform::String^ entryPoint)
 	//}
 }
 
+//ENGINE UPDATE
+
 // This method is called after the window becomes active.
 void App::Run()
 {
@@ -149,12 +183,6 @@ void App::Run()
 
 			if (engine->Update())
 				engine->Draw();
-			//m_main->Update();
-
-			//if (m_main->Render())
-			{
-				//m_deviceResources->Present();
-			}
 		}
 		else
 		{
@@ -185,10 +213,6 @@ void App::OnSuspending(Platform::Object^ sender, SuspendingEventArgs^ args)
 	// aware that a deferral may not be held indefinitely. After about five seconds,
 	// the app will be forced to exit.
 
-	std::string temp("SUSPENDING");
-	std::wstring	message(temp.begin(), temp.end());
-	OutputDebugStringW(message.c_str());
-
 	SuspendingDeferral^ deferral = args->SuspendingOperation->GetDeferral();
 
 	create_task([this, deferral]()
@@ -211,6 +235,8 @@ void App::OnResuming(Platform::Object^ sender, Platform::Object^ args)
 }
 
 // Window event handlers.
+
+//ENGINE WINDOW_RESIZED
 
 void App::OnWindowSizeChanged(CoreWindow^ sender, WindowSizeChangedEventArgs^ args)
 {
@@ -245,6 +271,8 @@ void App::OnDisplayContentsInvalidated(DisplayInformation^ sender, Object^ args)
 {
 	//m_deviceResources->ValidateDevice();
 }
+
+//ENGINE FROM_HERE_INPUT_FUNCTIONS
 
 void	App::OnPointerMoved(Windows::UI::Core::CoreWindow^ window, Windows::UI::Core::PointerEventArgs^ args)
 {
@@ -317,6 +345,8 @@ void	App::OnArcadeStickRemoved(Platform::Object^, Windows::Gaming::Input::Arcade
 	controllerCount--;
 }
 */
+
+//ENGINE CREATE_GAMEPAD
 
 auto	App::createGamepad(Windows::Gaming::Input::Gamepad^ pad) -> void
 {

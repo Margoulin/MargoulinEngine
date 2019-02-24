@@ -3,6 +3,7 @@
 
 #include "Context.hpp"
 
+#include "CoreMinimal.hpp"
 #include <wrl/client.h>
 #include <d3d11.h>
 #include <d2d1_3.h>
@@ -58,6 +59,7 @@ private:
 	ComPtr<ID3D11Device>			device = nullptr;
 	ComPtr<ID3D11DeviceContext>		deviceContext = nullptr;
 	ComPtr<IDXGISwapChain>			swapChain = nullptr;
+	ComPtr<ID3D11Texture2D>			depthStencilTexture = nullptr;
 	ComPtr<ID3D11RenderTargetView>	mainRenderTargetView = nullptr;
 	ComPtr<ID3D11DepthStencilView>	depthStencilView = nullptr;
 	Vector2F						renderTargetSize;
@@ -65,6 +67,8 @@ private:
 
 	
 #ifdef _DEBUG
+public:
+	void			MarkD3D11ObjectName(ID3D11DeviceChild* child, MString const& resourceName, MString const& additionnalInfo = "", MString const& filename = "");
 	ID3D11Debug*	debugInterface = nullptr;
 #endif // _DEBUG
 

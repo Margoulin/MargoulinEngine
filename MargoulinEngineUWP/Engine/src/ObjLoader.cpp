@@ -11,25 +11,28 @@
 #include "ResourcesManager.hpp"
 #include <fstream>
 
-std::string ObjLoader::LocalFolderName = "";
+#include <string>
 
-auto	ObjLoader::LoadObjFromFile(std::string const& filename, bool absolutePath) -> bool
+MString ObjLoader::LocalFolderName = ".";
+
+auto	ObjLoader::LoadObjFromFile(MString const& filename, bool absolutePath) -> bool
 {
 	ResourcesManager* rsMgr = Engine::GetInstance()->GetService<ResourcesManager>("Resources Manager");
 
-	std::string err = "";
+	std::string err;
 	tinyobj::attrib_t					attrib;
 	std::vector<tinyobj::shape_t>		shapes;
 	std::vector<tinyobj::material_t>	materials;
 
-	std::string	finalPath = LocalFolderName + "/" + filename;
+	MString	finalPath = LocalFolderName.Str() + '/';
+	finalPath += filename.Str();
 
-	if (tinyobj::LoadObj(&attrib, &shapes, &materials, &err, finalPath.c_str(), "./") == false)
+	if (tinyobj::LoadObj(&attrib, &shapes, &materials, &err, finalPath.Str(), "./") == false)
 		return false;
 
 	unsigned int meshID = rsMgr->CreateMeshResource();
 	MeshResource*				meshRsc = (MeshResource*)rsMgr->GetResource(meshID);
-	Mesh*						mesh = new Mesh();
+	Mesh*						mesh = NEW Mesh();
 	meshRsc->SetName(filename);
 	
 	SubMeshData*				defaultMeshData = nullptr;
@@ -37,7 +40,7 @@ auto	ObjLoader::LoadObjFromFile(std::string const& filename, bool absolutePath) 
 
 	for (auto&& mat : materials)
 	{
-		Material*	newMaterial = new Material();
+		Material*	newMaterial = NEW Material();
 		/*
 		if (mat.diffuse_texname != "")
 		{
@@ -62,9 +65,9 @@ auto	ObjLoader::LoadObjFromFile(std::string const& filename, bool absolutePath) 
 		newMaterial->kd = { mat.diffuse[0], mat.diffuse[1], mat.diffuse[2]};
 		newMaterial->ks = { mat.specular[0], mat.specular[1], mat.specular[2] };
 		newMaterial->shininess = mat.shininess;
-		newMaterial->name = mat.name;
+		newMaterial->name = mat.name.c_str();
 
-		SubMeshData* meshData = new SubMeshData();
+		SubMeshData* meshData = NEW SubMeshData();
 		subMeshes.push_back(meshData);
 		//mesh->MaterialID = ResourcesManager::Instance->AddMaterial(newMaterial)->GetID();
 	}
@@ -77,16 +80,16 @@ auto	ObjLoader::LoadObjFromFile(std::string const& filename, bool absolutePath) 
 			int currentMaterialID = shape.mesh.material_ids[f];
 
 			SubMeshData* currentMeshData = nullptr;
-			if (currentMaterialID < 0 || currentMaterialID >= subMeshes.size())
+			if (currentMaterialID < 0 || currentMaterialID >= (int)subMeshes.size())
 			{
 				if (!defaultMeshData)
-					defaultMeshData = new SubMeshData();
+					defaultMeshData = NEW SubMeshData();
 				currentMeshData = defaultMeshData;
 			}
 			else
 				currentMeshData = subMeshes[currentMaterialID];
 
-			int fv = shape.mesh.num_face_vertices[f];
+			size_t fv = shape.mesh.num_face_vertices[f];
 			for (size_t v = 0; v < fv; v++)
 			{
 				tinyobj::index_t	idx = shape.mesh.indices[index_offset + v];
@@ -132,16 +135,16 @@ auto	ObjLoader::LoadObjFromFile(std::string const& filename, bool absolutePath) 
 	return true;
 }
 
-auto	ObjLoader::LoadObjFromBinaryFile(std::string const& filename, bool absolutePath) -> bool
+auto	ObjLoader::LoadObjFromBinaryFile(MString const& filename, bool absolutePath) -> bool
 {
-	std::ifstream ifs(filename, std::ios::in);
+	std::ifstream ifs(filename.Str(), std::ios::in);
 	if (!ifs.is_open())
 		return false;
 
 	return true;
 }
 
-auto	ObjLoader::SaveObjInBinaryFile(Mesh* mesh, std::string const& filename, bool absolutePath) -> bool
+auto	ObjLoader::SaveObjInBinaryFile(Mesh* mesh, MString const& filename, bool absolutePath) -> bool
 {
 	/*
 	SerializeMesh	smesh;

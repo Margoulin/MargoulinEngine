@@ -22,12 +22,10 @@ public:
 		POLYGON
 	};
 
-	virtual auto	Shutdown() -> void {}
-
 	virtual	auto	Draw() -> void;
 	
 	virtual auto	GetObjectType() const -> ObjectType const { return RENDERER_2D_COMPONENT; }
-	virtual auto	GetObjectTypeName() const -> std::string const override { return "Renderer 2D Component"; }
+	virtual auto	GetObjectTypeName() const -> MString const override { return "Renderer 2D Component"; }
 
 	auto	operator = (const Renderer2DComponent&)->Renderer2DComponent& = delete;
 	auto	operator = (Renderer2DComponent&&)->Renderer2DComponent& = delete;

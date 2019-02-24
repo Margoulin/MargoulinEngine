@@ -11,13 +11,11 @@ public:
 	GraphicComponent(GraphicComponent&&) = delete;
 	~GraphicComponent() = default;
 
-	virtual auto	Shutdown() -> void = 0;
-	
 	virtual	auto	Draw() -> void = 0;
 	
 	virtual auto	GetComponentType() const -> COMPONENT_TYPE const { return COMPONENT_TYPE::GRAPHIC; }
 	virtual auto	GetObjectType() const -> ObjectType const { return GRAPHIC_COMPONENT; }
-	virtual auto	GetObjectTypeName() const -> std::string const override { return "Graphic Component"; }
+	virtual auto	GetObjectTypeName() const -> MString const override { return "Graphic Component"; }
 
 	auto	operator = (const GraphicComponent&)->GraphicComponent& = delete;
 	auto	operator = (GraphicComponent&&)->GraphicComponent& = delete;

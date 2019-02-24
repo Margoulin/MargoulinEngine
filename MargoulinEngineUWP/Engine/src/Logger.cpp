@@ -1,20 +1,21 @@
 #include "Logger.hpp"
 
-#include "Engine.hpp"
 #include <Windows.h>
 
-std::vector<std::string> Logger::logs = std::vector<std::string>();
+std::vector<MString> Logger::logs = std::vector<MString>();
+Logger*	Logger::instance = nullptr;
 
-auto	Logger::Log(std::string value) -> void
+auto	Logger::Initialize() -> void
 {
-	value += '\n';
+	instance = this;
+	Service::Initialize();
+}
+
+auto	Logger::Log(MString const& value) -> void
+{
 	logs.push_back(value);
-	Logger* logger = Engine::GetInstance()->GetService<Logger>("Logger");
-	if (!logger)
-	{
-		std::wstring	tempWstring(value.begin(), value.end());
-		OutputDebugStringW(tempWstring.c_str());
-	}
+	if (!instance)
+		OutputDebugStringW(MWString::FromString(value + '\n').Str());
 	if (logs.size() > 100)
 		logs.erase(logs.begin());
 }
@@ -25,7 +26,7 @@ auto	Logger::ImGuiUpdate() -> void
 {
 	ImGui::BeginChild("Logs", ImVec2(0, -ImGui::GetItemsLineHeightWithSpacing()), false, ImGuiWindowFlags_HorizontalScrollbar);
 	for (auto& log : logs)
-		ImGui::Text(log.c_str());
+		ImGui::Text(log.Str());
 	ImGui::EndChild();
 }
 #endif

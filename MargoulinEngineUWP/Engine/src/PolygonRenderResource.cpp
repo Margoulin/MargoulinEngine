@@ -3,7 +3,6 @@
 #include "Engine.hpp"
 #include "GraphicalLibrary.hpp"
 #include "D3D11Context.hpp"
-#include <string>
 
 auto	PolygonRenderResource::AddPoint(Vector2F const& value) -> void
 {
@@ -33,7 +32,7 @@ auto	PolygonRenderResource::ConstructGeometry() -> void
 				D2D1_FIGURE_BEGIN_FILLED);
 			
 			unsigned int size = points.size();
-			D2D1_POINT_2F* tempPoints = new D2D1_POINT_2F[size];
+			D2D1_POINT_2F* tempPoints = NEW D2D1_POINT_2F[size];
 			for (unsigned int pos = 1; pos < points.size(); pos++)
 				tempPoints[pos - 1] = D2D1::Point2F(points[pos].x, points[pos].y);
 			tempPoints[size - 1] = D2D1::Point2F(points[0].x, points[0].y);
@@ -59,14 +58,14 @@ auto	PolygonRenderResource::ClearGeometry() -> void
 
 auto	PolygonRenderResource::ImGuiUpdate() -> void
 {
-	ImGui::Value("Construction Dirty", &isConstructionDirty);
+	ImGui::Value("Construction Dirty", isConstructionDirty);
 	ImGui::Value("Points number", (unsigned int)points.size());
 	if (ImGui::TreeNode("Points"))
 	{
 		for (unsigned int pos = 0; pos < points.size(); pos++)
 		{
-			std::string	tempName = "Point " + std::to_string(pos);
-			ImGui::DragFloat2(tempName.c_str(), (float*)&points[pos].x);
+			MString	tempName = "Point " + MString::FromInt(pos);
+			ImGui::DragFloat2(tempName.Str(), (float*)&points[pos].x);
 		}
 		ImGui::TreePop();
 	}

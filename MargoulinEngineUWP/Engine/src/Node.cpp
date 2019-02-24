@@ -9,6 +9,20 @@
 
 Node::Node() :transformation(this) {}
 
+auto	Node::DestroyNode(bool removeFromParent) -> void
+{
+	if (removeFromParent && parent)
+		parent->DetachChild(this);
+
+	for (auto& comp : components)
+		comp->DestroyComponent(false);
+	for (auto& child : childrens)
+		child->DestroyNode(false);
+
+	ObjectManager* objMgr = Engine::GetInstance()->GetService<ObjectManager>("Object Manager");
+	objMgr->DeleteObject(this);
+}
+
 auto	Node::AddComponent(Component* value) -> void
 {
 	components.push_back(value);
@@ -23,7 +37,7 @@ auto	Node::AddChild(Node* value) -> void
 		childrens.push_back(value);
 		if (value->parent)
 		{
-			value->parent->RemoveChildFromList(value);
+			value->parent->DetachChild(value);
 			objMgr->RemoveRelation(value, value->parent);
 		}
 		value->SetParent(this);
@@ -32,7 +46,7 @@ auto	Node::AddChild(Node* value) -> void
 	}
 }
 
-auto	Node::RemoveChildFromList(Node* value) -> void
+auto	Node::DetachChild(Node* value) -> void
 {
 	auto it = std::find(childrens.begin(), childrens.end(), value);
 	childrens.erase(it);
@@ -40,11 +54,16 @@ auto	Node::RemoveChildFromList(Node* value) -> void
 
 auto	Node::RemoveChild(Node* value) -> void
 {
-//	ObjectManager* objMgr = Engine::GetInstance()->GetService<ObjectManager>("Object Manager");
 	auto it = std::find(childrens.begin(), childrens.end(), value);
 	childrens.erase(it);
-	value->Shutdown();
-	delete value;
+	ObjectManager* objMgr = Engine::GetInstance()->GetService<ObjectManager>("Object Manager");
+	objMgr->DeleteObject(value);
+}
+
+auto	Node::DetachComponent(Component* value) -> void
+{
+	auto it = std::find(components.begin(), components.end(), value);
+	components.erase(it);
 }
 
 #include <imgui.h>
@@ -52,8 +71,13 @@ auto	Node::RemoveChild(Node* value) -> void
 
 auto	Node::ImGuiUpdate() -> void
 {
-	std::string	idText = "ID : " + std::to_string(ID);
-	ImGui::Text(idText.c_str());
+	MString	idText = "ID : " + MString::FromInt(ID);
+	ImGui::Text(idText.Str());
+	if (ImGui::SmallButton("Delete node"))
+	{
+		DestroyNode();
+		return;
+	}
 	if (ImGui::TreeNode("Transform"))
 	{
 		transformation.ImGuiUpdate();
@@ -64,7 +88,7 @@ auto	Node::ImGuiUpdate() -> void
 	{
 		for (auto& child : childrens)
 		{
-			if (ImGui::TreeNode(child->GetName().c_str()))
+			if (ImGui::TreeNode(child->GetName().Str()))
 			{
 				child->ImGuiUpdate();
 				ImGui::TreePop();

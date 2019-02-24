@@ -1,6 +1,7 @@
 #ifndef __RESOURCESMANAGER_HPP__
 #define __RESOURCESMANAGER_HPP__
 
+#include "MemoryMacro.hpp"
 #include "Service.hpp"
 
 #include "Resource.hpp"
@@ -20,12 +21,28 @@ public:
 
 	virtual auto	Initialize() -> void;
 	virtual auto	Shutdown() -> void;
+	virtual auto	Update() -> void {}
 
 	auto	CreateMeshResource() -> unsigned int;
+	auto	CreateSkeletalMeshResource() -> unsigned int;
 	auto	CreateMaterialResource() -> unsigned int;
+	template<typename Rs>
+	auto	CreateResource() -> unsigned int
+	{
+		Rs* newResource = NEW Rs();
+		return addResource((Resource*)newResource);
+	}
 
 	auto	GetDefaultMeshResource(unsigned int const& id) const -> MeshResource* { return &defaultMeshes[id]; }
 	auto	GetResource(unsigned int const& resourceID) const -> Resource*;
+	template<typename Rs>
+	auto	GetResource(unsigned int const& resourceID) const -> Rs* 
+	{
+		auto it = resources.find(resourceID);
+		if (it != resources.end())
+			return (Rs*)(*it).second;
+		return nullptr;
+	}
 
 #ifdef _DEBUG
 	virtual auto	ImGuiUpdate() -> void;

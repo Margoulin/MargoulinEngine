@@ -6,6 +6,8 @@
 #include <d3d11_3.h>
 #include <imgui.h>
 
+#pragma comment( lib, "dxguid.lib") 
+
 static const D3D_FEATURE_LEVEL featureLevelArray[] = { D3D_FEATURE_LEVEL_11_0
 , D3D_FEATURE_LEVEL_10_1
 , D3D_FEATURE_LEVEL_10_0
@@ -102,10 +104,12 @@ auto	D3D11Context::Shutdown() -> void
 		mainRenderTargetView.Get()->Release();
 	if (depthStencilView)
 		depthStencilView.Get()->Release();
+	*depthStencilTexture.ReleaseAndGetAddressOf() = nullptr;
 	if (swapChain)
 		swapChain.Get()->Release();
 	if (deviceContext)
 		deviceContext.Get()->Release();
+	
 	if (device)
 		device.Get()->Release();
 
@@ -223,8 +227,8 @@ auto	D3D11Context::createSwapChain() -> void
 {
 	DXGI_SWAP_CHAIN_DESC1 swapChainDesc = { 0 };
 
-	swapChainDesc.Width = renderTargetSize.x;		// Match the size of the window.
-	swapChainDesc.Height = renderTargetSize.y;
+	swapChainDesc.Width = (UINT)renderTargetSize.x;		// Match the size of the window.
+	swapChainDesc.Height = (UINT)renderTargetSize.y;
 	swapChainDesc.Format = DXGI_FORMAT_B8G8R8A8_UNORM;				// This is the most common swap chain format.
 	swapChainDesc.Stereo = false;
 	swapChainDesc.SampleDesc.Count = 1;								// Don't use multi-sampling.
@@ -272,9 +276,9 @@ auto	D3D11Context::unsetRenderTarget() -> void
 auto	D3D11Context::resizeBuffers() -> void
 {
 #ifdef UWP
-	swapChain->ResizeBuffers(2, renderTargetSize.x, renderTargetSize.y, DXGI_FORMAT_B8G8R8A8_UNORM, 0);
+	swapChain->ResizeBuffers(2, (UINT)renderTargetSize.x, (UINT)renderTargetSize.y, DXGI_FORMAT_B8G8R8A8_UNORM, 0);
 #else
-	swapChain->ResizeBuffers(1, renderTargetSize.x, renderTargetSize.y, DXGI_FORMAT::DXGI_FORMAT_UNKNOWN, 0);
+	swapChain->ResizeBuffers(1, (UINT)renderTargetSize.x, (UINT)renderTargetSize.y, DXGI_FORMAT::DXGI_FORMAT_UNKNOWN, 0);
 #endif
 }
 
@@ -288,19 +292,18 @@ auto	D3D11Context::createRenderTarget() -> void
 
 	CD3D11_TEXTURE2D_DESC depthStencilDesc(
 		DXGI_FORMAT_D24_UNORM_S8_UINT,
-		renderTargetSize.x, renderTargetSize.y,
+		(UINT)renderTargetSize.x, (UINT)renderTargetSize.y,
 		1, // This depth stencil view has only one texture.
 		1, // Use a single mipmap level.
 		D3D11_BIND_DEPTH_STENCIL
 	);
 
-	ComPtr<ID3D11Texture2D> depthStencil;
 	device->CreateTexture2D(
-		&depthStencilDesc, nullptr, &depthStencil);
+		&depthStencilDesc, nullptr, &depthStencilTexture);
 
 	CD3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc(D3D11_DSV_DIMENSION_TEXTURE2D);
 	device->CreateDepthStencilView(
-			depthStencil.Get(),
+			depthStencilTexture.Get(),
 			&depthStencilViewDesc,
 			&depthStencilView);
 
@@ -328,4 +331,24 @@ auto	D3D11Context::createRenderTarget() -> void
 	d2dContext->SetDpi(window->GetDPI(), window->GetDPI());
 
 	d2dContext->SetTextAntialiasMode(D2D1_TEXT_ANTIALIAS_MODE_GRAYSCALE);
+
+#ifdef _DEBUG
+	MarkD3D11ObjectName(backBuffer.Get(), "Back Buffer");
+	MarkD3D11ObjectName(mainRenderTargetView.Get(), "Main Render Target View");
+	MarkD3D11ObjectName(depthStencilTexture.Get(), "Depth Stencil Tex");
+	MarkD3D11ObjectName(depthStencilView.Get(), "Depth Stencil View");
+#endif
 }
+
+#ifdef _DEBUG
+void	D3D11Context::MarkD3D11ObjectName(ID3D11DeviceChild* child, MString const& resourceName, MString const& additionnalInfo, MString const& filename)
+{
+	if (child != nullptr)
+	{
+		MString total = resourceName + additionnalInfo;
+		if (filename.Count() > 0)
+			total += MString("  File : ") + filename;
+		child->SetPrivateData(WKPDID_D3DDebugObjectName, total.Count(), total.Str());
+	}
+}
+#endif

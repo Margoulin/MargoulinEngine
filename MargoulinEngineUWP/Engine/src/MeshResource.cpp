@@ -15,6 +15,7 @@ auto	MeshResource::Unload() -> void
 auto	MeshResource::Shutdown() -> void
 {
 	meshData->Shutdown();
+	DEL(meshData);
 }
 
 #include <imgui.h>

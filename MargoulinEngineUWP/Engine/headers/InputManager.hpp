@@ -3,6 +3,7 @@
 
 #include "Service.hpp"
 
+#include "Maths/Vector.hpp"
 #include <Windows.h>
 
 class Gamepad;
@@ -15,10 +16,10 @@ public:
 	InputManager(InputManager&&) = delete;
 	~InputManager() = default;
 
-	virtual auto	Initialize() -> void {}
+	virtual auto	Initialize() -> void { Service::Initialize(); }
 	virtual auto	Shutdown() -> void {}
 
-	auto	Update() -> void;
+	virtual auto	Update() -> void;
 
 	auto	AddGamepad(Gamepad* pad) -> void;
 	auto	RemoveGamepad(Gamepad* pad) -> bool;
@@ -47,6 +48,12 @@ private:
 
 #ifdef _DEBUG
 	virtual auto	ImGuiUpdate() -> void;
+
+#ifdef _XBOX_ONE
+public:
+	Vector2F	imGuiCursor;
+#endif
+
 #endif // _DEBUG
 };
 

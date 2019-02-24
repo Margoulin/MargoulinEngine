@@ -3,6 +3,7 @@
 
 #include "Service.hpp"
 
+#include "String.hpp"
 #include <vector>
 
 class Logger : public Service
@@ -13,10 +14,11 @@ public:
 	Logger(Logger&&) = delete;
 	~Logger() = default;
 
-	static auto	Log(std::string log)-> void;
+	static auto	Log(MString const& log)-> void;
 
-	virtual auto	Initialize() -> void {}
-	virtual auto	Shutdown() -> void {}
+	virtual auto	Initialize() -> void;
+	virtual auto	Shutdown() -> void { instance = nullptr; }
+	virtual auto	Update() -> void {}
 
 	auto	operator = (const Logger&)->Logger& = delete;
 	auto	operator = (Logger&&)->Logger& = delete;
@@ -24,7 +26,8 @@ public:
 protected:
 
 private:
-	static std::vector<std::string>	logs;
+	static std::vector<MString>	logs;
+	static	Logger*				instance;
 
 #ifdef _DEBUG
 public:

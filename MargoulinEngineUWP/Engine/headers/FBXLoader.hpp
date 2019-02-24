@@ -1,7 +1,7 @@
 #ifndef __FBXLOADER_HPP__
 #define __FBXLOADER_HPP__
 
-#include "../MUtils/MUtils/String.hpp"
+#include "String.hpp"
 
 class FBXLoader
 {

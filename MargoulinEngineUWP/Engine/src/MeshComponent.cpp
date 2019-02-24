@@ -39,10 +39,6 @@ auto	MeshComponent::Draw() -> void
 	}
 }
 
-auto	MeshComponent::Shutdown() -> void
-{
-}
-
 #include <imgui.h>
 
 #ifdef _DEBUG

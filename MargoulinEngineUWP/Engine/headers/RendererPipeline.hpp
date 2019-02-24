@@ -1,8 +1,8 @@
 #ifndef __RENDERERPIPELINE_HPP__
 #define __RENDERERPIPELINE_HPP__
 
-#include "Camera.hpp"
 #include "Maths/Vector.hpp"
+#include "Maths/Matrix.hpp"
 
 class Material;
 class Mesh;
@@ -23,7 +23,8 @@ public:
 
 	auto	DrawCustomMesh(unsigned int const& meshID, unsigned int const& matID, Matrix4x4F const& modelMat) -> void;
 	auto	DrawCube(unsigned int const& matID, Matrix4x4F const& modelMat) -> void;
-	
+	auto	DrawSkeletalMesh(unsigned int const& meshID) -> void;
+
 	virtual auto	DrawRectangle(Vector2F const& screenPosition, Vector2F const& size, Vector4F const& color) -> void = 0;
 	virtual auto	DrawFilledRectangle(Vector2F const& screenPosition, Vector2F const& size, Vector4F const& color) -> void = 0;
 	virtual auto	DrawRoundedRectangle(Vector2F const& screenPosition, Vector2F const& size, Vector2F const& edgesRadius, Vector4F const& color) -> void = 0;
@@ -34,8 +35,6 @@ public:
 	virtual auto	DrawGeometry(PolygonRenderResource* polygon, Vector4F const& color) -> void = 0;
 	virtual auto	DrawFilledGeometry(PolygonRenderResource* polygon, Vector4F const& color) -> void = 0;
 
-	auto	GetEditorCamera() -> Camera* { return &editorCamera; }
-
 	auto	operator = (const RendererPipeline&)->RendererPipeline& = delete;
 	auto	operator = (RendererPipeline&&)->RendererPipeline& = delete;
 
@@ -43,7 +42,6 @@ protected:
 	virtual auto	drawData(Mesh* mesh, Material* mat, Matrix4x4F const& modelMat) -> void = 0;
 
 	float									clearColor[4] = {0.5f, 0.5f, 0.5f, 1.0f};
-	Camera									editorCamera;
 
 private:
 

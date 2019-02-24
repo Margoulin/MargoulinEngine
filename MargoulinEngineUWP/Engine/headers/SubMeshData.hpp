@@ -4,6 +4,7 @@
 #include <vector>
 #include "DirectXHelper.hpp"
 #include <d3d11.h>
+#include <wrl/client.h>
 
 #include "cereal/CustomTypes.hpp"
 
@@ -22,19 +23,18 @@ public:
 		vertexBufferData.SysMemPitch = 0;
 		vertexBufferData.SysMemSlicePitch = 0;
 		CD3D11_BUFFER_DESC vertexBufferDesc((unsigned int)vertices.size() * (unsigned int)(sizeof(Vector3F)), D3D11_BIND_VERTEX_BUFFER);
-		device->CreateBuffer(&vertexBufferDesc, &vertexBufferData, &g_VertexBuffer);
+		device->CreateBuffer(&vertexBufferDesc, &vertexBufferData, g_VertexBuffer.GetAddressOf());
 
 		D3D11_SUBRESOURCE_DATA indexBufferData = { 0 };
 		indexBufferData.pSysMem = &indices[0];
 		indexBufferData.SysMemPitch = 0;
 		indexBufferData.SysMemSlicePitch = 0;
 		CD3D11_BUFFER_DESC indexBufferDesc((unsigned int)sizeof(unsigned int)* (unsigned int)indices.size(), D3D11_BIND_INDEX_BUFFER);
-		device->CreateBuffer(&indexBufferDesc, &indexBufferData, &g_IndexBuffer
-		);
+		device->CreateBuffer(&indexBufferDesc, &indexBufferData, g_IndexBuffer.GetAddressOf());
 		inVRAM = true;
 	}
 
-	auto	Shutdown() -> void { SAFE_RELEASE(g_IndexBuffer);  SAFE_RELEASE(g_VertexBuffer); }
+	auto	Shutdown() -> void { *g_IndexBuffer.ReleaseAndGetAddressOf() = nullptr;  *g_VertexBuffer.ReleaseAndGetAddressOf() = nullptr; }
 
 	auto	AddVertice(Vector3F val) -> void { vertices.push_back(val); }
 	auto	AddNormal(Vector3F val) -> void { normals.push_back(val); }
@@ -43,8 +43,8 @@ public:
 
 	auto	IsInVRAM() const -> bool const { return inVRAM; }
 
-	auto	GetIndexBuffer() const -> ID3D11Buffer* { return g_IndexBuffer; }
-	auto	GetVertexBuffer() const-> ID3D11Buffer* const* { return &g_VertexBuffer; }
+	auto	GetIndexBuffer() const -> ID3D11Buffer* { return g_IndexBuffer.Get(); }
+	auto	GetVertexBuffer() const-> ID3D11Buffer* const* { return g_VertexBuffer.GetAddressOf(); }
 
 	auto	GetVerticesCount() const -> unsigned int const { return (unsigned int)vertices.size(); }
 	auto	GetNormalsCount() const -> unsigned int const { return (unsigned int)normals.size(); }
@@ -73,8 +73,8 @@ private:
 	std::vector<unsigned int>	indices;
 
 	bool inVRAM = false;
-	ID3D11Buffer*	g_VertexBuffer = nullptr;
-	ID3D11Buffer*	g_IndexBuffer = nullptr;
+	Microsoft::WRL::ComPtr<ID3D11Buffer>	g_VertexBuffer = nullptr;
+	Microsoft::WRL::ComPtr<ID3D11Buffer>	g_IndexBuffer = nullptr;
 };
 
 

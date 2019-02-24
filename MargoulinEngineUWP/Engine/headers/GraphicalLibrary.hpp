@@ -5,7 +5,7 @@
 #include "Maths/Vector.hpp"
 #include <vector>
 
-class IUnknown;
+struct IUnknown;
 class Context;
 class Window;
 class Shader;
@@ -19,9 +19,10 @@ public:
 	GraphicalLibrary(GraphicalLibrary&&) = delete;
 	~GraphicalLibrary() = default;
 
-	virtual auto	Initialize() -> void {}
+	virtual auto	Initialize() -> void { Service::Initialize(); }
 	virtual auto	Initialize(Window* window) -> void;
 	virtual auto	Shutdown() -> void;
+	virtual auto	Update() -> void {}
 #ifdef _DEBUG
 	virtual auto	ImGuiUpdate() -> void;
 #endif // _DEBUG
@@ -33,6 +34,7 @@ public:
 	auto	GetWindow() const -> Window* { return window; }
 	auto	GetContext() const -> Context* { return context; }
 	auto	GetRenderPipeline() const -> RendererPipeline* { return pipeline; }
+	auto	GetShader(unsigned int const& value) const -> Shader const* { return shaders[value]; }
 
 	auto	operator = (const GraphicalLibrary&)->GraphicalLibrary& = delete;
 	auto	operator = (GraphicalLibrary&&)->GraphicalLibrary& = delete;

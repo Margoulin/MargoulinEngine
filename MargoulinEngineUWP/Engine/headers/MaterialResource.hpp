@@ -3,6 +3,8 @@
 
 #include "Resource.hpp"
 
+#include "MemoryMacro.hpp"
+
 class Material;
 
 class MaterialResource : public Resource

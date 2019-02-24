@@ -5,6 +5,9 @@
 #include "Material.hpp"
 #include "PolygonRenderResource.hpp"
 
+#include "D3D11PixelShader.hpp"
+#include "D3D11VertexShader.hpp"
+
 #include "./Logger.hpp"
 
 auto	D3D11Renderer::Initialize() -> void
@@ -17,12 +20,59 @@ auto	D3D11Renderer::Initialize() -> void
 
 	context->GetDeviceContext()->UpdateSubresource(viewProjConstantBuffer.Get(), 0, NULL,
 		&viewProjBufferData, 0, 0);
+
+	D3D11_SUBRESOURCE_DATA vertexBufferData = { 0 };
+	vertexBufferData.pSysMem = textureVertices;
+	vertexBufferData.SysMemPitch = 0;
+	vertexBufferData.SysMemSlicePitch = 0;
+	CD3D11_BUFFER_DESC vertexBufferDesc(20 * (unsigned int)(sizeof(float)), D3D11_BIND_VERTEX_BUFFER);
+	vertexBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+	vertexBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+	context->GetDevice()->CreateBuffer(&vertexBufferDesc, &vertexBufferData, &textureVertexBuffer);
+
+	D3D11_SUBRESOURCE_DATA indexBufferData = { 0 };
+	indexBufferData.pSysMem = textureIndices;
+	indexBufferData.SysMemPitch = 0;
+	indexBufferData.SysMemSlicePitch = 0;
+	CD3D11_BUFFER_DESC indexBufferDesc((unsigned int)sizeof(unsigned int) * 6, D3D11_BIND_INDEX_BUFFER);
+	context->GetDevice()->CreateBuffer(&indexBufferDesc, &indexBufferData, &textureIndexBuffer);
+
+	textureVertexShader = NEW D3D11VertexShader();
+	textureVertexShader->InitializeTextureVertexShader(context->GetDevice());
+	texturePixelShader = NEW D3D11PixelShader();
+	texturePixelShader->InitializeTexturePixelShader(context->GetDevice(), textureVertexShader);
+
+	textureVertices[2] = 0.0f;
+	textureVertices[7] = 0.0f;
+	textureVertices[12] = 0.0f;
+	textureVertices[17] = 0.0f;
+	setTextureVertices(0, Vector2F(0.0f, 1.0f), Vector2F(0.0f, 0.0f));
+	setTextureVertices(1, Vector2F(1.0f, 1.0f), Vector2F(1.0f, 0.0f));
+	setTextureVertices(2, Vector2F(1.0f, 0.0f), Vector2F(1.0f, 1.0f));
+	setTextureVertices(3, Vector2F(0.0f, 0.0f), Vector2F(0.0f, 1.0f));
+
+#ifdef  _DEBUG
+	context->MarkD3D11ObjectName(viewProjConstantBuffer.Get(), MString("View Proj Constant Buffer"));
+	context->MarkD3D11ObjectName(modelConstantBuffer.Get(), MString("Model Constant Buffer"));
+	context->MarkD3D11ObjectName(textureVertexBuffer.Get(), MString("Texture Vertex Buffer"));
+	context->MarkD3D11ObjectName(textureIndexBuffer.Get(), MString("Texture Index Buffer"));
+	context->MarkD3D11ObjectName(textureVertexShader->GetShader(), MString("Texture Vertex Shader"));
+	context->MarkD3D11ObjectName(texturePixelShader->GetShader(), MString("Texture Pixel Shader"));
+	context->MarkD3D11ObjectName(texturePixelShader->GetInputLayout(), "Texture Shader Input Layout");
+#endif //_DEBUG
+
 }
 
 auto	D3D11Renderer::Shutdown() -> void
 {
+	texturePixelShader->Shutdown();
+	DEL(texturePixelShader);
+	textureVertexShader->Shutdown();
+	DEL(textureVertexShader);
 	*viewProjConstantBuffer.ReleaseAndGetAddressOf() = nullptr;
 	*modelConstantBuffer.ReleaseAndGetAddressOf() = nullptr;
+	*textureVertexBuffer.ReleaseAndGetAddressOf() = nullptr;
+	*textureIndexBuffer.ReleaseAndGetAddressOf() = nullptr;
 }
 
 auto	D3D11Renderer::BeginRender() -> void
@@ -68,8 +118,14 @@ auto	D3D11Renderer::BindCamera(Matrix4x4F const& projectionMatrix, Matrix4x4F co
 	context->GetDeviceContext()->VSSetConstantBuffers(0, 1, viewProjConstantBuffer.GetAddressOf());
 }
 	
+#include "Engine.hpp"
+#include "GraphicalLibrary.hpp"
+#include "D3D11VertexShader.hpp"
+
 auto	D3D11Renderer::drawData(Mesh* mesh, Material* mat, Matrix4x4F const& modelMat) -> void
 {
+	((D3D11VertexShader*)(Engine::GetInstance()->GetService<GraphicalLibrary>("Renderer")->GetShader(0)))->Bind(context->GetDeviceContext());
+
 	mat->Bind(context->GetDeviceContext());
 
 	context->GetDeviceContext()->UpdateSubresource(modelConstantBuffer.Get(), 0, NULL,
@@ -288,4 +344,67 @@ auto	D3D11Renderer::DrawFilledGeometry(PolygonRenderResource* polygon, Vector4F 
 	context->d2dContext->RestoreDrawingState(context->stateBlock.Get());
 	tempBrush.Reset();
 
+}
+
+#include "DirectXMath.h"
+
+auto	D3D11Renderer::DrawTexture(Vector4F const& screenRect, TextureRenderData const& renderData) -> void
+{
+	textureVertexShader->Bind(context->GetDeviceContext());
+	texturePixelShader->Bind(context->GetDeviceContext());
+
+	Vector2F halfScreen = context->GetRenderTargetSize() * 0.5f;
+	viewProjBufferData.View = Matrix4x4F::Transpose(Matrix4x4F::identity);
+	viewProjBufferData.Projection = Matrix4x4F::Transpose(Matrix4x4F::identity);
+	viewProjBufferData.Projection = Matrix4x4F::Transpose(Matrix4x4F::Orthographic(halfScreen.x * 2.0f, halfScreen.y * 2.0f, 0.0f, 100.0f));
+	context->GetDeviceContext()->UpdateSubresource(viewProjConstantBuffer.Get(), 0, NULL,
+		&viewProjBufferData, 0, 0);
+	context->GetDeviceContext()->VSSetConstantBuffers(0, 1, viewProjConstantBuffer.GetAddressOf());
+
+	float left = -halfScreen.x + screenRect.x;
+	float right = left + screenRect.w;
+	float top = halfScreen.y - screenRect.y;
+	float bottom = top - screenRect.z;
+
+	setTextureVertices(0, Vector2F(left, top), Vector2F(renderData.textureRect.x, renderData.textureRect.y));
+	setTextureVertices(1, Vector2F(right, top), Vector2F(renderData.textureRect.w, renderData.textureRect.y));
+	setTextureVertices(2, Vector2F(right, bottom), Vector2F(renderData.textureRect.w, renderData.textureRect.z));
+	setTextureVertices(3, Vector2F(left, bottom), Vector2F(renderData.textureRect.x, renderData.textureRect.z));
+
+	D3D11_MAPPED_SUBRESOURCE mappedResource;
+	context->GetDeviceContext()->Map(textureVertexBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
+	memcpy(mappedResource.pData, textureVertices, 20 * sizeof(float));
+	context->GetDeviceContext()->Unmap(textureVertexBuffer.Get(), 0);
+
+	context->GetDeviceContext()->PSSetShaderResources(0, 1, &renderData.shaderView);
+	context->GetDeviceContext()->PSSetSamplers(0, 1, &renderData.samplerState);
+
+	UINT offset = 0;
+	UINT stride = sizeof(float) * 5;
+	context->GetDeviceContext()->IASetVertexBuffers(0, 1, textureVertexBuffer.GetAddressOf(), &stride, &offset);
+	context->GetDeviceContext()->IASetIndexBuffer(textureIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+	context->GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	context->GetDeviceContext()->DrawIndexed(6, 0, 0);
+}
+
+auto	D3D11Renderer::setTextureVertices(unsigned int const& count, Vector2F const& screenPos, Vector2F const& uv) -> void
+{
+	if (count > 3)
+		return;
+
+	textureVertices[count * 5] = screenPos.x;
+	textureVertices[count * 5 + 1] = screenPos.y;
+	textureVertices[count * 5 + 3] = uv.x;
+	textureVertices[count * 5 + 4] = uv.y;
+}
+	
+auto	D3D11Renderer::InitializeTexture(TextureResource* tex) -> void
+{
+	tex->InitializeD3D11Datas(context->GetDevice());
+
+#ifdef _DEBUG
+	context->MarkD3D11ObjectName(tex->GetD3D11Resource(), MString("Texture : resource"));
+	context->MarkD3D11ObjectName(tex->GetShaderView(), MString("Texture : shader view"));
+	context->MarkD3D11ObjectName(tex->GetSamplerState(), MString("Texture : sampler state"));
+#endif
 }

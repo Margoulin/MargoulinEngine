@@ -19,7 +19,10 @@ public:
 		CAMERA
 	};
 
-	virtual auto	Shutdown() -> void = 0;
+	virtual auto Initialize() -> void {}
+	virtual auto Shutdown() -> void {}
+	virtual auto Update() -> void {}
+	virtual auto DestroyComponent(bool removeFromNode = false) -> void;
 
 	virtual auto	SetNode(Node* value) -> void { attachedNode = value; }
 	virtual auto	GetComponentType() const -> COMPONENT_TYPE const = 0;

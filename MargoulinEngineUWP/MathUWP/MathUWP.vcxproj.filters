@@ -20,5 +20,6 @@
     <ClCompile Include="..\MUtils\MUtils\Maths\Quaternion.cpp" />
     <ClCompile Include="..\MUtils\MUtils\Maths\Transform.cpp" />
     <ClCompile Include="..\MUtils\MUtils\Maths\Vector.cpp" />
+    <ClCompile Include="..\MUtils\MUtils\SampleCPP.cpp" />
   </ItemGroup>
 </Project>

@@ -1,7 +1,7 @@
 #ifndef __RESOURCE_HPP__
 #define __RESOURCE_HPP__
 
-#include <string>
+#include "CoreMinimal.hpp"
 
 class Resource
 {
@@ -10,7 +10,9 @@ public:
 	{
 		RESOURCE_EMPTY,
 		RESOURCE_MESH,
-		RESOURCE_MATERIAL
+		RESOURCE_SKELETALMESH,
+		RESOURCE_MATERIAL,
+		RESOURCE_TEXTURE
 	};
 
 	Resource() = default;
@@ -22,9 +24,9 @@ public:
 	virtual auto	Unload() -> void = 0;
 	virtual auto	Shutdown() -> void = 0;
 
-	auto	SetName(std::string const& value) -> void { name = value; }
+	auto	SetName(MString const& value) -> void { name = value; }
 
-	auto	GetName() const -> std::string const& { return name; }
+	auto	GetName() const -> MString const& { return name; }
 	auto	GetType() const -> ResourceType { return type; }
 	auto	GetRawData() const -> void* { return resourceData; }
 
@@ -32,7 +34,7 @@ public:
 	auto	operator = (Resource&&)->Resource& = delete;
 
 protected:
-	std::string		name;
+	MString		name;
 	void*			resourceData;
 	ResourceType	type;
 	bool			loaded = false;

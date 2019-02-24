@@ -1,6 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="DebugProfiling|Win32">
+      <Configuration>DebugProfiling</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="DebugProfiling|x64">
+      <Configuration>DebugProfiling</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
     <ProjectConfiguration Include="DebugXboxOne|Win32">
       <Configuration>DebugXboxOne</Configuration>
       <Platform>Win32</Platform>
@@ -47,6 +55,12 @@
     <PlatformToolset>v140</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugProfiling|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugXboxOne|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
@@ -68,6 +82,12 @@
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v140</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='DebugProfiling|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v140</PlatformToolset>
@@ -101,6 +121,9 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugProfiling|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugXboxOne|Win32'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
@@ -111,6 +134,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugProfiling|x64'" Label="PropertySheets">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <ImportGroup Condition="'$(Configuration)|$(Platform)'=='DebugXboxOne|x64'" Label="PropertySheets">
@@ -131,7 +157,20 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\shared;../Engine/ImGui;../Engine/headers;../MUtils/MUtils;../Engine/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\shared;../Engine/ImGui;../Engine/headers;../MUtils/MUtils;../Engine/;%(AdditionalIncludeDirectories);C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugProfiling|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_PROFILING_ENABLED_;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\shared;../Engine/ImGui;../Engine/headers;../MUtils/MUtils;../Engine/;%(AdditionalIncludeDirectories);C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -144,7 +183,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\shared;../Engine/ImGui;../Math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\shared;../Engine/ImGui;../Math;%(AdditionalIncludeDirectories);C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -157,7 +196,20 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\shared;../Engine/ImGui;../Engine/headers;../MUtils/MUtils;../Engine/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\shared;../Engine/ImGui;../Engine/headers;../MUtils/MUtils;../Engine/;%(AdditionalIncludeDirectories);C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='DebugProfiling|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_PROFILING_ENABLED_;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\shared;../Engine/ImGui;../Engine/headers;../MUtils/MUtils;../Engine/;%(AdditionalIncludeDirectories);C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -170,7 +222,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\shared;../Engine/ImGui;../Math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\shared;../Engine/ImGui;../Math;%(AdditionalIncludeDirectories);C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -185,7 +237,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\shared;../Engine/ImGui;../Engine/headers;../MUtils/MUtils;../Engine/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\shared;../Engine/ImGui;../Engine/headers;../MUtils/MUtils;../Engine/;%(AdditionalIncludeDirectories);C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -202,7 +254,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\shared;../Engine/ImGui;../Math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\shared;../Engine/ImGui;../Math;%(AdditionalIncludeDirectories);C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -219,7 +271,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\shared;../Engine/ImGui;../Engine/headers;../MUtils/MUtils;../Engine/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\shared;../Engine/ImGui;../Engine/headers;../MUtils/MUtils;../Engine/;%(AdditionalIncludeDirectories);C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -236,7 +288,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\shared;../Engine/ImGui;../Math;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\shared;../Engine/ImGui;../Math;%(AdditionalIncludeDirectories);C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -249,17 +301,20 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Engine\cereal\CustomTypes.hpp" />
-    <ClInclude Include="..\Engine\headers\Camera.hpp" />
     <ClInclude Include="..\Engine\headers\CameraComponent.hpp" />
     <ClInclude Include="..\Engine\headers\Clock.hpp" />
     <ClInclude Include="..\Engine\headers\Component.hpp" />
     <ClInclude Include="..\Engine\headers\Context.hpp" />
+    <ClInclude Include="..\Engine\headers\CoreMacros.hpp" />
+    <ClInclude Include="..\Engine\headers\CoreMinimal.hpp" />
     <ClInclude Include="..\Engine\headers\D3D11Context.hpp" />
+    <ClInclude Include="..\Engine\headers\D3D11PixelShader.hpp" />
     <ClInclude Include="..\Engine\headers\D3D11Renderer.hpp" />
-    <ClInclude Include="..\Engine\headers\Debug.hpp" />
+    <ClInclude Include="..\Engine\headers\D3D11VertexShader.hpp" />
     <ClInclude Include="..\Engine\headers\DirectXHelper.hpp" />
     <ClInclude Include="..\Engine\headers\Engine.hpp" />
     <ClInclude Include="..\Engine\headers\FBXLoader.hpp" />
+    <ClInclude Include="..\Engine\headers\FragmentShader.hpp" />
     <ClInclude Include="..\Engine\headers\Gamepad.hpp" />
     <ClInclude Include="..\Engine\headers\GraphicalLibrary.hpp" />
     <ClInclude Include="..\Engine\headers\GraphicComponent.hpp" />
@@ -267,25 +322,35 @@
     <ClInclude Include="..\Engine\headers\Logger.hpp" />
     <ClInclude Include="..\Engine\headers\Material.hpp" />
     <ClInclude Include="..\Engine\headers\MaterialResource.hpp" />
+    <ClInclude Include="..\Engine\headers\MemoryMacro.hpp" />
     <ClInclude Include="..\Engine\headers\Mesh.hpp" />
     <ClInclude Include="..\Engine\headers\MeshComponent.hpp" />
     <ClInclude Include="..\Engine\headers\MeshResource.hpp" />
     <ClInclude Include="..\Engine\headers\Node.hpp" />
     <ClInclude Include="..\Engine\headers\NodeTransform.hpp" />
     <ClInclude Include="..\Engine\headers\Object.hpp" />
+    <ClInclude Include="..\Engine\headers\ObjectHandle.inl" />
     <ClInclude Include="..\Engine\headers\ObjectManager.hpp" />
     <ClInclude Include="..\Engine\headers\ObjectTypes.hpp" />
     <ClInclude Include="..\Engine\headers\ObjLoader.hpp" />
     <ClInclude Include="..\Engine\headers\PolygonRenderResource.hpp" />
+    <ClInclude Include="..\Engine\headers\Profiler.hpp" />
     <ClInclude Include="..\Engine\headers\Renderer2DComponent.hpp" />
     <ClInclude Include="..\Engine\headers\RendererPipeline.hpp" />
     <ClInclude Include="..\Engine\headers\Resource.hpp" />
     <ClInclude Include="..\Engine\headers\ResourcesManager.hpp" />
     <ClInclude Include="..\Engine\headers\Scene.hpp" />
     <ClInclude Include="..\Engine\headers\Service.hpp" />
+    <ClInclude Include="..\Engine\headers\ServiceApplication.hpp" />
     <ClInclude Include="..\Engine\headers\Shader.hpp" />
+    <ClInclude Include="..\Engine\headers\SkeletalMesh.hpp" />
+    <ClInclude Include="..\Engine\headers\SkeletalMeshComponent.hpp" />
+    <ClInclude Include="..\Engine\headers\SkeletalMeshResource.hpp" />
     <ClInclude Include="..\Engine\headers\SubMeshData.hpp" />
-    <ClInclude Include="..\Engine\headers\Timer.h" />
+    <ClInclude Include="..\Engine\headers\TextureLoader.hpp" />
+    <ClInclude Include="..\Engine\headers\TextureResource.hpp" />
+    <ClInclude Include="..\Engine\headers\Timer.hpp" />
+    <ClInclude Include="..\Engine\headers\VertexShader.hpp" />
     <ClInclude Include="..\Engine\headers\Window.hpp" />
     <ClInclude Include="..\Engine\ImGui\imconfig.h" />
     <ClInclude Include="..\Engine\ImGui\imgui.h" />
@@ -303,13 +368,13 @@
     <ClCompile Include="..\Engine\ImGui\imgui_impl_dx11.cpp" />
     <ClCompile Include="..\Engine\OpenFBX\miniz.c" />
     <ClCompile Include="..\Engine\OpenFBX\ofbx.cpp" />
-    <ClCompile Include="..\Engine\src\Camera.cpp" />
     <ClCompile Include="..\Engine\src\CameraComponent.cpp" />
     <ClCompile Include="..\Engine\src\Clock.cpp" />
     <ClCompile Include="..\Engine\src\Component.cpp" />
     <ClCompile Include="..\Engine\src\D3D11Context.cpp" />
+    <ClCompile Include="..\Engine\src\D3D11PixelShader.cpp" />
     <ClCompile Include="..\Engine\src\D3D11Renderer.cpp" />
-    <ClCompile Include="..\Engine\src\Debug.cpp" />
+    <ClCompile Include="..\Engine\src\D3D11VertexShader.cpp" />
     <ClCompile Include="..\Engine\src\Engine.cpp" />
     <ClCompile Include="..\Engine\src\FBXLoader.cpp" />
     <ClCompile Include="..\Engine\src\Gamepad.cpp" />
@@ -323,19 +388,24 @@
     <ClCompile Include="..\Engine\src\MeshResource.cpp" />
     <ClCompile Include="..\Engine\src\Node.cpp" />
     <ClCompile Include="..\Engine\src\NodeTransform.cpp" />
-    <ClCompile Include="..\Engine\src\Object.cpp" />
     <ClCompile Include="..\Engine\src\ObjectManager.cpp" />
     <ClCompile Include="..\Engine\src\ObjLoader.cpp" />
     <ClCompile Include="..\Engine\src\PolygonRenderResource.cpp" />
+    <ClCompile Include="..\Engine\src\Profiler.cpp" />
     <ClCompile Include="..\Engine\src\Renderer2DComponent.cpp" />
     <ClCompile Include="..\Engine\src\RendererPipeline.cpp" />
     <ClCompile Include="..\Engine\src\ResourcesManager.cpp" />
     <ClCompile Include="..\Engine\src\Scene.cpp" />
-    <ClCompile Include="..\Engine\src\Shader.cpp" />
+    <ClCompile Include="..\Engine\src\SkeletalMeshComponent.cpp" />
+    <ClCompile Include="..\Engine\src\TextureLoader.cpp" />
+    <ClCompile Include="..\Engine\src\TextureResource.cpp" />
     <ClCompile Include="..\Engine\src\Timer.cpp" />
     <ClCompile Include="..\Engine\src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\..\UsefullRepo\DirectXTex\DirectXTex_Desktop_2015_Win10.vcxproj">
+      <Project>{371b9fa9-4c90-4ac6-a123-aced756d6c77}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\MUtils\MUtils\MUtils.vcxproj">
       <Project>{84c4c6f2-af1f-4d38-82df-93f6ed73e1c0}</Project>
     </ProjectReference>

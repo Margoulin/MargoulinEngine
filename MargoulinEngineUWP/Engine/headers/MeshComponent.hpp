@@ -3,8 +3,6 @@
 
 #include "GraphicComponent.hpp"
 
-#include <string>
-
 class Model;
 
 class MeshComponent final
@@ -22,7 +20,6 @@ public:
 	};
 
 	virtual auto	Draw() -> void;
-	virtual auto	Shutdown() -> void;
 
 	auto	SetMeshType(MESH_TYPE const value) -> void { MType = value; }
 	auto	SetCustomMesh(unsigned int const& value) -> void { meshID = value; }
@@ -32,7 +29,7 @@ public:
 	auto	GetMeshType() const -> MESH_TYPE const { return MType; }
 	
 	virtual auto	GetObjectType() const -> ObjectType const { return MESH_COMPONENT; }
-	virtual auto	GetObjectTypeName() const -> std::string const override { return "Mesh Component"; }
+	virtual auto	GetObjectTypeName() const -> MString const override { return "Mesh Component"; }
 
 	auto	operator = (const MeshComponent&)->MeshComponent& = delete;
 	auto	operator = (MeshComponent&&)->MeshComponent& = delete;

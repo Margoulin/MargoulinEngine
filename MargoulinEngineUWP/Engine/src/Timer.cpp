@@ -1,17 +1,17 @@
-#include "Timer.h"
+#include "Timer.hpp"
 
-void CTimer::Start()
+void Timer::Start()
 {
-	QueryPerformanceFrequency(&m_frequency);
-	QueryPerformanceCounter(&m_startTime);
+	QueryPerformanceFrequency(&frequency);
+	QueryPerformanceCounter(&startTime);
 }
 
-void CTimer::Stop()
+void Timer::Stop()
 {
-	QueryPerformanceCounter(&m_stopTime);
+	QueryPerformanceCounter(&stopTime);
 }
 
-float	CTimer::GetDuration() const
+float	Timer::GetDuration() const
 {
-	return (float)(m_stopTime.QuadPart - m_startTime.QuadPart) / (float)m_frequency.QuadPart;
+	return (float)(stopTime.QuadPart - startTime.QuadPart) / (float)frequency.QuadPart;
 }

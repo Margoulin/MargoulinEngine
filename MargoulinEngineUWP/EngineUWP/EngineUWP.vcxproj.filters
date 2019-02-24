@@ -46,36 +46,6 @@
     <ClInclude Include="..\Engine\OpenFBX\ofbx.h">
       <Filter>OpenFBX</Filter>
     </ClInclude>
-    <ClInclude Include="..\Engine\headers\Camera.hpp">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\headers\Clock.hpp">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\headers\Component.hpp">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\headers\Context.hpp">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\headers\D3D11Context.hpp">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\headers\D3D11Renderer.hpp">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\headers\Debug.hpp">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\headers\DirectXHelper.hpp">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\headers\Engine.hpp">
-      <Filter>Headers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\headers\FBXLoader.hpp">
-      <Filter>Headers</Filter>
-    </ClInclude>
     <ClInclude Include="..\Engine\headers\Gamepad.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
@@ -97,6 +67,9 @@
     <ClInclude Include="..\Engine\headers\MaterialResource.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="..\Engine\headers\MemoryMacro.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
     <ClInclude Include="..\Engine\headers\Mesh.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
@@ -107,6 +80,9 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="..\Engine\headers\Node.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\NodeTransform.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="..\Engine\headers\Object.hpp">
@@ -122,6 +98,9 @@
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="..\Engine\headers\PolygonRenderResource.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\Profiler.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="..\Engine\headers\Renderer2DComponent.hpp">
@@ -142,22 +121,79 @@
     <ClInclude Include="..\Engine\headers\Service.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
+    <ClInclude Include="..\Engine\headers\ServiceApplication.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
     <ClInclude Include="..\Engine\headers\Shader.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\SkeletalMesh.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\SkeletalMeshComponent.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\SkeletalMeshResource.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="..\Engine\headers\SubMeshData.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="..\Engine\headers\Timer.h">
+    <ClInclude Include="..\Engine\headers\TextureLoader.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\TextureResource.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\Timer.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\VertexShader.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
     <ClInclude Include="..\Engine\headers\Window.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="..\Engine\headers\NodeTransform.hpp">
+    <ClInclude Include="..\Engine\headers\CameraComponent.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
-    <ClInclude Include="..\Engine\headers\CameraComponent.hpp">
+    <ClInclude Include="..\Engine\headers\Clock.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\Component.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\Context.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\CoreMacros.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\CoreMinimal.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\D3D11Context.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\D3D11PixelShader.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\D3D11Renderer.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\D3D11VertexShader.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\DirectXHelper.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\Engine.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\FBXLoader.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\FragmentShader.hpp">
       <Filter>Headers</Filter>
     </ClInclude>
   </ItemGroup>
@@ -177,19 +213,73 @@
     <ClCompile Include="..\Engine\OpenFBX\ofbx.cpp">
       <Filter>OpenFBX</Filter>
     </ClCompile>
-    <ClCompile Include="..\Engine\src\Camera.cpp">
+    <ClCompile Include="..\Engine\src\Node.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\NodeTransform.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\ObjectManager.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\ObjLoader.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\PolygonRenderResource.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\Profiler.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\Renderer2DComponent.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\RendererPipeline.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\ResourcesManager.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\Scene.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\Shader.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\SkeletalMeshComponent.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\TextureLoader.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\TextureResource.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\Timer.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\Window.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\CameraComponent.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\Engine\src\Clock.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="..\Engine\src\Component.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
     <ClCompile Include="..\Engine\src\D3D11Context.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\src\D3D11PixelShader.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\Engine\src\D3D11Renderer.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\Engine\src\Debug.cpp">
+    <ClCompile Include="..\Engine\src\D3D11VertexShader.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
     <ClCompile Include="..\Engine\src\Engine.cpp">
@@ -225,47 +315,10 @@
     <ClCompile Include="..\Engine\src\MeshResource.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
-    <ClCompile Include="..\Engine\src\Node.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Engine\src\Object.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Engine\src\ObjectManager.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Engine\src\ObjLoader.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Engine\src\PolygonRenderResource.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Engine\src\Renderer2DComponent.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Engine\src\RendererPipeline.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Engine\src\ResourcesManager.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Engine\src\Scene.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Engine\src\Shader.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Engine\src\Timer.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Engine\src\Window.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Engine\src\NodeTransform.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Engine\src\CameraComponent.cpp">
-      <Filter>Sources</Filter>
-    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Engine\headers\ObjectHandle.inl">
+      <Filter>Headers</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -1,13 +1,13 @@
 #ifndef __WINDOW_HPP__
 #define __WINDOW_HPP__
 
+#include "CoreMinimal.hpp"
 #include <Windows.h>
-#include <string>
 #include <functional>
 #include <wrl/client.h>
 #include "Maths/Vector.hpp"
 
-class IUnknown;
+struct IUnknown;
 
 class Window
 {
@@ -18,8 +18,10 @@ public:
 	~Window() = default;
 
 #ifndef UWP 
-	static	auto	CreateWindowInstance() -> Window*;
+	static	auto	CreateWindowInstance(WNDPROC wndProc) -> Window*;
 	static	std::function<LRESULT(HWND, UINT, WPARAM, LPARAM)>	eventCallback;
+
+	auto	SetWindowTitle(MString const& value) -> void;
 
 	auto	GetWindow() const -> HWND { return winInstance; }
 #else
@@ -43,9 +45,9 @@ protected:
 
 private:
 #ifndef UWP 
-	HWND			winInstance;
-	WNDCLASS		wc;
-	std::wstring	className;
+	HWND		winInstance;
+	WNDCLASS	wc;
+	MWString	className;
 #else
 	Microsoft::WRL::ComPtr<IUnknown>	window;
 #endif
@@ -55,6 +57,7 @@ private:
 #ifdef _DEBUG
 public:
 	auto	ImGuiUpdate() -> void;
+	char	newWindowNameBuffer[50];
 #endif
 };
 

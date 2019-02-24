@@ -19,11 +19,9 @@ public:
 	CameraComponent(CameraComponent&&) = delete;
 	~CameraComponent() = default;
 
-	virtual auto	Shutdown() -> void {}
-
 	virtual auto	GetObjectType() const -> ObjectType const { return ObjectType::CAMERA_COMPONENT; }
 	virtual auto	GetComponentType() const -> COMPONENT_TYPE const { return COMPONENT_TYPE::CAMERA; }
-	virtual auto	GetObjectTypeName() const -> std::string const override { return "Camera Component"; }
+	virtual auto	GetObjectTypeName() const -> MString const override { return "Camera Component"; }
 
 	auto	GetProjectionMatrix(Vector2F const& windowSize) const -> Matrix4x4F { return Matrix4x4F::Perspective(parameters.FOV, windowSize.x / windowSize.y, parameters.ZNear, parameters.ZFar); }
 	auto	GetViewMatrix() const -> Matrix4x4F;

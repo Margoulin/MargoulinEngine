@@ -23,7 +23,7 @@ auto	Transform::GetGlobalMatrix() -> Matrix4x4F
 	if (parents.empty())	return GetLocalMatrix();
 
 	Matrix4x4F	ret = Matrix4x4F::identity;
-	for (int pos = 0u; pos < parents.size(); pos++)
+	for (size_t pos = 0u; pos < parents.size(); pos++)
 		ret = parents[pos]->GetLocalMatrix() * ret;
 
 	return ret * GetLocalMatrix();

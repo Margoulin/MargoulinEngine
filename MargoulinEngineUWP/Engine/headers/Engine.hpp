@@ -1,13 +1,15 @@
 #ifndef __ENGINE_HPP__
 #define __ENGINE_HPP__
 
+#include "CoreMinimal.hpp"
 #include <map>
+#include <vector>
 
 #include "Clock.hpp"
-#include "Maths/Vector.hpp"
 
 class Scene;
 class Service;
+class ServiceApplication;
 class Window;
 
 class Engine
@@ -26,9 +28,9 @@ public:
 	auto	Update() -> bool;
 	auto	Draw() -> void;
 
-	auto	AddService(std::string const& name, Service* service) -> void;
+	auto	AddService(MString const& name, Service* service) -> void;
 	template<typename T>
-	auto	GetService(std::string const& name) const -> T*
+	auto	GetService(MString const& name) const -> T*
 	{
 		auto value = services.find(name);
 		if (value != services.end())
@@ -36,39 +38,46 @@ public:
 		return nullptr;
 	}
 
-	auto	RemoveServiceEntry(std::string const& value) -> void;
-	auto	RemoveService(std::string const& value) -> void;
+	auto	GetRawService(MString const& name) const -> Service* 
+	{
+		auto value = services.find(name.Str());
+		if (value != services.end())
+			return value->second;
+		return nullptr;
+	}
+
+	auto	GetApplicationServices() const-> std::vector<ServiceApplication*>;
+
+	auto	RemoveServiceEntry(MString const& value) -> void;
+	auto	RemoveService(MString const& value) -> void;
 
 	auto	IsInitialized() const -> bool const { return initialized; }
-	auto	GetScene() -> Scene* { return currentScene; }
+	auto	GetScene() const -> Scene* { return currentScene; }
 
 	auto	operator = (const Engine&)->Engine& = delete;
 	auto	operator = (Engine&&)->Engine& = delete;
 
-	
-protected:
-
 private:
+	static Engine*					instance;
+	
+	Clock							engineClock;
+	std::map<MString, Service*>	services;
+	Scene*							currentScene;
+	Vector3F						editorCameraPosition;
+	Vector3F						editorCameraRotation;
+	bool							initialized = false;
+
 #ifdef _DEBUG
 
 	auto						DrawImGui() -> void;
 	float						lastImGuiRenderDuration = 0.0f;
 	bool						windowOpened = true;
-	bool						debugSceneWindow = false;
+	bool						debugSceneWindow = true;
 	float						framerates[100];
 	float						frametimes[100];
-	std::map<std::string, bool>	debugServicesWindows;
-	Vector2F					imGuiCursor;
-public:
-	bool						xboxOneDebug = false;
+	std::map<MString, bool>	debugServicesWindows;
 
 #endif // _DEBUG
-
-	static Engine*					instance;
-	Clock							engineClock;
-	std::map<std::string, Service*>	services;
-	Scene*							currentScene;
-	bool							initialized = false;
 };
 
 
