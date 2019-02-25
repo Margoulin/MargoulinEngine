@@ -9,6 +9,7 @@
 class Material;
 class Mesh;
 class PolygonRenderResource;
+class GPUBuffer;
 
 class RendererPipeline
 {
@@ -24,6 +25,9 @@ public:
 	virtual auto	BindCamera(Matrix4x4F const& projectionMatrix, Matrix4x4F const& viewMatrix) -> void = 0;
 
 	auto	DrawSkeletalMesh(unsigned int const& meshID) -> void;
+
+	auto	SetModelBuffer(GPUBuffer* buffer) -> void { modelBuffer = buffer; }
+	auto	SetViewProjBuffer(GPUBuffer* buffer) -> void { viewProjBuffer = buffer; }
 
 	virtual auto	DrawRectangle(Vector2F const& screenPosition, Vector2F const& size, Vector4F const& color) -> void = 0;
 	virtual auto	DrawFilledRectangle(Vector2F const& screenPosition, Vector2F const& size, Vector4F const& color) -> void = 0;
@@ -42,7 +46,9 @@ public:
 	virtual auto	drawTexture(Vector4F const& screenRect, TextureRenderData const& renderData) -> void = 0;
 protected:
 
-	float									clearColor[4] = {0.5f, 0.5f, 0.5f, 1.0f};
+	GPUBuffer*	modelBuffer = nullptr;
+	GPUBuffer*	viewProjBuffer = nullptr;
+	float		clearColor[4] = {0.5f, 0.5f, 0.5f, 1.0f};
 
 private:
 

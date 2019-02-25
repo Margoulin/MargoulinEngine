@@ -13,6 +13,7 @@ class Window;
 class Shader;
 class RendererPipeline;
 class ShaderFactory;
+class GPUBufferFactory;
 class MeshResource;
 class MaterialResource;
 
@@ -52,6 +53,7 @@ public:
 protected:
 	std::vector<Shader*>	shaders;
 	RendererPipeline*		pipeline = nullptr;
+	GPUBufferFactory*		bufferFactory = nullptr;
 	ShaderFactory*			shaderFactory = nullptr;
 	Context*				context = nullptr;
 	Window*					window = nullptr;

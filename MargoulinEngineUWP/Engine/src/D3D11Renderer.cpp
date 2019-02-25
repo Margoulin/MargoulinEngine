@@ -14,18 +14,10 @@
 #include "Engine.hpp"
 #include "GraphicalLibrary.hpp"
 #include "D3D11VertexShader.hpp"
+#include "D3D11Buffer.hpp"
 
 auto	D3D11Renderer::Initialize() -> void
 {
-	CD3D11_BUFFER_DESC viewProjConstantBufferDesc(sizeof(ViewProjectionConstantBuffer), D3D11_BIND_CONSTANT_BUFFER);
-	context->GetDevice()->CreateBuffer(&viewProjConstantBufferDesc, nullptr, &viewProjConstantBuffer);
-
-	CD3D11_BUFFER_DESC modelConstantBufferDesc(sizeof(Matrix4x4F), D3D11_BIND_CONSTANT_BUFFER);
-	context->GetDevice()->CreateBuffer(&modelConstantBufferDesc, nullptr, &modelConstantBuffer);
-
-	context->GetDeviceContext()->UpdateSubresource(viewProjConstantBuffer.Get(), 0, NULL,
-		&viewProjBufferData, 0, 0);
-
 	D3D11_SUBRESOURCE_DATA vertexBufferData = { 0 };
 	vertexBufferData.pSysMem = textureVertices;
 	vertexBufferData.SysMemPitch = 0;
@@ -52,8 +44,6 @@ auto	D3D11Renderer::Initialize() -> void
 	setTextureVertices(3, Vector2F(0.0f, 0.0f), Vector2F(0.0f, 1.0f));
 
 #ifdef  _DEBUG
-	context->MarkD3D11ObjectName(viewProjConstantBuffer.Get(), MString("View Proj Constant Buffer"));
-	context->MarkD3D11ObjectName(modelConstantBuffer.Get(), MString("Model Constant Buffer"));
 	context->MarkD3D11ObjectName(textureVertexBuffer.Get(), MString("Texture Vertex Buffer"));
 	context->MarkD3D11ObjectName(textureIndexBuffer.Get(), MString("Texture Index Buffer"));
 #endif //_DEBUG
@@ -62,8 +52,10 @@ auto	D3D11Renderer::Initialize() -> void
 
 auto	D3D11Renderer::Shutdown() -> void
 {
-	*viewProjConstantBuffer.ReleaseAndGetAddressOf() = nullptr;
-	*modelConstantBuffer.ReleaseAndGetAddressOf() = nullptr;
+	((D3D11Buffer*)modelBuffer)->Shutdown();
+	DEL(modelBuffer);
+	((D3D11Buffer*)viewProjBuffer)->Shutdown();
+	DEL(viewProjBuffer);
 	*textureVertexBuffer.ReleaseAndGetAddressOf() = nullptr;
 	*textureIndexBuffer.ReleaseAndGetAddressOf() = nullptr;
 }
@@ -85,7 +77,7 @@ auto	D3D11Renderer::BeginRender() -> void
 	context->GetDeviceContext()->ClearRenderTargetView(context->GetRenderTarget(), clearColor);
 	context->GetDeviceContext()->ClearDepthStencilView(context->GetDepthStencilView(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 
-	context->GetDeviceContext()->VSSetConstantBuffers(1, 1, modelConstantBuffer.GetAddressOf());
+	modelBuffer->BindBuffer(context);
 }
 
 auto	D3D11Renderer::EndRender() -> void
@@ -101,22 +93,18 @@ auto	D3D11Renderer::Present() -> void
 	
 auto	D3D11Renderer::BindCamera(Matrix4x4F const& projectionMatrix, Matrix4x4F const& viewMatrix) -> void
 {
-	viewProjBufferData.View = Matrix4x4F::Transpose(viewMatrix);
-	
+	viewProjBufferData.View = Matrix4x4F::Transpose(viewMatrix);	
 	viewProjBufferData.Projection = Matrix4x4F::Transpose(projectionMatrix);
 
-	context->GetDeviceContext()->UpdateSubresource(viewProjConstantBuffer.Get(), 0, NULL,
-		&viewProjBufferData, 0, 0);
-
-	context->GetDeviceContext()->VSSetConstantBuffers(0, 1, viewProjConstantBuffer.GetAddressOf());
+	viewProjBuffer->UpdateBufferData(context, (void*)&viewProjBufferData);
+	viewProjBuffer->BindBuffer(context);
 }
 
 auto	D3D11Renderer::drawData(Mesh* mesh, Material* mat, Matrix4x4F const& modelMat) -> void
 {
 	mat->Bind(context->GetDeviceContext());
 
-	context->GetDeviceContext()->UpdateSubresource(modelConstantBuffer.Get(), 0, NULL,
-		Matrix4x4F::Transpose(modelMat).GetArray(), 0, 0);
+	modelBuffer->UpdateBufferData(context, (void*)Matrix4x4F::Transpose(modelMat).GetArray());
 
 	SubMeshData** subMeshes = mesh->GetSubMeshTab();
 	for (unsigned int pos = 0; pos < mesh->GetSubMeshNbr(); pos++)
@@ -339,9 +327,8 @@ auto	D3D11Renderer::drawTexture(Vector4F const& screenRect, TextureRenderData co
 	viewProjBufferData.View = Matrix4x4F::Transpose(Matrix4x4F::identity);
 	viewProjBufferData.Projection = Matrix4x4F::Transpose(Matrix4x4F::identity);
 	viewProjBufferData.Projection = Matrix4x4F::Transpose(Matrix4x4F::Orthographic(halfScreen.x * 2.0f, halfScreen.y * 2.0f, 0.0f, 100.0f));
-	context->GetDeviceContext()->UpdateSubresource(viewProjConstantBuffer.Get(), 0, NULL,
-		&viewProjBufferData, 0, 0);
-	context->GetDeviceContext()->VSSetConstantBuffers(0, 1, viewProjConstantBuffer.GetAddressOf());
+	viewProjBuffer->UpdateBufferData(context, (void*)&viewProjBufferData);
+	viewProjBuffer->BindBuffer(context);
 
 	float left = -halfScreen.x + screenRect.x;
 	float right = left + screenRect.w;

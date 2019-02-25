@@ -46,6 +46,8 @@ public:
 	auto	GetIndexBuffer() const -> ID3D11Buffer* { return g_IndexBuffer.Get(); }
 	auto	GetVertexBuffer() const-> ID3D11Buffer* const* { return g_VertexBuffer.GetAddressOf(); }
 
+	//auto	GetVerticesDataSize() const -> unsigned int { return vertices.size() * sizeof(Vector3F) + normals.size() * sizeof(Vector3F) + uv.size() * sizeof(Vector2F); }
+	auto	GetVerticesDataSize() const -> unsigned int { return vertices.size() * sizeof(Vector3F); }
 	auto	GetVerticesCount() const -> unsigned int const { return (unsigned int)vertices.size(); }
 	auto	GetNormalsCount() const -> unsigned int const { return (unsigned int)normals.size(); }
 	auto	GetIndicesCount() const -> unsigned int const { return (unsigned int)indices.size(); }

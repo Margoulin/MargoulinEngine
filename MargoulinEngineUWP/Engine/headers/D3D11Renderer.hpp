@@ -59,8 +59,6 @@ private:
 	auto	setTextureVertices(unsigned int const& count, Vector2F const& screenPos, Vector2F const& uv) -> void;
 
 	D3D11Context*							context = nullptr;
-	Microsoft::WRL::ComPtr<ID3D11Buffer>	viewProjConstantBuffer;
-	Microsoft::WRL::ComPtr<ID3D11Buffer>	modelConstantBuffer;
 
 	Microsoft::WRL::ComPtr<ID3D11Buffer>	textureVertexBuffer;
 	Microsoft::WRL::ComPtr<ID3D11Buffer>	textureIndexBuffer;

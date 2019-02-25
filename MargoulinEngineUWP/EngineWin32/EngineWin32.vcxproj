@@ -307,6 +307,8 @@
     <ClInclude Include="..\Engine\headers\Context.hpp" />
     <ClInclude Include="..\Engine\headers\CoreMacros.hpp" />
     <ClInclude Include="..\Engine\headers\CoreMinimal.hpp" />
+    <ClInclude Include="..\Engine\headers\D3D11Buffer.hpp" />
+    <ClInclude Include="..\Engine\headers\D3D11BufferFactory.hpp" />
     <ClInclude Include="..\Engine\headers\D3D11Context.hpp" />
     <ClInclude Include="..\Engine\headers\D3D11ShaderFactory.hpp" />
     <ClInclude Include="..\Engine\headers\D3D11PixelShader.hpp" />
@@ -317,6 +319,8 @@
     <ClInclude Include="..\Engine\headers\FBXLoader.hpp" />
     <ClInclude Include="..\Engine\headers\FragmentShader.hpp" />
     <ClInclude Include="..\Engine\headers\Gamepad.hpp" />
+    <ClInclude Include="..\Engine\headers\GPUBuffer.hpp" />
+    <ClInclude Include="..\Engine\headers\GPUBufferFactory.hpp" />
     <ClInclude Include="..\Engine\headers\GraphicalLibrary.hpp" />
     <ClInclude Include="..\Engine\headers\GraphicComponent.hpp" />
     <ClInclude Include="..\Engine\headers\InputManager.hpp" />
@@ -373,6 +377,7 @@
     <ClCompile Include="..\Engine\src\CameraComponent.cpp" />
     <ClCompile Include="..\Engine\src\Clock.cpp" />
     <ClCompile Include="..\Engine\src\Component.cpp" />
+    <ClCompile Include="..\Engine\src\D3D11Buffer.cpp" />
     <ClCompile Include="..\Engine\src\D3D11Context.cpp" />
     <ClCompile Include="..\Engine\src\D3D11PixelShader.cpp" />
     <ClCompile Include="..\Engine\src\D3D11Renderer.cpp" />
@@ -381,6 +386,7 @@
     <ClCompile Include="..\Engine\src\Engine.cpp" />
     <ClCompile Include="..\Engine\src\FBXLoader.cpp" />
     <ClCompile Include="..\Engine\src\Gamepad.cpp" />
+    <ClCompile Include="..\Engine\src\D3D11BufferFactory.cpp" />
     <ClCompile Include="..\Engine\src\GraphicalLibrary.cpp" />
     <ClCompile Include="..\Engine\src\InputManager.cpp" />
     <ClCompile Include="..\Engine\src\Logger.cpp" />

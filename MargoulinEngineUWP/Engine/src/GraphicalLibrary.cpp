@@ -6,6 +6,7 @@
 #include "Window.hpp"
 #include "D3D11Renderer.hpp"
 #include "D3D11ShaderFactory.hpp"
+#include "D3D11BufferFactory.hpp"
 #include "imgui_impl_dx11.h"
 #include "Shader.hpp"
 #include "ResourcesManager.hpp"
@@ -15,6 +16,7 @@
 
 #include "D3D11PixelShader.hpp"
 #include "D3D11VertexShader.hpp"
+#include "D3D11Buffer.hpp"
 
 auto	GraphicalLibrary::Initialize(Window* window) -> void
 {
@@ -32,6 +34,17 @@ auto	GraphicalLibrary::Initialize(Window* window) -> void
 	pipeline = (RendererPipeline*)pipe;
 	pipe->SetContext(d11Context);
 	pipe->Initialize();
+
+	D3D11BufferFactory* d3d11BufferFactory = NEW D3D11BufferFactory();
+	bufferFactory = d3d11BufferFactory;
+	d3d11BufferFactory->SetContext(context);
+
+	D3D11Buffer* modelBuffer = (D3D11Buffer*)d3d11BufferFactory->GenerateBuffer(sizeof(Matrix4x4F));
+	modelBuffer->SetBufferBindIndex(1);
+	pipeline->SetModelBuffer(modelBuffer);
+	
+	D3D11Buffer* viewProjBuffer = (D3D11Buffer*)d3d11BufferFactory->GenerateBuffer(sizeof(ViewProjectionConstantBuffer));
+	pipeline->SetViewProjBuffer(viewProjBuffer);
 
 #ifdef UWP
 	ImGui_ImplDX11_Init(d11Context->GetDevice(), d11Context->GetDeviceContext());
@@ -72,6 +85,7 @@ auto	GraphicalLibrary::Shutdown() -> void
 	DEL(pipeline);
 	context->Shutdown();
 	DEL(shaderFactory);
+	DEL(bufferFactory);
 	DEL(context);
 	window->Shutdown();
 }
