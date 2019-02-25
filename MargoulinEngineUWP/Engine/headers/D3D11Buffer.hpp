@@ -15,11 +15,12 @@ public:
 	~D3D11Buffer() = default;
 
 	virtual auto	BindBuffer(Context* context) -> void;
-	virtual auto	UpdateBufferData(Context* context, void* dataPtr) -> void;
+	virtual auto	UpdateBufferData(Context* context, void* dataPtr, unsigned int size = 0) -> void;
 	
 	auto	Shutdown() -> void { *datas.ReleaseAndGetAddressOf() = nullptr; }
 
 	auto	SetBufferBindIndex(unsigned int const& value) -> void { bufferBindIndex = value; }
+	auto	SetStride(unsigned int const& value) -> void { bufferStride = value; }
 
 	auto	GetBuffer() const -> ID3D11Buffer* { return datas.Get(); }
 	auto	GetBufferPtr() const -> ID3D11Buffer* const* { return datas.GetAddressOf(); }

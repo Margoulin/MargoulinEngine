@@ -11,6 +11,7 @@
 class D3D11Context;
 class D3D11VertexShader;
 class D3D11PixelShader;
+class SubMeshData;
 
 struct ViewProjectionConstantBuffer
 {
@@ -44,7 +45,7 @@ protected:
 
 private:
 	virtual auto	drawData(Mesh* mesh, Material* mat, Matrix4x4F const& modelMat) -> void;
-	virtual auto	drawTexture(Vector4F const& screenRect, TextureRenderData const& renderData) -> void;
+	virtual auto	drawTexture(Vector4F const& screenRect, SubMeshData* texMesh, TextureRenderData const& renderData) -> void;
 
 	virtual auto	DrawRectangle(Vector2F const& screenPosition, Vector2F const& size, Vector4F const& color) -> void;
 	virtual auto	DrawFilledRectangle(Vector2F const& screenPosition, Vector2F const& size, Vector4F const& color) -> void;
@@ -56,15 +57,7 @@ private:
 	virtual auto	DrawGeometry(PolygonRenderResource* polygon, Vector4F const& color) -> void;
 	virtual auto	DrawFilledGeometry(PolygonRenderResource* polygon, Vector4F const& color) -> void;
 
-	auto	setTextureVertices(unsigned int const& count, Vector2F const& screenPos, Vector2F const& uv) -> void;
-
 	D3D11Context*							context = nullptr;
-
-	Microsoft::WRL::ComPtr<ID3D11Buffer>	textureVertexBuffer;
-	Microsoft::WRL::ComPtr<ID3D11Buffer>	textureIndexBuffer;
-	unsigned int							textureIndices[6] { 0, 1, 2, 0, 2, 3 };
-	float									textureVertices[20];
-
 	ViewProjectionConstantBuffer			viewProjBufferData;
 };
 

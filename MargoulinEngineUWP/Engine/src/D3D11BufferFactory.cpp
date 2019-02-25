@@ -12,7 +12,7 @@ auto	D3D11BufferFactory::SetContext(Context* value) -> void
 	d3d11Context = (D3D11Context*)context;
 }
 
-auto	D3D11BufferFactory::GenerateVertexBuffer(SubMeshData* data) -> GPUBuffer*
+auto	D3D11BufferFactory::GenerateVertexBuffer(SubMeshData* data, bool dynamic) -> GPUBuffer*
 {
 	ID3D11Buffer* buffer = nullptr;
 
@@ -21,10 +21,16 @@ auto	D3D11BufferFactory::GenerateVertexBuffer(SubMeshData* data) -> GPUBuffer*
 	vertexBufferData.SysMemPitch = 0;
 	vertexBufferData.SysMemSlicePitch = 0;
 	CD3D11_BUFFER_DESC vertexBufferDesc(data->GetVerticesDataSize(), D3D11_BIND_VERTEX_BUFFER);
+	if (dynamic)
+	{
+		vertexBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
+		vertexBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
+	}
 	d3d11Context->GetDevice()->CreateBuffer(&vertexBufferDesc, &vertexBufferData, &buffer);
 
 	D3D11Buffer* outBuffer = NEW D3D11Buffer(buffer);
 	outBuffer->SetBufferType(BufferType::VERTEX);
+	outBuffer->SetStride(sizeof(Vector3F));
 	return outBuffer;
 }
 

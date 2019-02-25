@@ -15,7 +15,7 @@ public:
 
 	virtual auto	SetContext(Context* value) -> void { context = value; }
 
-	virtual auto	GenerateVertexBuffer(SubMeshData* meshData) -> GPUBuffer* = 0;
+	virtual auto	GenerateVertexBuffer(SubMeshData* meshData, bool dynamic = false) -> GPUBuffer* = 0;
 	virtual auto	GenerateIndexBuffer(SubMeshData* meshData) -> GPUBuffer* = 0;
 	virtual auto	GenerateBuffer(unsigned int size) -> GPUBuffer* = 0;
 

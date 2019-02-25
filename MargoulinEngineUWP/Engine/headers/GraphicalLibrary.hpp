@@ -31,7 +31,7 @@ public:
 	virtual auto	Update() -> void {}
 
 	auto	DrawMesh(Matrix4x4F const& modelMat, MeshResource* meshRes, MaterialResource* matRes) -> void;
-	auto	DrawTexture(Vector4F const& screenRect, TextureRenderData const& renderData) -> void;
+	auto	DrawTexture(Vector4F const& screenRect,  TextureRenderData const& renderData) -> void;
 
 #ifdef _DEBUG
 	virtual auto	ImGuiUpdate() -> void;
@@ -42,6 +42,7 @@ public:
 #endif
 
 	auto	GetWindow() const -> Window* { return window; }
+	auto	GetBufferFactory() const -> GPUBufferFactory* { return bufferFactory; }
 	auto	GetContext() const -> Context* { return context; }
 	auto	GetRenderPipeline() const -> RendererPipeline* { return pipeline; }
 	auto	GetShaderFactory() const -> ShaderFactory* { return shaderFactory; }

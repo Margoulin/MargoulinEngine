@@ -17,6 +17,7 @@
 #include "D3D11PixelShader.hpp"
 #include "D3D11VertexShader.hpp"
 #include "D3D11Buffer.hpp"
+#include "Mesh.hpp"
 
 auto	GraphicalLibrary::Initialize(Window* window) -> void
 {
@@ -95,6 +96,17 @@ auto	GraphicalLibrary::DrawMesh(Matrix4x4F const& modelMat, MeshResource* meshRe
 	shaderFactory->BindShader(shaders[0]);
 	shaderFactory->BindShader(matRes->GetMaterialData()->attachedShader);
 
+	SubMeshData** subMeshes = meshRes->GetMeshData()->GetSubMeshTab();
+	for (unsigned int pos = 0; pos < meshRes->GetMeshData()->GetSubMeshNbr(); pos++)
+	{
+		if (!subMeshes[pos]->IsInVRAM())
+		{
+			subMeshes[pos]->SetIndexBuffer(bufferFactory->GenerateIndexBuffer(subMeshes[pos]));
+			subMeshes[pos]->SetVertexBuffer(bufferFactory->GenerateVertexBuffer(subMeshes[pos]));
+			subMeshes[pos]->SetInVRAM(true);
+		}
+	}
+
 	pipeline->drawData(meshRes->GetMeshData(), matRes->GetMaterialData(), modelMat);
 }
 	
@@ -102,8 +114,32 @@ auto	GraphicalLibrary::DrawTexture(Vector4F const& screenRect, TextureRenderData
 {
 	shaderFactory->BindShader(shaders[2]);
 	shaderFactory->BindShader(shaders[3]);
+	
+	Vector2F halfScreen = window->GetSize() * 0.5f;
+	float left = -halfScreen.x + screenRect.x;
+	float right = left + screenRect.w;
+	float top = halfScreen.y - screenRect.y;
+	float bottom = top - screenRect.z;
 
-	pipeline->drawTexture(screenRect, renderData);
+	ResourcesManager* rsMgr = Engine::GetInstance()->GetService<ResourcesManager>("Resources Manager");
+	SubMeshData* textureMesh = rsMgr->GetDefaultMeshResource(1)->GetMeshData()->GetSubMeshTab()[0];
+	textureMesh->SetVertice(0, Vector3F(left, top, 0.0f));
+	textureMesh->SetVertice(1, Vector3F(right, top, 0.0f));
+	textureMesh->SetVertice(2, Vector3F(right, bottom, 0.0f));
+	textureMesh->SetVertice(3, Vector3F(left, bottom, 0.0f));
+	textureMesh->SetUV(0, Vector2F(renderData.textureRect.x, renderData.textureRect.y));
+	textureMesh->SetUV(1, Vector2F(renderData.textureRect.w, renderData.textureRect.y));
+	textureMesh->SetUV(2, Vector2F(renderData.textureRect.w, renderData.textureRect.z));
+	textureMesh->SetUV(3, Vector2F(renderData.textureRect.x, renderData.textureRect.z));
+	if (!textureMesh->IsInVRAM())
+	{
+		textureMesh->SetIndexBuffer(bufferFactory->GenerateIndexBuffer(textureMesh));
+		textureMesh->SetVertexBuffer(bufferFactory->GenerateVertexBuffer(textureMesh, true));
+		((D3D11Buffer*)(textureMesh->GetVertexBuffer()))->SetStride(5 * sizeof(float));
+		textureMesh->SetInVRAM(true);
+	}
+
+	pipeline->drawTexture(screenRect, textureMesh, renderData);
 }
 
 #ifdef UWP

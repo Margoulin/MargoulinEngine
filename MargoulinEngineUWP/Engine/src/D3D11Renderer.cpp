@@ -18,36 +18,6 @@
 
 auto	D3D11Renderer::Initialize() -> void
 {
-	D3D11_SUBRESOURCE_DATA vertexBufferData = { 0 };
-	vertexBufferData.pSysMem = textureVertices;
-	vertexBufferData.SysMemPitch = 0;
-	vertexBufferData.SysMemSlicePitch = 0;
-	CD3D11_BUFFER_DESC vertexBufferDesc(20 * (unsigned int)(sizeof(float)), D3D11_BIND_VERTEX_BUFFER);
-	vertexBufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
-	vertexBufferDesc.Usage = D3D11_USAGE_DYNAMIC;
-	context->GetDevice()->CreateBuffer(&vertexBufferDesc, &vertexBufferData, &textureVertexBuffer);
-
-	D3D11_SUBRESOURCE_DATA indexBufferData = { 0 };
-	indexBufferData.pSysMem = textureIndices;
-	indexBufferData.SysMemPitch = 0;
-	indexBufferData.SysMemSlicePitch = 0;
-	CD3D11_BUFFER_DESC indexBufferDesc((unsigned int)sizeof(unsigned int) * 6, D3D11_BIND_INDEX_BUFFER);
-	context->GetDevice()->CreateBuffer(&indexBufferDesc, &indexBufferData, &textureIndexBuffer);
-
-	textureVertices[2] = 0.0f;
-	textureVertices[7] = 0.0f;
-	textureVertices[12] = 0.0f;
-	textureVertices[17] = 0.0f;
-	setTextureVertices(0, Vector2F(0.0f, 1.0f), Vector2F(0.0f, 0.0f));
-	setTextureVertices(1, Vector2F(1.0f, 1.0f), Vector2F(1.0f, 0.0f));
-	setTextureVertices(2, Vector2F(1.0f, 0.0f), Vector2F(1.0f, 1.0f));
-	setTextureVertices(3, Vector2F(0.0f, 0.0f), Vector2F(0.0f, 1.0f));
-
-#ifdef  _DEBUG
-	context->MarkD3D11ObjectName(textureVertexBuffer.Get(), MString("Texture Vertex Buffer"));
-	context->MarkD3D11ObjectName(textureIndexBuffer.Get(), MString("Texture Index Buffer"));
-#endif //_DEBUG
-
 }
 
 auto	D3D11Renderer::Shutdown() -> void
@@ -56,8 +26,6 @@ auto	D3D11Renderer::Shutdown() -> void
 	DEL(modelBuffer);
 	((D3D11Buffer*)viewProjBuffer)->Shutdown();
 	DEL(viewProjBuffer);
-	*textureVertexBuffer.ReleaseAndGetAddressOf() = nullptr;
-	*textureIndexBuffer.ReleaseAndGetAddressOf() = nullptr;
 }
 
 auto	D3D11Renderer::BeginRender() -> void
@@ -110,14 +78,9 @@ auto	D3D11Renderer::drawData(Mesh* mesh, Material* mat, Matrix4x4F const& modelM
 	for (unsigned int pos = 0; pos < mesh->GetSubMeshNbr(); pos++)
 	{
 		SubMeshData* subMesh = subMeshes[pos];
-		if (!subMesh->IsInVRAM())
-			subMesh->UploadInVRAM(context->GetDevice());
-		UINT offset = 0;
+		subMesh->GetVertexBuffer()->BindBuffer(context);
+		subMesh->GetIndexBuffer()->BindBuffer(context);
 
-		UINT stride = sizeof(Vector3F);
-		context->GetDeviceContext()->IASetVertexBuffers(0, 1, subMesh->GetVertexBuffer(), &stride, &offset);
-		context->GetDeviceContext()->IASetIndexBuffer(subMesh->GetIndexBuffer(),
-			DXGI_FORMAT_R32_UINT, 0);
 		context->GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		context->GetDeviceContext()->DrawIndexed(subMesh->GetIndicesCount(), 0, 0);
 	}
@@ -321,7 +284,7 @@ auto	D3D11Renderer::DrawFilledGeometry(PolygonRenderResource* polygon, Vector4F 
 
 }
 
-auto	D3D11Renderer::drawTexture(Vector4F const& screenRect, TextureRenderData const& renderData) -> void
+auto	D3D11Renderer::drawTexture(Vector4F const& screenRect, SubMeshData* texMesh, TextureRenderData const& renderData) -> void
 {
 	Vector2F halfScreen = context->GetRenderTargetSize() * 0.5f;
 	viewProjBufferData.View = Matrix4x4F::Transpose(Matrix4x4F::identity);
@@ -330,43 +293,30 @@ auto	D3D11Renderer::drawTexture(Vector4F const& screenRect, TextureRenderData co
 	viewProjBuffer->UpdateBufferData(context, (void*)&viewProjBufferData);
 	viewProjBuffer->BindBuffer(context);
 
-	float left = -halfScreen.x + screenRect.x;
-	float right = left + screenRect.w;
-	float top = halfScreen.y - screenRect.y;
-	float bottom = top - screenRect.z;
+	std::vector<float> fullVertices;
+	Vector3F* vert = texMesh->GetVertices();
+	Vector2F* uvs = texMesh->GetUV();
+	for (unsigned int pos = 0; pos < texMesh->GetVerticesCount(); pos++)
+	{
+		fullVertices.push_back(vert[pos].x);
+		fullVertices.push_back(vert[pos].y);
+		fullVertices.push_back(vert[pos].z);
+		fullVertices.push_back(uvs[pos].x);
+		fullVertices.push_back(uvs[pos].y);
+	}
 
-	setTextureVertices(0, Vector2F(left, top), Vector2F(renderData.textureRect.x, renderData.textureRect.y));
-	setTextureVertices(1, Vector2F(right, top), Vector2F(renderData.textureRect.w, renderData.textureRect.y));
-	setTextureVertices(2, Vector2F(right, bottom), Vector2F(renderData.textureRect.w, renderData.textureRect.z));
-	setTextureVertices(3, Vector2F(left, bottom), Vector2F(renderData.textureRect.x, renderData.textureRect.z));
-
-	D3D11_MAPPED_SUBRESOURCE mappedResource;
-	context->GetDeviceContext()->Map(textureVertexBuffer.Get(), 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
-	memcpy(mappedResource.pData, textureVertices, 20 * sizeof(float));
-	context->GetDeviceContext()->Unmap(textureVertexBuffer.Get(), 0);
+	texMesh->GetVertexBuffer()->UpdateBufferData(context, fullVertices.data(), 20 * sizeof(float));
 
 	context->GetDeviceContext()->PSSetShaderResources(0, 1, &renderData.shaderView);
 	context->GetDeviceContext()->PSSetSamplers(0, 1, &renderData.samplerState);
 
-	UINT offset = 0;
-	UINT stride = sizeof(float) * 5;
-	context->GetDeviceContext()->IASetVertexBuffers(0, 1, textureVertexBuffer.GetAddressOf(), &stride, &offset);
-	context->GetDeviceContext()->IASetIndexBuffer(textureIndexBuffer.Get(), DXGI_FORMAT_R32_UINT, 0);
+	texMesh->GetVertexBuffer()->BindBuffer(context);
+	texMesh->GetIndexBuffer()->BindBuffer(context);
+	
 	context->GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 	context->GetDeviceContext()->DrawIndexed(6, 0, 0);
 }
 
-auto	D3D11Renderer::setTextureVertices(unsigned int const& count, Vector2F const& screenPos, Vector2F const& uv) -> void
-{
-	if (count > 3)
-		return;
-
-	textureVertices[count * 5] = screenPos.x;
-	textureVertices[count * 5 + 1] = screenPos.y;
-	textureVertices[count * 5 + 3] = uv.x;
-	textureVertices[count * 5 + 4] = uv.y;
-}
-	
 auto	D3D11Renderer::InitializeTexture(TextureResource* tex) -> void
 {
 	tex->InitializeD3D11Datas(context->GetDevice());

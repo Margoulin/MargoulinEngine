@@ -10,6 +10,7 @@ class Material;
 class Mesh;
 class PolygonRenderResource;
 class GPUBuffer;
+class SubMeshData;
 
 class RendererPipeline
 {
@@ -43,7 +44,7 @@ public:
 	auto	operator = (RendererPipeline&&)->RendererPipeline& = delete;
 
 	virtual auto	drawData(Mesh* mesh, Material* mat, Matrix4x4F const& modelMat) -> void = 0;
-	virtual auto	drawTexture(Vector4F const& screenRect, TextureRenderData const& renderData) -> void = 0;
+	virtual auto	drawTexture(Vector4F const& screenRect, SubMeshData* texMesh, TextureRenderData const& renderData) -> void = 0;
 protected:
 
 	GPUBuffer*	modelBuffer = nullptr;

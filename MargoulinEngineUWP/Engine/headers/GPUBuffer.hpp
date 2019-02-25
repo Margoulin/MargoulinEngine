@@ -19,7 +19,7 @@ public:
 	~GPUBuffer() = default;
 
 	virtual auto	BindBuffer(Context* context) -> void = 0;
-	virtual auto	UpdateBufferData(Context* context, void* dataPtr) -> void = 0;
+	virtual auto	UpdateBufferData(Context* context, void* dataPtr, unsigned int size = 0) -> void = 0;
 
 	virtual auto	SetBufferType(BufferType value) -> void { bufferType = value; }
 
