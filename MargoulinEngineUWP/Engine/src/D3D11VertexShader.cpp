@@ -12,9 +12,3 @@ auto	D3D11VertexShader::Shutdown() -> void
 	*inLayout.ReleaseAndGetAddressOf() = nullptr;
 	*vtxShader.ReleaseAndGetAddressOf() = nullptr; 
 }
-
-auto	D3D11VertexShader::Bind(ID3D11DeviceContext* context) const -> void 
-{ 
-	context->VSSetShader(vtxShader.Get(), nullptr, 0); 
-	context->IASetInputLayout(inLayout.Get());
-}

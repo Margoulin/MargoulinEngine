@@ -15,7 +15,7 @@
 
 MString ObjLoader::LocalFolderName = ".";
 
-auto	ObjLoader::LoadObjFromFile(MString const& filename, bool absolutePath) -> bool
+auto	ObjLoader::LoadObjFromFile(MString const& filename, bool absolutePath) -> Resource*
 {
 	ResourcesManager* rsMgr = Engine::GetInstance()->GetService<ResourcesManager>("Resources Manager");
 
@@ -28,7 +28,7 @@ auto	ObjLoader::LoadObjFromFile(MString const& filename, bool absolutePath) -> b
 	finalPath += filename.Str();
 
 	if (tinyobj::LoadObj(&attrib, &shapes, &materials, &err, finalPath.Str(), "./") == false)
-		return false;
+		return nullptr;
 
 	unsigned int meshID = rsMgr->CreateMeshResource();
 	MeshResource*				meshRsc = (MeshResource*)rsMgr->GetResource(meshID);
@@ -132,7 +132,7 @@ auto	ObjLoader::LoadObjFromFile(MString const& filename, bool absolutePath) -> b
 	}
 	meshRsc->SetMeshData(mesh);
 
-	return true;
+	return meshRsc;
 }
 
 auto	ObjLoader::LoadObjFromBinaryFile(MString const& filename, bool absolutePath) -> bool

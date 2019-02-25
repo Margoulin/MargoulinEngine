@@ -129,6 +129,37 @@ auto	D3D11ShaderFactory::CreateUnlitColorShader() -> Shader*
 	return createPixelShader(pixelShader);
 }
 
+auto	D3D11ShaderFactory::BindShader(Shader const* shader) -> void
+{
+	if (shader->GetShaderType() == Shader::ShaderType::VERTEX)
+	{
+		D3D11VertexShader* vtxShader = (D3D11VertexShader*)shader;
+		d3d11Context->GetDeviceContext()->VSSetShader(vtxShader->GetShader(), nullptr, 0);
+		d3d11Context->GetDeviceContext()->IASetInputLayout(vtxShader->GetInputLayout());
+	}
+	else if (shader->GetShaderType() == Shader::ShaderType::FRAGMENT)
+	{
+		D3D11PixelShader* pxShader = (D3D11PixelShader*)shader;
+		d3d11Context->GetDeviceContext()->PSSetShader(pxShader->GetShader(), nullptr, 0);
+	}
+}
+
+auto	D3D11ShaderFactory::DeleteShader(Shader* shader) -> void
+{
+	if (shader->GetShaderType() == Shader::ShaderType::VERTEX)
+	{
+		D3D11VertexShader* vtxShader = (D3D11VertexShader*)shader;
+		vtxShader->Shutdown();
+		DEL(vtxShader);
+	}
+	else if (shader->GetShaderType() == Shader::ShaderType::FRAGMENT)
+	{
+		D3D11PixelShader* pxShader = (D3D11PixelShader*)shader;
+		pxShader->Shutdown();
+		DEL(pxShader);
+	}
+}
+
 auto	D3D11ShaderFactory::createShader(Shader::ShaderType const& type, MString const& shaderText) -> Shader*
 {
 	if (type == Shader::ShaderType::VERTEX)

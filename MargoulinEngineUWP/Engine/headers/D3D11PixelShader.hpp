@@ -22,8 +22,6 @@ public:
 
 	auto	Shutdown() -> void { *pxShader.ReleaseAndGetAddressOf() = nullptr; }
 
-	auto	Bind(ID3D11DeviceContext* context) const -> void { context->PSSetShader(pxShader.Get(), nullptr, 0); }
-
 	auto	operator = (const D3D11PixelShader&)->D3D11PixelShader& = delete;
 	auto	operator = (D3D11PixelShader&&)->D3D11PixelShader& = delete;
 

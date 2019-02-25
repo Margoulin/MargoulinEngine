@@ -4,6 +4,7 @@
 #include "CoreMinimal.hpp"
 
 class Mesh;
+class Resource;
 
 class ObjLoader
 {
@@ -13,7 +14,7 @@ public:
 	ObjLoader(ObjLoader&&) = delete;
 	~ObjLoader() = default;
 
-	static	auto	LoadObjFromFile(MString const& filename, bool absolutePath = false) -> bool;
+	static	auto	LoadObjFromFile(MString const& filename, bool absolutePath = false) -> Resource*;
 	static	auto	LoadObjFromBinaryFile(MString const& filepath, bool absolutePath = false) -> bool;
 	static	auto	SaveObjInBinaryFile(Mesh* meshToSerialize, MString const& filename, bool absolutePath = false) -> bool;
 

@@ -42,10 +42,6 @@ auto	D3D11Renderer::Initialize() -> void
 	CD3D11_BUFFER_DESC indexBufferDesc((unsigned int)sizeof(unsigned int) * 6, D3D11_BIND_INDEX_BUFFER);
 	context->GetDevice()->CreateBuffer(&indexBufferDesc, &indexBufferData, &textureIndexBuffer);
 
-	auto* graph = Engine::GetInstance()->GetService<GraphicalLibrary>("Renderer");
-	textureVertexShader = (D3D11VertexShader*)graph->GetShaderFactory()->CreateVertexTextureShader();
-	texturePixelShader = (D3D11PixelShader*)graph->GetShaderFactory()->CreatePixelTextureShader();
-
 	textureVertices[2] = 0.0f;
 	textureVertices[7] = 0.0f;
 	textureVertices[12] = 0.0f;
@@ -66,10 +62,6 @@ auto	D3D11Renderer::Initialize() -> void
 
 auto	D3D11Renderer::Shutdown() -> void
 {
-	texturePixelShader->Shutdown();
-	DEL(texturePixelShader);
-	textureVertexShader->Shutdown();
-	DEL(textureVertexShader);
 	*viewProjConstantBuffer.ReleaseAndGetAddressOf() = nullptr;
 	*modelConstantBuffer.ReleaseAndGetAddressOf() = nullptr;
 	*textureVertexBuffer.ReleaseAndGetAddressOf() = nullptr;
@@ -121,8 +113,6 @@ auto	D3D11Renderer::BindCamera(Matrix4x4F const& projectionMatrix, Matrix4x4F co
 
 auto	D3D11Renderer::drawData(Mesh* mesh, Material* mat, Matrix4x4F const& modelMat) -> void
 {
-	((D3D11VertexShader*)(Engine::GetInstance()->GetService<GraphicalLibrary>("Renderer")->GetShader(0)))->Bind(context->GetDeviceContext());
-
 	mat->Bind(context->GetDeviceContext());
 
 	context->GetDeviceContext()->UpdateSubresource(modelConstantBuffer.Get(), 0, NULL,
@@ -343,13 +333,8 @@ auto	D3D11Renderer::DrawFilledGeometry(PolygonRenderResource* polygon, Vector4F 
 
 }
 
-#include "DirectXMath.h"
-
-auto	D3D11Renderer::DrawTexture(Vector4F const& screenRect, TextureRenderData const& renderData) -> void
+auto	D3D11Renderer::drawTexture(Vector4F const& screenRect, TextureRenderData const& renderData) -> void
 {
-	textureVertexShader->Bind(context->GetDeviceContext());
-	texturePixelShader->Bind(context->GetDeviceContext());
-
 	Vector2F halfScreen = context->GetRenderTargetSize() * 0.5f;
 	viewProjBufferData.View = Matrix4x4F::Transpose(Matrix4x4F::identity);
 	viewProjBufferData.Projection = Matrix4x4F::Transpose(Matrix4x4F::identity);

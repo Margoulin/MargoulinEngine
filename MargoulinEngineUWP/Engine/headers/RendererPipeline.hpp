@@ -4,6 +4,8 @@
 #include "Maths/Vector.hpp"
 #include "Maths/Matrix.hpp"
 
+#include "TextureResource.hpp"
+
 class Material;
 class Mesh;
 class PolygonRenderResource;
@@ -21,8 +23,6 @@ public:
 	virtual auto	Present() -> void = 0;
 	virtual auto	BindCamera(Matrix4x4F const& projectionMatrix, Matrix4x4F const& viewMatrix) -> void = 0;
 
-	auto	DrawCustomMesh(unsigned int const& meshID, unsigned int const& matID, Matrix4x4F const& modelMat) -> void;
-	auto	DrawCube(unsigned int const& matID, Matrix4x4F const& modelMat) -> void;
 	auto	DrawSkeletalMesh(unsigned int const& meshID) -> void;
 
 	virtual auto	DrawRectangle(Vector2F const& screenPosition, Vector2F const& size, Vector4F const& color) -> void = 0;
@@ -38,8 +38,9 @@ public:
 	auto	operator = (const RendererPipeline&)->RendererPipeline& = delete;
 	auto	operator = (RendererPipeline&&)->RendererPipeline& = delete;
 
-protected:
 	virtual auto	drawData(Mesh* mesh, Material* mat, Matrix4x4F const& modelMat) -> void = 0;
+	virtual auto	drawTexture(Vector4F const& screenRect, TextureRenderData const& renderData) -> void = 0;
+protected:
 
 	float									clearColor[4] = {0.5f, 0.5f, 0.5f, 1.0f};
 

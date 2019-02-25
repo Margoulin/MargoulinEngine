@@ -53,6 +53,9 @@ auto	GraphicalLibrary::Initialize(Window* window) -> void
 	newMat->Initialize(d11Context->GetDevice());
 	matRes->SetMaterialData(newMat);
 
+	shaders.push_back(shaderFactory->CreateVertexTextureShader());
+	shaders.push_back(shaderFactory->CreatePixelTextureShader());
+
 #ifdef _DEBUG
 	d11Context->MarkD3D11ObjectName(newMat->GetConstantBuffer(), MString("Default Vertex Shader"));
 #endif
@@ -63,19 +66,30 @@ auto	GraphicalLibrary::Shutdown() -> void
 	ImGui_ImplDX11_Shutdown();
 
 	for (auto& shader : shaders)
-	{
-		if (shader->GetShaderType() == Shader::ShaderType::VERTEX)
-			((D3D11VertexShader*)shader)->Shutdown();
-		else if (shader->GetShaderType() == Shader::ShaderType::FRAGMENT)
-			((D3D11PixelShader*)shader)->Shutdown();
-		DEL(shader);
-	}
+		shaderFactory->DeleteShader(shader);
 	D3D11Renderer* pipe = (D3D11Renderer*)pipeline;
 	pipe->Shutdown();
 	DEL(pipeline);
 	context->Shutdown();
+	DEL(shaderFactory);
 	DEL(context);
 	window->Shutdown();
+}
+
+auto	GraphicalLibrary::DrawMesh(Matrix4x4F const& modelMat, MeshResource* meshRes, MaterialResource* matRes) -> void
+{
+	shaderFactory->BindShader(shaders[0]);
+	shaderFactory->BindShader(matRes->GetMaterialData()->attachedShader);
+
+	pipeline->drawData(meshRes->GetMeshData(), matRes->GetMaterialData(), modelMat);
+}
+	
+auto	GraphicalLibrary::DrawTexture(Vector4F const& screenRect, TextureRenderData const& renderData) -> void
+{
+	shaderFactory->BindShader(shaders[2]);
+	shaderFactory->BindShader(shaders[3]);
+
+	pipeline->drawTexture(screenRect, renderData);
 }
 
 #ifdef UWP

@@ -30,7 +30,6 @@ public:
 	virtual auto	EndRender() -> void;
 	virtual auto	Present() -> void;
 	virtual auto	BindCamera(Matrix4x4F const& projectionMatrix, Matrix4x4F const& viewMatrix) -> void;
-	auto	DrawTexture(Vector4F const& screenRect, TextureRenderData const& renderData) -> void;
 	auto	InitializeTexture(TextureResource* tex) -> void;
 
 	auto	SetContext(D3D11Context* value) -> void { context = value; }
@@ -45,6 +44,7 @@ protected:
 
 private:
 	virtual auto	drawData(Mesh* mesh, Material* mat, Matrix4x4F const& modelMat) -> void;
+	virtual auto	drawTexture(Vector4F const& screenRect, TextureRenderData const& renderData) -> void;
 
 	virtual auto	DrawRectangle(Vector2F const& screenPosition, Vector2F const& size, Vector4F const& color) -> void;
 	virtual auto	DrawFilledRectangle(Vector2F const& screenPosition, Vector2F const& size, Vector4F const& color) -> void;
@@ -66,8 +66,6 @@ private:
 	Microsoft::WRL::ComPtr<ID3D11Buffer>	textureIndexBuffer;
 	unsigned int							textureIndices[6] { 0, 1, 2, 0, 2, 3 };
 	float									textureVertices[20];
-	D3D11VertexShader*						textureVertexShader = nullptr;
-	D3D11PixelShader*						texturePixelShader = nullptr;
 
 	ViewProjectionConstantBuffer			viewProjBufferData;
 };

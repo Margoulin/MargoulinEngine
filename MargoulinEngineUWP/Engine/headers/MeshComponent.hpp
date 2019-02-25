@@ -3,8 +3,6 @@
 
 #include "GraphicComponent.hpp"
 
-class Model;
-
 class MeshComponent final
 	: public GraphicComponent
 {
@@ -19,15 +17,14 @@ public:
 		CUBE, PYRAMID, SPHERE, CUSTOM, NONE
 	};
 
-	virtual auto	Draw() -> void;
-
-	auto	SetMeshType(MESH_TYPE const value) -> void { MType = value; }
+	auto	SetMeshType(MESH_TYPE const value) -> void { meshType = value; }
 	auto	SetCustomMesh(unsigned int const& value) -> void { meshID = value; }
 	auto	SetMaterial(unsigned int const& matID) -> void { mat = matID; }
 
-	//auto	GetMaterial() const -> Material* { return Mat; }
-	auto	GetMeshType() const -> MESH_TYPE const { return MType; }
-	
+	auto	GetMaterial() const -> unsigned int const& { return mat; }
+	auto	GetMeshType() const -> MESH_TYPE const { return meshType; }
+	auto	GetMesh() const -> unsigned int const& { return meshID; }
+
 	virtual auto	GetObjectType() const -> ObjectType const { return MESH_COMPONENT; }
 	virtual auto	GetObjectTypeName() const -> MString const override { return "Mesh Component"; }
 
@@ -37,7 +34,7 @@ public:
 protected:
 
 private:
-	MESH_TYPE		MType = NONE;
+	MESH_TYPE		meshType = NONE;
 	unsigned int	mat;
 	unsigned int	meshID = 0;
 

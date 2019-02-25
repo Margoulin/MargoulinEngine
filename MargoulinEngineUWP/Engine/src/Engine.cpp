@@ -7,6 +7,7 @@
 #include "ResourcesManager.hpp"
 #include "InputManager.hpp"
 
+#include "MaterialResource.hpp"
 #include "MeshComponent.hpp"
 #include <imgui.h>
 
@@ -22,6 +23,7 @@
 #include "Renderer2DComponent.hpp"
 #include "CameraComponent.hpp"
 #include "Profiler.hpp"
+#include "Node.hpp"
 
 #include "Maths/Math.hpp"
 
@@ -54,8 +56,8 @@ auto	Engine::Initialize(Window* window) -> void
 	AddService("Logger", (Service*)logger);
 
 	GraphicalLibrary* renderer = NEW GraphicalLibrary();
-	AddService("Renderer", (Service*)renderer);
 	renderer->Initialize(window);
+	AddService("Renderer", (Service*)renderer);
 		
 	InputManager* inputManager = NEW InputManager();
 	inputManager->SetUpdateOrderIndex(2);
@@ -125,6 +127,7 @@ auto	Engine::Draw() -> void
 	auto* rend = GetService<GraphicalLibrary>("Renderer");
 	rend->GetRenderPipeline()->BeginRender();
 
+	ResourcesManager* resMgr = GetService<ResourcesManager>("Resources Manager");
 	ObjectManager* objMgr = GetService<ObjectManager>("Object Manager");
 
 	std::vector<Object*> cameras = objMgr->GetObjectsOfType(ObjectType::CAMERA_COMPONENT);
@@ -136,7 +139,18 @@ auto	Engine::Draw() -> void
 
 		std::vector<Object*> objects = objMgr->GetObjectsOfType(ObjectType::MESH_COMPONENT);
 		for (auto& obj : objects)
-			((MeshComponent*)obj)->Draw();
+		{
+			MeshComponent* meshComp = (MeshComponent*)obj;
+			MeshResource* meshResource = nullptr;
+			MaterialResource* matResource = nullptr;
+			if (meshComp->GetMeshType() == MeshComponent::MESH_TYPE::CUSTOM)
+				meshResource = (MeshResource*)resMgr->GetResource(meshComp->GetMesh());
+			else if (meshComp->GetMeshType() == MeshComponent::MESH_TYPE::CUBE)
+				meshResource = (MeshResource*)resMgr->GetDefaultMeshResource(0);
+			matResource = (MaterialResource*)resMgr->GetResource(meshComp->GetMaterial());
+			if (matResource && meshResource)
+				rend->DrawMesh(meshComp->GetNode()->GetTransform()->GetGlobalMatrix(), meshResource, matResource);
+		}
 		std::vector<Object*> objects2D = objMgr->GetObjectsOfType(ObjectType::RENDERER_2D_COMPONENT);
 		for (auto& obj : objects2D)
 			((Renderer2DComponent*)obj)->Draw();
@@ -160,7 +174,18 @@ auto	Engine::Draw() -> void
 		rend->GetRenderPipeline()->BindCamera(proj, view);
 		std::vector<Object*> objects = objMgr->GetObjectsOfType(ObjectType::MESH_COMPONENT);
 		for (auto& obj : objects)
-			((MeshComponent*)obj)->Draw();
+		{
+			MeshComponent* meshComp = (MeshComponent*)obj;
+			MeshResource* meshResource = nullptr;
+			MaterialResource* matResource = nullptr;
+			if (meshComp->GetMeshType() == MeshComponent::MESH_TYPE::CUSTOM)
+				meshResource = (MeshResource*)resMgr->GetResource(meshComp->GetMesh());
+			else if (meshComp->GetMeshType() == MeshComponent::MESH_TYPE::CUBE)
+				meshResource = (MeshResource*)resMgr->GetDefaultMeshResource(0);
+			matResource = (MaterialResource*)resMgr->GetResource(meshComp->GetMaterial());
+			if (matResource && meshResource)
+				rend->DrawMesh(meshComp->GetNode()->GetTransform()->GetGlobalMatrix(), meshResource, matResource);
+		}
 		std::vector<Object*> objects2D = objMgr->GetObjectsOfType(ObjectType::RENDERER_2D_COMPONENT);
 		for (auto& obj : objects2D)
 			((Renderer2DComponent*)obj)->Draw();

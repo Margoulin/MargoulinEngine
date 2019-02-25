@@ -15,8 +15,6 @@ auto	Material::Shutdown() -> void
 
 auto	Material::Bind(ID3D11DeviceContext* context) -> void
 {
-	((D3D11PixelShader*)attachedShader)->Bind(context);
-
 	context->UpdateSubresource(unlitColorConstantBuffer.Get(), 0, NULL,
 		&unlitColor, 0, 0);
 	context->VSSetConstantBuffers(2, 1, unlitColorConstantBuffer.GetAddressOf());

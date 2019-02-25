@@ -28,6 +28,7 @@ public:
 	virtual auto	GetComponentType() const -> COMPONENT_TYPE const = 0;
 	
 	virtual auto	GetObjectType() const -> ObjectType const { return COMPONENT; }
+	virtual auto	GetNode() const -> Node* { return attachedNode; }
 
 	auto	operator = (const Component&)->Component& = delete;
 	auto	operator = (Component&&)->Component& = delete;

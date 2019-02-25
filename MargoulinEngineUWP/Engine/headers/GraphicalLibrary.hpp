@@ -4,6 +4,8 @@
 #include "Service.hpp"
 #include "Maths/Vector.hpp"
 #include <vector>
+#include "Maths/Matrix.hpp"
+#include "TextureResource.hpp"
 
 struct IUnknown;
 class Context;
@@ -11,6 +13,8 @@ class Window;
 class Shader;
 class RendererPipeline;
 class ShaderFactory;
+class MeshResource;
+class MaterialResource;
 
 class GraphicalLibrary : Service
 {
@@ -24,6 +28,10 @@ public:
 	virtual auto	Initialize(Window* window) -> void;
 	virtual auto	Shutdown() -> void;
 	virtual auto	Update() -> void {}
+
+	auto	DrawMesh(Matrix4x4F const& modelMat, MeshResource* meshRes, MaterialResource* matRes) -> void;
+	auto	DrawTexture(Vector4F const& screenRect, TextureRenderData const& renderData) -> void;
+
 #ifdef _DEBUG
 	virtual auto	ImGuiUpdate() -> void;
 #endif // _DEBUG

@@ -21,6 +21,9 @@ public:
 	
 	virtual auto	SetContext(Context* value) -> void { ShaderFactory::SetContext(value); d3d11Context = (D3D11Context*)value; }
 
+	virtual auto	BindShader(Shader const* shader) -> void;
+	virtual auto	DeleteShader(Shader* shader) -> void;
+
 	auto	operator = (const D3D11ShaderFactory&)->D3D11ShaderFactory& = delete;
 	auto	operator = (D3D11ShaderFactory&&)->D3D11ShaderFactory& = delete;
 

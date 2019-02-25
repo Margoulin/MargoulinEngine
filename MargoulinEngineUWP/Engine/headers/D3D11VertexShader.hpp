@@ -17,13 +17,7 @@ public:
 	D3D11VertexShader(D3D11VertexShader&&) = delete;
 	~D3D11VertexShader() = default;
 
-	auto	InitializeDefaultVertexShader(ID3D11Device* d3d11Device) -> void;
-	auto	InitializeSkinningVertexShader(ID3D11Device* d3d11Device) -> void {}
-	auto	InitializeTextureVertexShader(ID3D11Device* d3d11Device) -> void;
-
 	auto	Shutdown() -> void;
-
-	auto	Bind(ID3D11DeviceContext* context) const -> void;
 
 	auto	GetShaderBlob() const -> ID3D10Blob* { return shaderBlob.Get(); }
 	auto	GetShader() const -> ID3D11VertexShader* const { return vtxShader.Get(); }

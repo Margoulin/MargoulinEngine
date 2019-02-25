@@ -8,7 +8,7 @@
 
 auto	ResourcesManager::Initialize() -> void
 {
-	defaultMeshes = NEW MeshResource[1];
+	defaultMeshes = NEW MeshResource[2];
 #pragma region CUBE
 	Mesh* cubeMesh = NEW Mesh();
 	defaultMeshes[0].SetMeshData(cubeMesh);
@@ -65,6 +65,28 @@ auto	ResourcesManager::Initialize() -> void
 	cubeData->AddIndice(5);
 	cubeMesh->AddMesh(cubeData);
 #pragma endregion
+
+#pragma region TEXTURE
+	Mesh* textureMesh = NEW Mesh();
+	defaultMeshes[1].SetMeshData(textureMesh);
+	SubMeshData* textureData = NEW SubMeshData();
+	textureData->AddVertice(Vector3F(0.0f, 1.0f, 0.0f));
+	textureData->AddVertice(Vector3F(1.0f, 1.0f, 0.0f));
+	textureData->AddVertice(Vector3F(1.0f, 0.0f, 0.0f));
+	textureData->AddVertice(Vector3F(0.0f, 0.0f, 0.0f));
+	textureData->AddTexCoords(Vector2F(0.0f, 0.0f));
+	textureData->AddTexCoords(Vector2F(1.0f, 0.0f));
+	textureData->AddTexCoords(Vector2F(1.0f, 1.0f));
+	textureData->AddTexCoords(Vector2F(0.0f, 1.0f));
+	textureData->AddIndice(0);
+	textureData->AddIndice(1);
+	textureData->AddIndice(2);
+	textureData->AddIndice(0);
+	textureData->AddIndice(2);
+	textureData->AddIndice(3);
+	textureMesh->AddMesh(textureData);
+#pragma endregion
+
 	Service::Initialize();
 }
 
@@ -76,7 +98,7 @@ auto	ResourcesManager::Shutdown() -> void
 		DEL(resource.second);
 	}
 
-	for (unsigned int pos = 0; pos < 1; pos++)
+	for (unsigned int pos = 0; pos < 2; pos++)
 		defaultMeshes[pos].Shutdown();
 	DELARRAY(defaultMeshes);
 }
