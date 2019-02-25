@@ -10,6 +10,7 @@ class Context;
 class Window;
 class Shader;
 class RendererPipeline;
+class ShaderFactory;
 
 class GraphicalLibrary : Service
 {
@@ -34,6 +35,7 @@ public:
 	auto	GetWindow() const -> Window* { return window; }
 	auto	GetContext() const -> Context* { return context; }
 	auto	GetRenderPipeline() const -> RendererPipeline* { return pipeline; }
+	auto	GetShaderFactory() const -> ShaderFactory* { return shaderFactory; }
 	auto	GetShader(unsigned int const& value) const -> Shader const* { return shaders[value]; }
 
 	auto	operator = (const GraphicalLibrary&)->GraphicalLibrary& = delete;
@@ -42,6 +44,7 @@ public:
 protected:
 	std::vector<Shader*>	shaders;
 	RendererPipeline*		pipeline = nullptr;
+	ShaderFactory*			shaderFactory = nullptr;
 	Context*				context = nullptr;
 	Window*					window = nullptr;
 

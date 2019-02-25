@@ -308,6 +308,7 @@
     <ClInclude Include="..\Engine\headers\CoreMacros.hpp" />
     <ClInclude Include="..\Engine\headers\CoreMinimal.hpp" />
     <ClInclude Include="..\Engine\headers\D3D11Context.hpp" />
+    <ClInclude Include="..\Engine\headers\D3D11ShaderFactory.hpp" />
     <ClInclude Include="..\Engine\headers\D3D11PixelShader.hpp" />
     <ClInclude Include="..\Engine\headers\D3D11Renderer.hpp" />
     <ClInclude Include="..\Engine\headers\D3D11VertexShader.hpp" />
@@ -343,6 +344,7 @@
     <ClInclude Include="..\Engine\headers\Service.hpp" />
     <ClInclude Include="..\Engine\headers\ServiceApplication.hpp" />
     <ClInclude Include="..\Engine\headers\Shader.hpp" />
+    <ClInclude Include="..\Engine\headers\ShaderFactory.hpp" />
     <ClInclude Include="..\Engine\headers\SkeletalMesh.hpp" />
     <ClInclude Include="..\Engine\headers\SkeletalMeshComponent.hpp" />
     <ClInclude Include="..\Engine\headers\SkeletalMeshResource.hpp" />
@@ -374,6 +376,7 @@
     <ClCompile Include="..\Engine\src\D3D11Context.cpp" />
     <ClCompile Include="..\Engine\src\D3D11PixelShader.cpp" />
     <ClCompile Include="..\Engine\src\D3D11Renderer.cpp" />
+    <ClCompile Include="..\Engine\src\D3D11ShaderFactory.cpp" />
     <ClCompile Include="..\Engine\src\D3D11VertexShader.cpp" />
     <ClCompile Include="..\Engine\src\Engine.cpp" />
     <ClCompile Include="..\Engine\src\FBXLoader.cpp" />
@@ -396,6 +399,7 @@
     <ClCompile Include="..\Engine\src\RendererPipeline.cpp" />
     <ClCompile Include="..\Engine\src\ResourcesManager.cpp" />
     <ClCompile Include="..\Engine\src\Scene.cpp" />
+    <ClCompile Include="..\Engine\src\ShaderFactory.cpp" />
     <ClCompile Include="..\Engine\src\SkeletalMeshComponent.cpp" />
     <ClCompile Include="..\Engine\src\TextureLoader.cpp" />
     <ClCompile Include="..\Engine\src\TextureResource.cpp" />

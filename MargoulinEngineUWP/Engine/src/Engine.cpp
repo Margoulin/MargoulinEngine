@@ -54,8 +54,8 @@ auto	Engine::Initialize(Window* window) -> void
 	AddService("Logger", (Service*)logger);
 
 	GraphicalLibrary* renderer = NEW GraphicalLibrary();
-	renderer->Initialize(window);
 	AddService("Renderer", (Service*)renderer);
+	renderer->Initialize(window);
 		
 	InputManager* inputManager = NEW InputManager();
 	inputManager->SetUpdateOrderIndex(2);
@@ -81,8 +81,6 @@ auto	Engine::Initialize(Window* window) -> void
 
 auto	Engine::Shutdown() -> void
 {
-	ImGui_ImplDX11_Shutdown();
-	
 	if (currentScene)
 	{
 		currentScene->Shutdown();

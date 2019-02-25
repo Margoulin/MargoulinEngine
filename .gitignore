@@ -328,3 +328,8 @@ ASALocalRun/
 
 # MFractors (Xamarin productivity tool) working folder 
 .mfractor/
+
+MargoulinEngineUWP/BootstrapWin32/DebugProfiling/*
+MargoulinEngineUWP/EngineUWP/DebugXboxOne/*
+MargoulinEngineUWP/EngineWin32/DebugProfiling/*
+MargoulinEngineUWP/XboxOneMain/DebugXboxOne/*

@@ -7,8 +7,13 @@
 
 #include "D3D11PixelShader.hpp"
 #include "D3D11VertexShader.hpp"
+#include "ShaderFactory.hpp"
 
 #include "./Logger.hpp"
+
+#include "Engine.hpp"
+#include "GraphicalLibrary.hpp"
+#include "D3D11VertexShader.hpp"
 
 auto	D3D11Renderer::Initialize() -> void
 {
@@ -37,10 +42,9 @@ auto	D3D11Renderer::Initialize() -> void
 	CD3D11_BUFFER_DESC indexBufferDesc((unsigned int)sizeof(unsigned int) * 6, D3D11_BIND_INDEX_BUFFER);
 	context->GetDevice()->CreateBuffer(&indexBufferDesc, &indexBufferData, &textureIndexBuffer);
 
-	textureVertexShader = NEW D3D11VertexShader();
-	textureVertexShader->InitializeTextureVertexShader(context->GetDevice());
-	texturePixelShader = NEW D3D11PixelShader();
-	texturePixelShader->InitializeTexturePixelShader(context->GetDevice(), textureVertexShader);
+	auto* graph = Engine::GetInstance()->GetService<GraphicalLibrary>("Renderer");
+	textureVertexShader = (D3D11VertexShader*)graph->GetShaderFactory()->CreateVertexTextureShader();
+	texturePixelShader = (D3D11PixelShader*)graph->GetShaderFactory()->CreatePixelTextureShader();
 
 	textureVertices[2] = 0.0f;
 	textureVertices[7] = 0.0f;
@@ -56,9 +60,6 @@ auto	D3D11Renderer::Initialize() -> void
 	context->MarkD3D11ObjectName(modelConstantBuffer.Get(), MString("Model Constant Buffer"));
 	context->MarkD3D11ObjectName(textureVertexBuffer.Get(), MString("Texture Vertex Buffer"));
 	context->MarkD3D11ObjectName(textureIndexBuffer.Get(), MString("Texture Index Buffer"));
-	context->MarkD3D11ObjectName(textureVertexShader->GetShader(), MString("Texture Vertex Shader"));
-	context->MarkD3D11ObjectName(texturePixelShader->GetShader(), MString("Texture Pixel Shader"));
-	context->MarkD3D11ObjectName(texturePixelShader->GetInputLayout(), "Texture Shader Input Layout");
 #endif //_DEBUG
 
 }
@@ -117,10 +118,6 @@ auto	D3D11Renderer::BindCamera(Matrix4x4F const& projectionMatrix, Matrix4x4F co
 
 	context->GetDeviceContext()->VSSetConstantBuffers(0, 1, viewProjConstantBuffer.GetAddressOf());
 }
-	
-#include "Engine.hpp"
-#include "GraphicalLibrary.hpp"
-#include "D3D11VertexShader.hpp"
 
 auto	D3D11Renderer::drawData(Mesh* mesh, Material* mat, Matrix4x4F const& modelMat) -> void
 {

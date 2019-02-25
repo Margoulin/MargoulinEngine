@@ -5,6 +5,7 @@
 #include "D3D11Context.hpp"
 #include "Window.hpp"
 #include "D3D11Renderer.hpp"
+#include "D3D11ShaderFactory.hpp"
 #include "imgui_impl_dx11.h"
 #include "Shader.hpp"
 #include "ResourcesManager.hpp"
@@ -23,6 +24,10 @@ auto	GraphicalLibrary::Initialize(Window* window) -> void
 	context = d11Context;
 	context->Initialize(window);
 
+	D3D11ShaderFactory* shadFactory = NEW D3D11ShaderFactory();
+	shaderFactory = (ShaderFactory*)shadFactory;
+	shadFactory->SetContext(context);
+
 	D3D11Renderer*	pipe = NEW D3D11Renderer();
 	pipeline = (RendererPipeline*)pipe;
 	pipe->SetContext(d11Context);
@@ -35,32 +40,28 @@ auto	GraphicalLibrary::Initialize(Window* window) -> void
 #endif
 
 
-	D3D11VertexShader* staticMeshVertexShader = NEW D3D11VertexShader();
-	staticMeshVertexShader->InitializeDefaultVertexShader(d11Context->GetDevice());
-	shaders.push_back((Shader*)staticMeshVertexShader);
-
-	D3D11PixelShader* unlitColorShader = NEW D3D11PixelShader();
-	unlitColorShader->InitializeUnlitColorPixelShader(d11Context->GetDevice(), (D3D11VertexShader*)shaders[0]);
-	shaders.push_back((Shader*)unlitColorShader);
+	shaders.push_back(shaderFactory->CreateBasicVertexShader());
+	Shader* unlitColorShader = shaderFactory->CreateUnlitColorShader();
+	shaders.push_back(unlitColorShader);
 
 	ResourcesManager* rsMgr = Engine::GetInstance()->GetService<ResourcesManager>("Resources Manager");
 	unsigned int matId = rsMgr->CreateMaterialResource();
 	MaterialResource* matRes = (MaterialResource*)rsMgr->GetResource(matId);
 	matRes->SetName("BasicMaterial");
 	Material* newMat = NEW Material();
-	newMat->attachedShader = unlitColorShader;
+	newMat->attachedShader = (FragmentShader*)unlitColorShader;
 	newMat->Initialize(d11Context->GetDevice());
 	matRes->SetMaterialData(newMat);
 
 #ifdef _DEBUG
-	d11Context->MarkD3D11ObjectName(staticMeshVertexShader->GetShader(), MString("Default Vertex Shader"));
-	d11Context->MarkD3D11ObjectName(unlitColorShader->GetShader(), MString("Unlit Color Shader"));
 	d11Context->MarkD3D11ObjectName(newMat->GetConstantBuffer(), MString("Default Vertex Shader"));
 #endif
 }
 
 auto	GraphicalLibrary::Shutdown() -> void
 {
+	ImGui_ImplDX11_Shutdown();
+
 	for (auto& shader : shaders)
 	{
 		if (shader->GetShaderType() == Shader::ShaderType::VERTEX)
