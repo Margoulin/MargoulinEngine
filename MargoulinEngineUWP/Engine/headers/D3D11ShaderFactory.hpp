@@ -18,7 +18,9 @@ public:
 	virtual auto	CreatePixelTextureShader() -> Shader* override;
 	virtual auto	CreateBasicVertexShader() -> Shader* override;
 	virtual auto	CreateUnlitColorShader() -> Shader* override;
-	
+	virtual auto	CreateVertexSkinningShader() -> Shader* override;
+	virtual auto	CreateLineVertexShader() -> Shader* override;
+
 	virtual auto	SetContext(Context* value) -> void { ShaderFactory::SetContext(value); d3d11Context = (D3D11Context*)value; }
 
 	virtual auto	BindShader(Shader const* shader) -> void;

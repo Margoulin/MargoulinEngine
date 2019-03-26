@@ -359,5 +359,8 @@
     <ClCompile Include="..\Engine\src\D3D11Buffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\Engine\src\SkeletalMesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

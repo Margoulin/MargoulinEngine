@@ -43,7 +43,9 @@ auto	D3D11ShaderFactory::CreateVertexTextureShader() -> Shader*
 		{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 	};
 
-	return createVertexShader(vertexShader, inLayoutDesc, 2);
+	auto* out = createVertexShader(vertexShader, inLayoutDesc, 2);
+	out->SetShaderName("TEXTURE");
+	return out;
 }
 
 auto	D3D11ShaderFactory::CreatePixelTextureShader() -> Shader*
@@ -62,7 +64,9 @@ auto	D3D11ShaderFactory::CreatePixelTextureShader() -> Shader*
 			float4 out_col = texture0.Sample(sampler0, input.uv);  \
 			return out_col; \
         }";
-	return createPixelShader(pixelShader);
+	auto* out = createPixelShader(pixelShader);
+	out->SetShaderName("TEXTURE");
+	return out;
 }
 
 auto	D3D11ShaderFactory::CreateBasicVertexShader() -> Shader*
@@ -78,7 +82,7 @@ auto	D3D11ShaderFactory::CreateBasicVertexShader() -> Shader*
 		{\
 			matrix model;\
 		};\
-		cbuffer UnlitColorBuffer : register(b2)\
+		cbuffer UnlitColorBuffer : register(b3)\
 		{\
 			float4	unlitColor;\
 		};\
@@ -109,7 +113,44 @@ auto	D3D11ShaderFactory::CreateBasicVertexShader() -> Shader*
 	{
 		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 }
 	};
-	return createVertexShader(vertexShader, inLayoutDesc, 1);
+	auto* out = createVertexShader(vertexShader, inLayoutDesc, 1);
+	out->SetShaderName("Basic");
+	return out;
+}
+
+auto	D3D11ShaderFactory::CreateLineVertexShader() -> Shader*
+{
+	MString vertexShader =
+		"cbuffer ViewProjectionConstantBuffer : register(b0)\
+		{\
+			matrix view;\
+			matrix projection;\
+		};\
+		\
+		struct PS_INPUT \
+		{ \
+			float4 pos : SV_POSITION; \
+			float4 color : COLOR0; \
+		}; \
+		\
+		PS_INPUT main(float3 pos : POSITION, float4 col : COLOR)\
+		{ \
+			PS_INPUT output;\
+			float4 tempPos = float4(pos, 1.0f);\
+			tempPos = mul(tempPos, view);\
+			tempPos = mul(tempPos, projection);\
+			output.pos = tempPos;\
+			output.color = col; \
+			return output;\
+		}";
+	D3D11_INPUT_ELEMENT_DESC inLayoutDesc[] =
+	{
+		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{ "COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 }
+	};
+	auto* out = createVertexShader(vertexShader, inLayoutDesc, 2);
+	out->SetShaderName("Line");
+	return out;
 }
 
 auto	D3D11ShaderFactory::CreateUnlitColorShader() -> Shader*
@@ -126,7 +167,130 @@ auto	D3D11ShaderFactory::CreateUnlitColorShader() -> Shader*
 			return input.color; \
 		} \
 		";
-	return createPixelShader(pixelShader);
+	auto* out = createPixelShader(pixelShader);
+	out->SetShaderName("UNLIT COLOR");
+	return out;
+}
+
+auto	D3D11ShaderFactory::CreateVertexSkinningShader() -> Shader*
+{
+	MString vertexShader =
+		"cbuffer ViewProjectionConstantBuffer : register(b0)\
+		{\
+			matrix view;\
+			matrix projection;\
+		};\
+		\
+		cbuffer ModelConstantBuffer : register(b1)\
+		{\
+			matrix model;\
+		};\
+		cbuffer UnlitColorBuffer : register(b3)\
+		{\
+			float4	unlitColor;\
+		};\
+		cbuffer SkelMeshBuffer : register(b2)\
+		{\
+			uint	boneCount;\
+			matrix boneMatrices[99];\
+		}\
+		\
+		struct VS_INPUT \
+		{ \
+			float3 a_position : POSITION; \
+			uint4	a_boneIndices : BLENDINDICES;\
+			float4	a_boneWeights : BLENDWEIGHT;\
+		}; \
+		\
+		struct PS_INPUT \
+		{ \
+			float4 pos : SV_POSITION; \
+			float4 color : COLOR0; \
+		}; \
+		\
+		PS_INPUT main(VS_INPUT input)\
+		{ \
+			PS_INPUT output;\
+			float4 tempPos = float4(input.a_position, 1.0f);\
+			tempPos = mul(tempPos, model);\
+			tempPos = mul(tempPos, view);\
+			tempPos = mul(tempPos, projection);\
+			output.pos = tempPos;\
+			output.color = unlitColor; \
+			return output;\
+		}";
+
+	/*
+	MString vertexShader =
+	"cbuffer ViewProjectionConstantBuffer : register(b0)\
+		{\
+			matrix view;\
+			matrix projection;\
+		};\
+		\
+		cbuffer ModelConstantBuffer : register(b1)\
+		{\
+			matrix model;\
+		};\
+		cbuffer UnlitColorBuffer : register(b3)\
+		{\
+			float4	unlitColor;\
+		};\
+		cbuffer SkelMeshBuffer : register(b2)\
+		{\
+			uint	boneCount;\
+			matrix boneMatrices[99];\
+		}\
+		\
+		struct VS_INPUT \
+		{ \
+			float3 a_position : POSITION; \
+			uint4	a_boneIndices : BLENDINDICES;\
+			float4	a_boneWeights : BLENDWEIGHT;\
+		}; \
+		\
+		struct PS_INPUT \
+		{ \
+			float4 pos : SV_POSITION; \
+			float4 color : COLOR0; \
+		}; \
+		\
+		PS_INPUT main(VS_INPUT input)\
+		{ \
+			PS_INPUT output;\
+			float4 pos = float4(input.a_position, 1.0f);\
+			float4 tempPos = float4(0.0f, 0.0f, 0.0f, 1.0f);\
+			float lastWeight = 0.0f;\
+			lastWeight += input.a_boneWeights.x;\
+			tempPos += input.a_boneWeights.x * mul(pos, boneMatrices[input.a_boneIndices.x]);\
+			lastWeight += input.a_boneWeights.y;\
+			tempPos += input.a_boneWeights.y * mul(pos, boneMatrices[input.a_boneIndices.y]);\
+			lastWeight += input.a_boneWeights.z;\
+			tempPos += input.a_boneWeights.z * mul(pos, boneMatrices[input.a_boneIndices.z]);\
+			lastWeight = 1.0f - lastWeight;\
+			tempPos += lastWeight * mul(pos, boneMatrices[input.a_boneIndices.w]);\
+			tempPos.w = 1.0f;\
+			\
+			tempPos = mul(tempPos, model);\
+			tempPos = mul(tempPos, view);\
+			tempPos = mul(tempPos, projection);\
+			output.pos = tempPos;\
+			output.color = unlitColor; \
+			return output;\
+		}";
+	*/
+
+	D3D11_INPUT_ELEMENT_DESC inLayoutDesc[] =
+	{
+		{ "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		//{ "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0, 12, D3D11_INPUT_PER_VERTEX_DATA, 0 },
+		{"BLENDINDICES", 0, DXGI_FORMAT_R32G32B32A32_UINT, 1, 0, D3D11_INPUT_PER_VERTEX_DATA, 0},
+		{"BLENDWEIGHT", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 1, 16, D3D11_INPUT_PER_VERTEX_DATA, 0}
+	};
+
+	auto* out = createVertexShader(vertexShader, inLayoutDesc, 3);
+	out->SetShaderName("Skinning");
+	return out;
 }
 
 auto	D3D11ShaderFactory::BindShader(Shader const* shader) -> void

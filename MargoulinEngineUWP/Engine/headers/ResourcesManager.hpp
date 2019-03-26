@@ -23,9 +23,6 @@ public:
 	virtual auto	Shutdown() -> void;
 	virtual auto	Update() -> void {}
 
-	auto	CreateMeshResource() -> unsigned int;
-	auto	CreateSkeletalMeshResource() -> unsigned int;
-	auto	CreateMaterialResource() -> unsigned int;
 	template<typename Rs>
 	auto	CreateResource() -> unsigned int
 	{

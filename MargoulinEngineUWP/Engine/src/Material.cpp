@@ -17,7 +17,7 @@ auto	Material::Bind(ID3D11DeviceContext* context) -> void
 {
 	context->UpdateSubresource(unlitColorConstantBuffer.Get(), 0, NULL,
 		&unlitColor, 0, 0);
-	context->VSSetConstantBuffers(2, 1, unlitColorConstantBuffer.GetAddressOf());
+	context->VSSetConstantBuffers(3, 1, unlitColorConstantBuffer.GetAddressOf());
 }
 
 #include <imgui.h>

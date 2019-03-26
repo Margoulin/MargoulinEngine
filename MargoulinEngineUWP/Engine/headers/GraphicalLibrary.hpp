@@ -15,6 +15,7 @@ class RendererPipeline;
 class ShaderFactory;
 class GPUBufferFactory;
 class MeshResource;
+class SkeletalMeshResource;
 class MaterialResource;
 
 class GraphicalLibrary : Service
@@ -30,8 +31,11 @@ public:
 	virtual auto	Shutdown() -> void;
 	virtual auto	Update() -> void {}
 
+	auto	EndOfFrame() -> void { lastVertexShaderUse = nullptr; }
 	auto	DrawMesh(Matrix4x4F const& modelMat, MeshResource* meshRes, MaterialResource* matRes) -> void;
+	auto	DrawSkeletalMesh(Matrix4x4F const& modelMat, SkeletalMeshResource* meshRes, MaterialResource* matRes) -> void;
 	auto	DrawTexture(Vector4F const& screenRect,  TextureRenderData const& renderData) -> void;
+	auto	DrawLine(Vector3F const& firstPoint, Vector3F const& secondPoint, Vector3F const& color) -> void;
 
 #ifdef _DEBUG
 	virtual auto	ImGuiUpdate() -> void;
@@ -60,7 +64,7 @@ protected:
 	Window*					window = nullptr;
 
 private:
-
+	Shader*	lastVertexShaderUse = nullptr;
 };
 
 

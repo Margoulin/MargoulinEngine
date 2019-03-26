@@ -19,10 +19,11 @@ Scene::Scene()
 
 	ObjectManager* objMgr = Engine::GetInstance()->GetService<ObjectManager>("Object Manager");
 
+	/*
 	Node* node = objMgr->Create<Node>();
 	node->SetName("Cube");
 	node->Initialize();
-	node->GetTransform()->SetPosition(Vector3F(0.0f, 0.0f, -2.0f));
+	node->GetTransform()->SetPosition(Vector3F(0.0f, 0.0f, 0.0f));
 	auto* cp1 = objMgr->Create<MeshComponent>();
 	cp1->SetMeshType(MeshComponent::CUBE);
 	cp1->SetCustomMesh(0);
@@ -42,6 +43,7 @@ Scene::Scene()
 	camNode->Initialize();
 	camNode->AddComponent(objMgr->Create<CameraComponent>());
 	AddNode(camNode);
+	*/
 }
 
 auto	Scene::AddNode(Node* value) -> void

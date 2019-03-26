@@ -201,6 +201,8 @@ auto	Engine::Draw() -> void
 		rend->GetRenderPipeline()->DrawFilledRectangle(imGuiCursor - Vector2F(2.5f, 2.5f), Vector2F(5.0f, 5.0f), Vector4F(1.0f, 1.0f, 1.0f, 1.0f));
 #endif
 
+	rend->EndOfFrame();
+
 	rend->GetRenderPipeline()->Present();
 }
 

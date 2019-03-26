@@ -1,6 +1,49 @@
 #include "D3D11Buffer.hpp"
 
 #include "D3D11Context.hpp"
+#include "MemoryMacro.hpp"
+
+D3D11BufferArray::D3D11BufferArray(unsigned int bufferNbr)
+{
+	buffers = NEW ID3D11Buffer*[bufferNbr];
+	bufferStrides = NEW unsigned int[bufferNbr];
+}
+
+auto	D3D11BufferArray::BindBuffers(Context* context) -> void
+{
+	D3D11Context* d3d11Context = (D3D11Context*)context;
+
+	if (bufferType == BufferType::VERTEX)
+	{
+		unsigned int offset[] = { 0, 0 };
+		d3d11Context->GetDeviceContext()->IASetVertexBuffers(0, bufferCount, buffers, bufferStrides, offset);
+	}
+	else if (bufferType == BufferType::GENERAL)
+		d3d11Context->GetDeviceContext()->VSSetConstantBuffers(bufferBindIndex, bufferCount, buffers);
+}
+
+auto	D3D11BufferArray::BindSingleBuffer(Context* context, unsigned int bufferID) -> void
+{
+	D3D11Context* d3d11Context = (D3D11Context*)context;
+	if (bufferType == BufferType::VERTEX)
+	{
+		unsigned int offset = 0;
+		d3d11Context->GetDeviceContext()->IASetVertexBuffers(0, 1, &buffers[bufferID], bufferStrides, &offset);
+	}
+	else if (bufferType == BufferType::GENERAL)
+		d3d11Context->GetDeviceContext()->VSSetConstantBuffers(bufferBindIndex, 1, &buffers[bufferID]);
+}
+
+auto	D3D11BufferArray::Shutdown() -> void
+{
+	for (unsigned int pos = 0; pos < bufferCount; pos++)
+	{
+		if (buffers[pos])
+			buffers[pos]->Release();
+	}
+	DELARRAY(buffers);
+	DELARRAY(bufferStrides);
+}
 
 auto	D3D11Buffer::BindBuffer(Context* context) -> void
 {

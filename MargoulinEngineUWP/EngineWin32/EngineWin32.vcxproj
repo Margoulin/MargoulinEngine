@@ -406,6 +406,7 @@
     <ClCompile Include="..\Engine\src\ResourcesManager.cpp" />
     <ClCompile Include="..\Engine\src\Scene.cpp" />
     <ClCompile Include="..\Engine\src\ShaderFactory.cpp" />
+    <ClCompile Include="..\Engine\src\SkeletalMesh.cpp" />
     <ClCompile Include="..\Engine\src\SkeletalMeshComponent.cpp" />
     <ClCompile Include="..\Engine\src\TextureLoader.cpp" />
     <ClCompile Include="..\Engine\src\TextureResource.cpp" />

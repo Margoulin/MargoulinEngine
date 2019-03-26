@@ -18,6 +18,8 @@
 #include "D3D11VertexShader.hpp"
 #include "D3D11Buffer.hpp"
 #include "Mesh.hpp"
+#include "SkeletalMesh.hpp"
+#include "SkeletalMeshResource.hpp"
 
 auto	GraphicalLibrary::Initialize(Window* window) -> void
 {
@@ -47,6 +49,14 @@ auto	GraphicalLibrary::Initialize(Window* window) -> void
 	D3D11Buffer* viewProjBuffer = (D3D11Buffer*)d3d11BufferFactory->GenerateBuffer(sizeof(ViewProjectionConstantBuffer));
 	pipeline->SetViewProjBuffer(viewProjBuffer);
 
+	D3D11Buffer* skelMeshBuffer = (D3D11Buffer*)d3d11BufferFactory->GenerateBuffer(16 + 99 * 16 * sizeof(float));
+	skelMeshBuffer->SetBufferBindIndex(2);
+	pipeline->SetSkeletalMeshBuffer(skelMeshBuffer);
+
+	//D3D11Buffer* lineBuffer = (D3D11Buffer*)d3d11BufferFactory->GenerateVertexBuffer(99 * (sizeof(Vector3F) + sizeof(Vector4F)), sizeof(Vector3F) + sizeof(Vector4F), pipeline->GetLineVerticesBuffer(), true);
+	D3D11Buffer* lineBuffer = (D3D11Buffer*)d3d11BufferFactory->GenerateVertexBuffer(2 * (sizeof(Vector3F) + sizeof(Vector4F)), sizeof(Vector3F) + sizeof(Vector4F), pipeline->GetLineVerticesBuffer(), true);
+	pipeline->SetLineBuffer(lineBuffer);
+
 #ifdef UWP
 	ImGui_ImplDX11_Init(d11Context->GetDevice(), d11Context->GetDeviceContext());
 #else
@@ -59,7 +69,7 @@ auto	GraphicalLibrary::Initialize(Window* window) -> void
 	shaders.push_back(unlitColorShader);
 
 	ResourcesManager* rsMgr = Engine::GetInstance()->GetService<ResourcesManager>("Resources Manager");
-	unsigned int matId = rsMgr->CreateMaterialResource();
+	unsigned int matId = rsMgr->CreateResource<MaterialResource>();
 	MaterialResource* matRes = (MaterialResource*)rsMgr->GetResource(matId);
 	matRes->SetName("BasicMaterial");
 	Material* newMat = NEW Material();
@@ -69,6 +79,8 @@ auto	GraphicalLibrary::Initialize(Window* window) -> void
 
 	shaders.push_back(shaderFactory->CreateVertexTextureShader());
 	shaders.push_back(shaderFactory->CreatePixelTextureShader());
+	shaders.push_back(shaderFactory->CreateVertexSkinningShader());
+	shaders.push_back(shaderFactory->CreateLineVertexShader());
 
 #ifdef _DEBUG
 	d11Context->MarkD3D11ObjectName(newMat->GetConstantBuffer(), MString("Default Vertex Shader"));
@@ -94,6 +106,9 @@ auto	GraphicalLibrary::Shutdown() -> void
 auto	GraphicalLibrary::DrawMesh(Matrix4x4F const& modelMat, MeshResource* meshRes, MaterialResource* matRes) -> void
 {
 	shaderFactory->BindShader(shaders[0]);
+	if (lastVertexShaderUse && shaders[0] != lastVertexShaderUse)
+		pipeline->RebindCamera();
+	lastVertexShaderUse = shaders[0];
 	shaderFactory->BindShader(matRes->GetMaterialData()->attachedShader);
 
 	SubMeshData** subMeshes = meshRes->GetMeshData()->GetSubMeshTab();
@@ -109,10 +124,45 @@ auto	GraphicalLibrary::DrawMesh(Matrix4x4F const& modelMat, MeshResource* meshRe
 
 	pipeline->drawData(meshRes->GetMeshData(), matRes->GetMaterialData(), modelMat);
 }
+
+auto	GraphicalLibrary::DrawSkeletalMesh(Matrix4x4F const& modelMat, SkeletalMeshResource* meshRes, MaterialResource* matRes) -> void
+{
+	shaderFactory->BindShader(shaders[4]);
+	if (lastVertexShaderUse && shaders[4] != lastVertexShaderUse)
+		pipeline->RebindCamera();
+	lastVertexShaderUse = shaders[4];
+	shaderFactory->BindShader(matRes->GetMaterialData()->attachedShader);
+
+	if (!meshRes->GetSkeletalMeshConstData().IsInVRAM())
+	{
+		meshRes->GetSkeletalMeshData().SetIndexBuffer(bufferFactory->GenerateIndexBuffer(&meshRes->GetSkeletalMeshData()));
+		meshRes->GetSkeletalMeshData().SetVertexBufferArray(bufferFactory->GenerateVertexBufferArray(2, &meshRes->GetSkeletalMeshData()));
+		meshRes->GetSkeletalMeshData().SetInVRAM(true);
+	}
+
+	//pipeline->drawData(&meshRes->GetSkeletalMeshData(), matRes->GetMaterialData(), modelMat);
+	
+	Rig* rig = meshRes->GetSkeletalMeshConstData().GetRig();
+	for (int pos = 0; pos < rig->GetBoneCount(); pos++)
+	{
+		if (rig->GetBone(pos)->ParentIdx != -1)
+		{
+			Vector3F from = Matrix4x4F::GetPositionFromModelMatrix(rig->GetBone(pos)->TPoseMatrix);
+			Vector3F to = Matrix4x4F::GetPositionFromModelMatrix(rig->GetBone(rig->GetBone(pos)->ParentIdx)->TPoseMatrix);
+			from = from * 0.01f;
+			to = to * 0.01f;
+			DrawLine(from, to, Vector3F(1.0f, 0.0f, 0.0f));
+		}
+	}
+
+}
 	
 auto	GraphicalLibrary::DrawTexture(Vector4F const& screenRect, TextureRenderData const& renderData) -> void
 {
 	shaderFactory->BindShader(shaders[2]);
+	if (lastVertexShaderUse && shaders[2] != lastVertexShaderUse)
+		pipeline->RebindCamera();
+	lastVertexShaderUse = shaders[2];
 	shaderFactory->BindShader(shaders[3]);
 	
 	Vector2F halfScreen = window->GetSize() * 0.5f;
@@ -140,6 +190,16 @@ auto	GraphicalLibrary::DrawTexture(Vector4F const& screenRect, TextureRenderData
 	}
 
 	pipeline->drawTexture(screenRect, textureMesh, renderData);
+}
+
+auto	GraphicalLibrary::DrawLine(Vector3F const& firstPoint, Vector3F const& secondPoint, Vector3F const& color) -> void
+{
+	shaderFactory->BindShader(shaders[5]);
+	if (lastVertexShaderUse && shaders[5] != lastVertexShaderUse)
+		pipeline->RebindCamera();
+	lastVertexShaderUse = shaders[5];
+	shaderFactory->BindShader(shaders[1]);
+	pipeline->draw3DLine(firstPoint, secondPoint, color);
 }
 
 #ifdef UWP

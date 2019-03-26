@@ -103,24 +103,6 @@ auto	ResourcesManager::Shutdown() -> void
 	DELARRAY(defaultMeshes);
 }
 
-auto	ResourcesManager::CreateMeshResource() -> unsigned int
-{
-	MeshResource* meshResource = NEW MeshResource();
-	return addResource((Resource*)meshResource);
-}
-
-auto	ResourcesManager::CreateSkeletalMeshResource() -> unsigned int
-{
-	SkeletalMeshResource* skelResource = NEW SkeletalMeshResource();
-	return addResource((Resource*)skelResource);
-}
-
-auto	ResourcesManager::CreateMaterialResource() -> unsigned int
-{
-	MaterialResource* matRes = NEW MaterialResource();
-	return addResource((Resource*)matRes);
-}
-
 auto	ResourcesManager::GetResource(unsigned int const& resourceID) const -> Resource*
 {
 	auto it = resources.find(resourceID);

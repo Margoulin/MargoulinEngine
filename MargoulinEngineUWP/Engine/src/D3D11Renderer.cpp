@@ -2,6 +2,7 @@
 
 #include "D3D11Context.hpp"
 #include "Mesh.hpp"
+#include "SkeletalMesh.hpp"
 #include "Material.hpp"
 #include "PolygonRenderResource.hpp"
 
@@ -66,6 +67,35 @@ auto	D3D11Renderer::BindCamera(Matrix4x4F const& projectionMatrix, Matrix4x4F co
 
 	viewProjBuffer->UpdateBufferData(context, (void*)&viewProjBufferData);
 	viewProjBuffer->BindBuffer(context);
+
+	this->projectionMatrix = projectionMatrix;
+	this->viewMatrix = viewMatrix;
+}
+
+auto	D3D11Renderer::RebindCamera() -> void
+{
+	viewProjBufferData.View = Matrix4x4F::Transpose(viewMatrix);
+	viewProjBufferData.Projection = Matrix4x4F::Transpose(projectionMatrix);
+	viewProjBuffer->UpdateBufferData(context, (void*)&viewProjBufferData);
+	viewProjBuffer->BindBuffer(context);
+}
+
+auto	D3D11Renderer::draw3DLine(Vector3F const& firstPoint, Vector3F const& secondPoint, Vector3F const& color) -> void
+{
+	modelBuffer->UpdateBufferData(context, (void*)Matrix4x4F::identity.GetArray());
+
+	memcpy(lineVerticesBuffer, &firstPoint.x, 3 * sizeof(float));
+	memcpy(&lineVerticesBuffer[3], &color.x, 4 * sizeof(float));
+	lineVerticesBuffer[6] = 1.0f;
+	memcpy(&lineVerticesBuffer[7], &secondPoint.x, 3 * sizeof(float));
+	memcpy(&lineVerticesBuffer[10], &color.x, 4 * sizeof(float));
+	lineVerticesBuffer[13] = 1.0f;
+
+	lineBuffer->UpdateBufferData(context, lineVerticesBuffer, (sizeof(Vector3F) + sizeof(Vector4F)) * 2);
+	lineBuffer->BindBuffer(context);
+
+	context->GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_LINELIST);
+	context->GetDeviceContext()->Draw(2, 0);
 }
 
 auto	D3D11Renderer::drawData(Mesh* mesh, Material* mat, Matrix4x4F const& modelMat) -> void
@@ -84,6 +114,25 @@ auto	D3D11Renderer::drawData(Mesh* mesh, Material* mat, Matrix4x4F const& modelM
 		context->GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 		context->GetDeviceContext()->DrawIndexed(subMesh->GetIndicesCount(), 0, 0);
 	}
+}
+	
+auto	D3D11Renderer::drawData(SkeletalMesh* mesh, Material* mat, Matrix4x4F const& modelMat) -> void
+{
+	mat->Bind(context->GetDeviceContext());
+
+	SkeletonConstantBuffer	skeletalShaderData;
+	skeletalShaderData.boneCount = mesh->GetRig()->GetBoneCount();
+	skeletalShaderData.matricesData = mesh->GetBindPose()->bonesFloat.data();
+
+	skelMeshBuffer->UpdateBufferData(context, &skeletalShaderData);
+
+	modelBuffer->UpdateBufferData(context, (void*)Matrix4x4F::Transpose(modelMat).GetArray());
+	
+	mesh->GetVertexBufferArray()->BindBuffers(context);
+	mesh->GetIndexBuffer()->BindBuffer(context);
+
+	context->GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	context->GetDeviceContext()->DrawIndexed(mesh->GetIndicesCount(), 0, 0);
 }
 	
 auto	D3D11Renderer::DrawRectangle(Vector2F const& screenPosition, Vector2F const& size, Vector4F const& colorValue) -> void
@@ -313,8 +362,8 @@ auto	D3D11Renderer::drawTexture(Vector4F const& screenRect, SubMeshData* texMesh
 	texMesh->GetVertexBuffer()->BindBuffer(context);
 	texMesh->GetIndexBuffer()->BindBuffer(context);
 	
-	context->GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-	context->GetDeviceContext()->DrawIndexed(6, 0, 0);
+	//context->GetDeviceContext()->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+	//context->GetDeviceContext()->DrawIndexed(6, 0, 0);
 }
 
 auto	D3D11Renderer::InitializeTexture(TextureResource* tex) -> void

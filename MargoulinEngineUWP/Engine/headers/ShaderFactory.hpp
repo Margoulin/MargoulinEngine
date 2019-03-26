@@ -22,6 +22,8 @@ public:
 	virtual auto	CreatePixelTextureShader() -> Shader* = 0;
 	virtual auto	CreateBasicVertexShader() -> Shader* = 0;
 	virtual auto	CreateUnlitColorShader() -> Shader* = 0;
+	virtual auto	CreateVertexSkinningShader() -> Shader* = 0;
+	virtual auto	CreateLineVertexShader() -> Shader* = 0;
 
 	virtual auto	BindShader(Shader const* shader) -> void = 0;
 	virtual auto	DeleteShader(Shader* shader) -> void = 0;

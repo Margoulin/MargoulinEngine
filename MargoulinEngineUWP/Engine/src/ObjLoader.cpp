@@ -30,8 +30,8 @@ auto	ObjLoader::LoadObjFromFile(MString const& filename, bool absolutePath) -> R
 	if (tinyobj::LoadObj(&attrib, &shapes, &materials, &err, finalPath.Str(), "./") == false)
 		return nullptr;
 
-	unsigned int meshID = rsMgr->CreateMeshResource();
-	MeshResource*				meshRsc = (MeshResource*)rsMgr->GetResource(meshID);
+	unsigned int meshID = rsMgr->CreateResource<MeshResource>();
+	MeshResource*				meshRsc = rsMgr->GetResource<MeshResource>(meshID);
 	Mesh*						mesh = NEW Mesh();
 	meshRsc->SetName(filename);
 	

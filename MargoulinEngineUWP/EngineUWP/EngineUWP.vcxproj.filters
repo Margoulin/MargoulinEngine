@@ -315,6 +315,9 @@
     <ClCompile Include="..\Engine\src\MeshResource.cpp">
       <Filter>Sources</Filter>
     </ClCompile>
+    <ClCompile Include="..\Engine\src\SkeletalMesh.cpp">
+      <Filter>Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Engine\headers\ObjectHandle.inl">

@@ -19,6 +19,12 @@ struct ViewProjectionConstantBuffer
 	Matrix4x4F	Projection;
 };
 
+struct SkeletonConstantBuffer
+{
+	unsigned int	boneCount = 0;
+	float*			matricesData;
+};
+
 class D3D11Renderer : public RendererPipeline
 {
 public:
@@ -31,6 +37,7 @@ public:
 	virtual auto	EndRender() -> void;
 	virtual auto	Present() -> void;
 	virtual auto	BindCamera(Matrix4x4F const& projectionMatrix, Matrix4x4F const& viewMatrix) -> void;
+	virtual auto	RebindCamera() -> void;
 	auto	InitializeTexture(TextureResource* tex) -> void;
 
 	auto	SetContext(D3D11Context* value) -> void { context = value; }
@@ -44,7 +51,9 @@ public:
 protected:
 
 private:
+	virtual auto	draw3DLine(Vector3F const& firstPoint, Vector3F const& secondPoint, Vector3F const& color) -> void;
 	virtual auto	drawData(Mesh* mesh, Material* mat, Matrix4x4F const& modelMat) -> void;
+	virtual auto	drawData(SkeletalMesh* mesh, Material* mat, Matrix4x4F const& modelMat) -> void;
 	virtual auto	drawTexture(Vector4F const& screenRect, SubMeshData* texMesh, TextureRenderData const& renderData) -> void;
 
 	virtual auto	DrawRectangle(Vector2F const& screenPosition, Vector2F const& size, Vector4F const& color) -> void;

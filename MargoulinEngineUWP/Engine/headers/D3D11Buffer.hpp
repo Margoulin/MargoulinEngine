@@ -6,6 +6,42 @@
 #include <d3d11.h>
 #include <wrl/client.h>
 
+class D3D11BufferArray : public GPUBufferArray
+{
+public:
+	D3D11BufferArray(unsigned int bufferCount);
+	D3D11BufferArray(const D3D11BufferArray&) = delete;
+	D3D11BufferArray(D3D11BufferArray&&) = delete;
+	~D3D11BufferArray() = default;
+
+	virtual auto	BindBuffers(Context* context) -> void;
+	virtual auto	BindSingleBuffer(Context* context, unsigned int bufferID) -> void;
+
+	auto	SetBuffer(unsigned int bufferIndex, ID3D11Buffer* value) { buffers[bufferIndex] = value; }
+	auto	SetBufferBindIndex(unsigned int const& value) -> void { bufferBindIndex = value; }
+	auto	SetStride(unsigned int const& bufferIndex, unsigned int const& value) -> void { bufferStrides[bufferIndex] = value; }
+
+	auto	GetBufferStride(unsigned int bufferIndex) const -> unsigned int { return bufferStrides[bufferIndex]; }
+	auto	GetBufferBindIndex() const -> unsigned int { return bufferBindIndex; }
+
+	auto	GetBuffer(unsigned int bufferIndex) const -> ID3D11Buffer* { return buffers[bufferIndex]; }
+	auto	GetBufferPtr(unsigned int bufferIndex) const -> ID3D11Buffer* const* { return &buffers[bufferIndex]; }
+	auto	GetBuffers() const -> ID3D11Buffer** const { return buffers; }
+
+	auto	Shutdown() -> void;
+
+	auto	operator = (const D3D11BufferArray&)->D3D11BufferArray& = delete;
+	auto	operator = (D3D11BufferArray&&)->D3D11BufferArray& = delete;
+
+protected:
+
+private:
+	ID3D11Buffer**		buffers = nullptr;
+	unsigned int*		bufferStrides = nullptr;
+	unsigned int		bufferBindIndex = 0;
+};
+
+
 class D3D11Buffer : public GPUBuffer
 {
 public:
