@@ -25,7 +25,7 @@
 #include "Profiler.hpp"
 #include "Node.hpp"
 
-#include "Maths/Math.hpp"
+#include <MUtils/Maths/Math.hpp>
 
 Engine* Engine::instance = nullptr;
 

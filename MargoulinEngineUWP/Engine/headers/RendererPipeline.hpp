@@ -1,8 +1,8 @@
 #ifndef __RENDERERPIPELINE_HPP__
 #define __RENDERERPIPELINE_HPP__
 
-#include "Maths/Vector.hpp"
-#include "Maths/Matrix.hpp"
+#include <MUtils/Maths/Vector.hpp>
+#include <MUtils/Maths/Matrix.hpp>
 
 #include "TextureResource.hpp"
 

@@ -3,7 +3,7 @@
 
 #include "Service.hpp"
 
-#include "Maths/Vector.hpp"
+#include <MUtils/Maths/Vector.hpp>
 #include <Windows.h>
 
 class Gamepad;

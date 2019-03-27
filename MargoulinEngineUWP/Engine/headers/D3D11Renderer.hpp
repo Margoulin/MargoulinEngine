@@ -5,7 +5,7 @@
 
 #include <d3d11.h>
 #include <wrl/client.h>
-#include "Maths/Matrix.hpp"
+#include <MUtils/Maths/Matrix.hpp>
 #include "TextureResource.hpp"
 
 class D3D11Context;

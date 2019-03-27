@@ -3,7 +3,7 @@
 
 #include "Service.hpp"
 
-#include "String.hpp"
+#include <MUtils/String.hpp>
 #include <vector>
 
 class Logger : public Service

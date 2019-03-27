@@ -2,7 +2,7 @@
 #define __PROFILER_HPP__
 
 #include "Service.hpp"
-#include "String.hpp"
+#include <MUtils/String.hpp>
 
 #include <map>
 
@@ -23,9 +23,9 @@ struct MemoryPtrEntry
 	{
 		MString ret;
 		ret += "Pointer of size : ";
-		ret += MString(std::to_string(PointerSize).c_str());
+		ret += MString::FromInt(PointerSize);
 		ret += " at line ";
-		ret += MString(std::to_string(LineNumber).c_str());
+		ret += MString::FromInt(LineNumber);
 		ret += " of ";
 		ret += Filename;
 		return ret;

@@ -76,7 +76,6 @@
     <ClCompile Include="..\MUtils\MUtils\Maths\Quaternion.cpp" />
     <ClCompile Include="..\MUtils\MUtils\Maths\Transform.cpp" />
     <ClCompile Include="..\MUtils\MUtils\Maths\Vector.cpp" />
-    <ClCompile Include="..\MUtils\MUtils\SampleCPP.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{2425cb36-aca8-4b2d-b90d-7c70f201ca29}</ProjectGuid>

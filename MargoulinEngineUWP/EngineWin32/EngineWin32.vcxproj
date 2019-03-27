@@ -157,7 +157,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\shared;../Engine/ImGui;../Engine/headers;../MUtils/MUtils;../Engine/;%(AdditionalIncludeDirectories);C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\um;C:\Program Files %28x86%29\Windows Kits\10\Include\10.0.16299.0\shared;../Engine/ImGui;../Engine/headers;../MUtils;../Engine/;%(AdditionalIncludeDirectories);C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -414,7 +414,7 @@
     <ClCompile Include="..\Engine\src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\UsefullRepo\DirectXTex\DirectXTex_Desktop_2015_Win10.vcxproj">
+    <ProjectReference Include="C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex\DirectXTex_Desktop_2015_Win10.vcxproj">
       <Project>{371b9fa9-4c90-4ac6-a123-aced756d6c77}</Project>
     </ProjectReference>
     <ProjectReference Include="..\MUtils\MUtils\MUtils.vcxproj">

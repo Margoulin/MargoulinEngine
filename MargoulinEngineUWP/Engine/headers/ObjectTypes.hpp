@@ -1,7 +1,7 @@
 #ifndef __OBJECTTYPES_HPP__
 #define __OBJECTTYPES_HPP__
 
-#include "String.hpp"
+#include <MUtils/String.hpp>
 
 enum ObjectType
 {

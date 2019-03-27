@@ -1,7 +1,7 @@
 #ifndef __TEXTURE_LOADER_HPP__
 #define __TEXTURE_LOADER_HPP__
 
-#include "String.hpp"
+#include <MUtils/String.hpp>
 
 class TextureLoader
 {

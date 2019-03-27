@@ -5,7 +5,7 @@
 #include <Windows.h>
 #include <functional>
 #include <wrl/client.h>
-#include "Maths/Vector.hpp"
+#include <MUtils/Maths/Vector.hpp>
 
 struct IUnknown;
 

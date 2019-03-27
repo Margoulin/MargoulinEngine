@@ -2,7 +2,7 @@
 #define __RENDERER2DCOMPONENT_HPP__
 
 #include "GraphicComponent.hpp"
-#include "Maths/Vector.hpp"
+#include <MUtils/Maths/Vector.hpp>
 #include "PolygonRenderResource.hpp"
 
 class Renderer2DComponent : public GraphicComponent

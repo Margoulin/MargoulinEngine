@@ -1,6 +1,6 @@
 #include "TextureResource.hpp"
 
-#include "Maths/Math.hpp"
+#include <MUtils/Maths/Math.hpp>
 
 auto	TextureResource::Shutdown() -> void
 {

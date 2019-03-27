@@ -2,7 +2,7 @@
 #define __CAMERACOMPONENT_HPP__
 
 #include "Component.hpp"
-#include "Maths/Matrix.hpp"
+#include <MUtils/Maths/Matrix.hpp>
 
 struct CameraParameters
 {

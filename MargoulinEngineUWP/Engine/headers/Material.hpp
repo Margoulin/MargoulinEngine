@@ -1,9 +1,9 @@
 #ifndef __MATERIAL_HPP__
 #define __MATERIAL_HPP__
 
-#include "Maths/Vector.hpp"
+#include <MUtils/Maths/Vector.hpp>
 #include <d3d11.h>
-#include "String.hpp"
+#include <MUtils/String.hpp>
 #include <wrl/client.h>
 
 class FragmentShader;

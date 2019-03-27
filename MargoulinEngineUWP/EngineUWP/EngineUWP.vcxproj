@@ -258,7 +258,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../Engine;../MUtils/MUtils;../Engine/ImGui;../Engine/headers;C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Engine;../MUtils;../Engine/ImGui;../Engine/headers;C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>UWP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -272,7 +272,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../Engine;../MUtils/MUtils;../Engine/ImGui;../Engine/headers;C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Engine;../MUtils;../Engine/ImGui;../Engine/headers;C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>UWP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -286,7 +286,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../Engine;../MUtils/MUtils;../Engine/ImGui;../Engine/headers;C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Engine;../MUtils;../Engine/ImGui;../Engine/headers;C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>UWP;_XBOX_ONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -300,7 +300,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../Engine;../MUtils/MUtils;../Engine/ImGui;../Engine/headers;C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Engine;../MUtils;../Engine/ImGui;../Engine/headers;C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>UWP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -314,7 +314,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../Engine;../MUtils/MUtils;../Engine/ImGui;../Engine/headers;C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Engine;../MUtils;../Engine/ImGui;../Engine/headers;C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>UWP;_XBOX_ONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -328,7 +328,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../Engine;../MUtils/MUtils;../Engine/ImGui;../Engine/headers;C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Engine;../MUtils;../Engine/ImGui;../Engine/headers;C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>UWP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -342,7 +342,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../Engine;../MUtils/MUtils;../Engine/ImGui;../Engine/headers;C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Engine;../MUtils;../Engine/ImGui;../Engine/headers;C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>UWP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -356,7 +356,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../Engine;../MUtils/MUtils;../Engine/ImGui;../Engine/headers;C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Engine;../MUtils;../Engine/ImGui;../Engine/headers;C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>UWP;_XBOX_ONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -370,7 +370,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../Engine;../MUtils/MUtils;../Engine/ImGui;../Engine/headers;C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Engine;../MUtils;../Engine/ImGui;../Engine/headers;C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>UWP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -384,7 +384,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../Engine;../MUtils/MUtils;../Engine/ImGui;../Engine/headers;C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Engine;../MUtils;../Engine/ImGui;../Engine/headers;C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>UWP;_XBOX_ONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -398,7 +398,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../Engine;../MUtils/MUtils;../Engine/ImGui;../Engine/headers;C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Engine;../MUtils;../Engine/ImGui;../Engine/headers;C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>UWP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -412,7 +412,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../Engine;../MUtils/MUtils;../Engine/ImGui;../Engine/headers;C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Engine;../MUtils;../Engine/ImGui;../Engine/headers;C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>UWP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -426,7 +426,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../Engine;../MUtils/MUtils;../Engine/ImGui;../Engine/headers;C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Engine;../MUtils;../Engine/ImGui;../Engine/headers;C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>UWP;_XBOX_ONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -440,7 +440,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../Engine;../MUtils/MUtils;../Engine/ImGui;../Engine/headers;C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Engine;../MUtils;../Engine/ImGui;../Engine/headers;C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>UWP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -454,7 +454,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <CompileAsWinRT>false</CompileAsWinRT>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../Engine;../MUtils/MUtils;../Engine/ImGui;../Engine/headers;C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Engine;../MUtils;../Engine/ImGui;../Engine/headers;C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>UWP;_XBOX_ONE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
@@ -464,7 +464,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\UsefullRepo\DirectXTex\DirectXTex_Windows10_2015.vcxproj">
+    <ProjectReference Include="C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex\DirectXTex_Windows10_2015.vcxproj">
       <Project>{fb3f52b5-bfe8-43fd-836f-363735dab738}</Project>
     </ProjectReference>
     <ProjectReference Include="..\MathUWP\MathUWP.vcxproj">

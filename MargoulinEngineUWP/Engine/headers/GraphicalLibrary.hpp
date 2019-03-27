@@ -2,9 +2,9 @@
 #define __GRAPHICALLIBRARY_HPP__
 
 #include "Service.hpp"
-#include "Maths/Vector.hpp"
+#include <MUtils/Maths/Vector.hpp>
 #include <vector>
-#include "Maths/Matrix.hpp"
+#include <MUtils/Maths/Matrix.hpp>
 #include "TextureResource.hpp"
 
 struct IUnknown;

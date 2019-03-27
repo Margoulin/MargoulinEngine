@@ -1,7 +1,7 @@
 #ifndef __CONTEXT_HPP__
 #define __CONTEXT_HPP__
 
-#include "Maths/Vector.hpp"
+#include <MUtils/Maths/Vector.hpp>
 
 class Window;
 

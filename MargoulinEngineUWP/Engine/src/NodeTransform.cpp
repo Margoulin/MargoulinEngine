@@ -1,7 +1,7 @@
 #include "NodeTransform.hpp"
 
 #include "Node.hpp"
-#include "Maths/Math.hpp"
+#include <MUtils/Maths/Math.hpp>
 
 Transform::Transform(Node* nd)
 {

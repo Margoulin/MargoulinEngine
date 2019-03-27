@@ -27,17 +27,17 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MUtilsTest", "MUtils\MUtils
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MUtils", "MUtils\MUtils\MUtils.vcxproj", "{84C4C6F2-AF1F-4D38-82DF-93F6ED73E1C0}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tetris", "..\..\Perso\NewTetris\Tetris\Tetris\Tetris.vcxproj", "{BA8DA825-3F9B-402D-A53B-10BFB7DF8219}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Tetris", "C:\Users\Remi\Documents\Projects\Perso\NewTetris\Tetris\Tetris\Tetris.vcxproj", "{BA8DA825-3F9B-402D-A53B-10BFB7DF8219}"
 	ProjectSection(ProjectDependencies) = postProject
 		{E4F0ED81-E3A5-48F6-A9D9-87BA1D809203} = {E4F0ED81-E3A5-48F6-A9D9-87BA1D809203}
 		{84C4C6F2-AF1F-4D38-82DF-93F6ED73E1C0} = {84C4C6F2-AF1F-4D38-82DF-93F6ED73E1C0}
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectXTexWin32", "..\..\UsefullRepo\DirectXTex\DirectXTex_Desktop_2015_Win10.vcxproj", "{371B9FA9-4C90-4AC6-A123-ACED756D6C77}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectXTexWin32", "C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex\DirectXTex_Desktop_2015_Win10.vcxproj", "{371B9FA9-4C90-4AC6-A123-ACED756D6C77}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectXTex", "..\..\UsefullRepo\DirectXTex\DirectXTex_Windows10_2015.vcxproj", "{FB3F52B5-BFE8-43FD-836F-363735DAB738}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DirectXTex", "C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex\DirectXTex_Windows10_2015.vcxproj", "{FB3F52B5-BFE8-43FD-836F-363735DAB738}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TetrisUWP", "..\..\Perso\NewTetris\Tetris\TetrisUWP\TetrisUWP.vcxproj", "{5681B43C-F743-40FE-B6EE-D27FA8DE1E67}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TetrisUWP", "C:\Users\Remi\Documents\Projects\Perso\NewTetris\Tetris\TetrisUWP\TetrisUWP.vcxproj", "{5681B43C-F743-40FE-B6EE-D27FA8DE1E67}"
 	ProjectSection(ProjectDependencies) = postProject
 		{3821CC33-3FB4-4184-808B-5E62B317650D} = {3821CC33-3FB4-4184-808B-5E62B317650D}
 	EndProjectSection

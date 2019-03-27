@@ -2,7 +2,7 @@
 #define __POLYGONRENDERRESOURCE_HPP__
 
 #include <vector>
-#include "Maths/Vector.hpp"
+#include <MUtils/Maths/Vector.hpp>
 #include <d2d1.h>
 #include <wrl/client.h>
 
