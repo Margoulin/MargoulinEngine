@@ -1,8 +1,18 @@
 #include "Clock.hpp"
 
+#ifdef VITA
+#include <psp2/power.h>
+#endif
+
+#include "Logger.hpp"
+
 Clock::Clock()
 {
+#ifndef VITA
 	QueryPerformanceFrequency(&frequency);
+#else
+	frequency = (float)(scePowerGetArmClockFrequency()) * 1000.0f;
+#endif
 }
 
 auto	Clock::SetFramerateLimit(unsigned int frames) -> void
@@ -28,6 +38,7 @@ auto	Clock::UnsetFramerateLimit() -> void
 
 auto	Clock::CanUpdate() -> bool
 {
+#ifndef VITA
 	LARGE_INTEGER	currentTime;
 	QueryPerformanceCounter(&currentTime);
 	tempDeltaTime += (float)(currentTime.QuadPart - previousTime.QuadPart) / (float)frequency.QuadPart;
@@ -39,4 +50,19 @@ auto	Clock::CanUpdate() -> bool
 		return true;
 	}
 	return false;
+#else
+	SceRtcTick currentTime;
+	sceRtcGetCurrentTick(&currentTime);
+
+	tempDeltaTime += (float)(currentTime.tick - previousTime.tick) / frequency;
+	previousTime = currentTime;
+
+	if (tempDeltaTime >= framerateTime)
+	{
+		deltaTime = tempDeltaTime;
+		tempDeltaTime = 0.0;
+		return true;
+	}
+	return false;
+#endif // !VITA
 }

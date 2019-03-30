@@ -6,7 +6,7 @@
 #include "GraphicalLibrary.hpp"
 #include "RendererPipeline.hpp"
 
-#include <imgui.h>
+#include <imgui/imgui.h>
 
 #ifdef _DEBUG
 

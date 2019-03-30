@@ -5,7 +5,7 @@
 #include <MUtils/Maths/Vector.hpp>
 #include <vector>
 #include <MUtils/Maths/Matrix.hpp>
-#include "TextureResource.hpp"
+#include "TextureData.hpp"
 
 struct IUnknown;
 class Context;
@@ -34,7 +34,7 @@ public:
 	auto	EndOfFrame() -> void { lastVertexShaderUse = nullptr; }
 	auto	DrawMesh(Matrix4x4F const& modelMat, MeshResource* meshRes, MaterialResource* matRes) -> void;
 	auto	DrawSkeletalMesh(Matrix4x4F const& modelMat, SkeletalMeshResource* meshRes, MaterialResource* matRes) -> void;
-	auto	DrawTexture(Vector4F const& screenRect,  TextureRenderData const& renderData) -> void;
+	auto	DrawTexture(Vector4F const& screenRect,  TextureRenderDataBase const& renderData) -> void;
 	auto	DrawLine(Vector3F const& firstPoint, Vector3F const& secondPoint, Vector3F const& color) -> void;
 
 #ifdef _DEBUG

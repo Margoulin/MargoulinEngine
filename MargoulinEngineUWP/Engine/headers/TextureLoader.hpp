@@ -21,7 +21,6 @@ public:
 protected:
 
 private:
-	static bool DirectXTexInitialized;
 };
 
 #endif /*__TEXTURE_LOADER_HPP__*/

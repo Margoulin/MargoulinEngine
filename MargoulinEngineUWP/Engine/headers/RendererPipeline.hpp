@@ -4,7 +4,7 @@
 #include <MUtils/Maths/Vector.hpp>
 #include <MUtils/Maths/Matrix.hpp>
 
-#include "TextureResource.hpp"
+#include "TextureData.hpp"
 
 class Material;
 class Mesh;
@@ -50,7 +50,7 @@ public:
 	virtual auto	draw3DLine(Vector3F const& firstPoint, Vector3F const& secondPoint, Vector3F const& color) -> void = 0;
 	virtual auto	drawData(Mesh* mesh, Material* mat, Matrix4x4F const& modelMat) -> void = 0;
 	virtual auto	drawData(SkeletalMesh* mesh, Material* mat, Matrix4x4F const& modelMat) -> void = 0;
-	virtual auto	drawTexture(Vector4F const& screenRect, SubMeshData* texMesh, TextureRenderData const& renderData) -> void = 0;
+	virtual auto	drawTexture(Vector4F const& screenRect, SubMeshData* texMesh, TextureRenderDataBase const& renderData) -> void = 0;
 protected:
 
 	GPUBuffer*	modelBuffer = nullptr;

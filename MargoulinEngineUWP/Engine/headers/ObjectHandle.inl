@@ -56,7 +56,7 @@ public:
 	auto	GetObjectPtr() const -> ObjectType* { return dynamic_cast<ObjectType*>(weakPointer.lock().get()); }
 
 	auto	operator=(const ObjectWeakPtr&)->ObjectWeakPtr& = delete;
-	auto	operator=(ObjectWeakPtr&&)->ObjectWeakPtr&
+	auto	operator=(ObjectWeakPtr&& other)->ObjectWeakPtr&
 	{
 		weakPointer = std::move(other.weakPointer);
 	}

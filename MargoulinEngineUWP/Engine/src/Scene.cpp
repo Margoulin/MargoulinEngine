@@ -8,7 +8,7 @@
 #include "Engine.hpp"
 #include "ObjectManager.hpp"
 
-#include <imgui.h>
+#include <imgui/imgui.h>
 
 #include "ObjectHandle.inl"
 
@@ -19,7 +19,6 @@ Scene::Scene()
 
 	ObjectManager* objMgr = Engine::GetInstance()->GetService<ObjectManager>("Object Manager");
 
-	/*
 	Node* node = objMgr->Create<Node>();
 	node->SetName("Cube");
 	node->Initialize();
@@ -30,6 +29,7 @@ Scene::Scene()
 	cp1->SetMaterial(0);
 	node->AddComponent(cp1);
 	AddNode(node);
+	/*
 
 	node = objMgr->Create<Node>();
 	node->SetName("Rectangle");

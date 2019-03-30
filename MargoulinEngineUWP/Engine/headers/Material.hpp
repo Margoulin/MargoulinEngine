@@ -1,12 +1,11 @@
 #ifndef __MATERIAL_HPP__
 #define __MATERIAL_HPP__
 
-#include <MUtils/Maths/Vector.hpp>
-#include <d3d11.h>
-#include <MUtils/String.hpp>
-#include <wrl/client.h>
+#include "CoreMinimal.hpp"
 
 class FragmentShader;
+class GPUBuffer;
+class Context;
 
 class Material
 {
@@ -16,12 +15,11 @@ public:
 	Material(Material&&) = delete;
 	~Material() = default;
 
-	auto	Initialize(ID3D11Device* device) -> void;
+	auto	Bind(Context* context) -> void;
 	auto	Shutdown() -> void;
 
-	auto	Bind(ID3D11DeviceContext* context) -> void;
-
-	auto	GetConstantBuffer() const -> ID3D11Buffer* const { return unlitColorConstantBuffer.Get(); }
+	auto	SetConstantBuffer(GPUBuffer* value) -> void { unlitColorBuffer = value; }
+	auto	GetConstantBuffer() const -> GPUBuffer* { return unlitColorBuffer; }
 
 	auto	operator = (const Material&)->Material& = delete;
 	auto	operator = (Material&&)->Material& = delete;
@@ -35,7 +33,8 @@ public:
 	float		shininess = 100.0f;
 
 private:
-	Microsoft::WRL::ComPtr<ID3D11Buffer>	unlitColorConstantBuffer;
+
+	GPUBuffer*	unlitColorBuffer;
 
 #ifdef _DEBUG
 public:

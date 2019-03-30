@@ -16,6 +16,7 @@
 #include "GraphicalLibrary.hpp"
 #include "D3D11VertexShader.hpp"
 #include "D3D11Buffer.hpp"
+#include "D3D11TextureData.hpp"
 
 auto	D3D11Renderer::Initialize() -> void
 {
@@ -100,7 +101,7 @@ auto	D3D11Renderer::draw3DLine(Vector3F const& firstPoint, Vector3F const& secon
 
 auto	D3D11Renderer::drawData(Mesh* mesh, Material* mat, Matrix4x4F const& modelMat) -> void
 {
-	mat->Bind(context->GetDeviceContext());
+	mat->Bind(context);
 
 	modelBuffer->UpdateBufferData(context, (void*)Matrix4x4F::Transpose(modelMat).GetArray());
 
@@ -118,7 +119,7 @@ auto	D3D11Renderer::drawData(Mesh* mesh, Material* mat, Matrix4x4F const& modelM
 	
 auto	D3D11Renderer::drawData(SkeletalMesh* mesh, Material* mat, Matrix4x4F const& modelMat) -> void
 {
-	mat->Bind(context->GetDeviceContext());
+	mat->Bind(context);
 
 	SkeletonConstantBuffer	skeletalShaderData;
 	skeletalShaderData.boneCount = mesh->GetRig()->GetBoneCount();
@@ -333,8 +334,9 @@ auto	D3D11Renderer::DrawFilledGeometry(PolygonRenderResource* polygon, Vector4F 
 
 }
 
-auto	D3D11Renderer::drawTexture(Vector4F const& screenRect, SubMeshData* texMesh, TextureRenderData const& renderData) -> void
+auto	D3D11Renderer::drawTexture(Vector4F const& screenRect, SubMeshData* texMesh, TextureRenderDataBase const& renderData) -> void
 {
+	D3D11TextureRenderData* d3d11RenderData = (D3D11TextureRenderData*)&renderData;
 	Vector2F halfScreen = context->GetRenderTargetSize() * 0.5f;
 	viewProjBufferData.View = Matrix4x4F::Transpose(Matrix4x4F::identity);
 	viewProjBufferData.Projection = Matrix4x4F::Transpose(Matrix4x4F::identity);
@@ -356,8 +358,8 @@ auto	D3D11Renderer::drawTexture(Vector4F const& screenRect, SubMeshData* texMesh
 
 	texMesh->GetVertexBuffer()->UpdateBufferData(context, fullVertices.data(), 20 * sizeof(float));
 
-	context->GetDeviceContext()->PSSetShaderResources(0, 1, &renderData.shaderView);
-	context->GetDeviceContext()->PSSetSamplers(0, 1, &renderData.samplerState);
+	context->GetDeviceContext()->PSSetShaderResources(0, 1, &d3d11RenderData->shaderView);
+	context->GetDeviceContext()->PSSetSamplers(0, 1, &d3d11RenderData->samplerState);
 
 	texMesh->GetVertexBuffer()->BindBuffer(context);
 	texMesh->GetIndexBuffer()->BindBuffer(context);
@@ -368,11 +370,12 @@ auto	D3D11Renderer::drawTexture(Vector4F const& screenRect, SubMeshData* texMesh
 
 auto	D3D11Renderer::InitializeTexture(TextureResource* tex) -> void
 {
-	tex->InitializeD3D11Datas(context->GetDevice());
+	D3D11TextureData* texData = (D3D11TextureData*)tex->GetTextureData();
+	texData->InitializeD3D11Datas(context->GetDevice());
 
 #ifdef _DEBUG
-	context->MarkD3D11ObjectName(tex->GetD3D11Resource(), MString("Texture : resource"));
-	context->MarkD3D11ObjectName(tex->GetShaderView(), MString("Texture : shader view"));
-	context->MarkD3D11ObjectName(tex->GetSamplerState(), MString("Texture : sampler state"));
+	//context->MarkD3D11ObjectName(tex->GetD3D11Resource(), MString("Texture : resource"));
+	//context->MarkD3D11ObjectName(tex->GetShaderView(), MString("Texture : shader view"));
+	//context->MarkD3D11ObjectName(tex->GetSamplerState(), MString("Texture : sampler state"));
 #endif
 }

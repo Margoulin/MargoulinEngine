@@ -114,7 +114,7 @@ auto	ObjectManager::removeObject(Object* obj) -> void
 	}
 }
 
-#include <imgui.h>
+#include <imgui/imgui.h>
 #ifdef _DEBUG
 
 auto	ObjectManager::ImGuiUpdate() -> void

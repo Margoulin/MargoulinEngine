@@ -28,7 +28,7 @@ public:
 	auto	GetBufferPtr(unsigned int bufferIndex) const -> ID3D11Buffer* const* { return &buffers[bufferIndex]; }
 	auto	GetBuffers() const -> ID3D11Buffer** const { return buffers; }
 
-	auto	Shutdown() -> void;
+	virtual auto	Shutdown() -> void;
 
 	auto	operator = (const D3D11BufferArray&)->D3D11BufferArray& = delete;
 	auto	operator = (D3D11BufferArray&&)->D3D11BufferArray& = delete;

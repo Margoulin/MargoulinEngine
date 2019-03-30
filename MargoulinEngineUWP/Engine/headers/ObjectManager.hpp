@@ -3,6 +3,7 @@
 
 #include "Service.hpp"
 
+#include "MemoryMacro.hpp"
 #include <vector>
 #include <map>
 #include "ObjectTypes.hpp"

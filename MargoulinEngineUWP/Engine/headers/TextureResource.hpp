@@ -5,16 +5,7 @@
 
 #include "Resource.hpp"
 
-#include "DirectXTex.h"
-#include <d3d11.h>
-#include <wrl/client.h>
-
-struct TextureRenderData
-{
-	ID3D11ShaderResourceView*	shaderView = nullptr;
-	ID3D11SamplerState*			samplerState = nullptr;
-	Vector4F					textureRect;
-};
+class TextureData;
 
 class TextureResource : public Resource
 {
@@ -28,15 +19,8 @@ public:
 	virtual auto	Unload() -> void {}
 	virtual auto	Shutdown() -> void;
 
-	auto	InitializeD3D11Datas(ID3D11Device* device) -> void;
-	auto	CreateTextureRenderData() const -> TextureRenderData;
-	auto	CreateTextureRenderData(Vector4F const& newRect) const -> TextureRenderData;
-
-	auto	SetImageData(DirectX::ScratchImage* dxData) -> void { imageData = dxData; }
-
-	auto	GetD3D11Resource() const -> ID3D11Resource* const { return d3d11Resource.Get(); }
-	auto	GetShaderView() const -> ID3D11ShaderResourceView* const { return shaderView.Get(); }
-	auto	GetSamplerState() const -> ID3D11SamplerState* const { return samplerState.Get(); }
+	auto	GetTextureData() const -> TextureData* { return textureData; }
+	auto	SetTextureData(TextureData* data) -> void { textureData = data; }
 
 	auto	operator = (const TextureResource&)->TextureResource& = delete;
 	auto	operator = (TextureResource&&)->TextureResource& = delete;
@@ -44,17 +28,14 @@ public:
 protected:
 
 private:
-	DirectX::ScratchImage*		imageData = nullptr;
-	Microsoft::WRL::ComPtr<ID3D11Resource>				d3d11Resource = nullptr;
-	Microsoft::WRL::ComPtr<ID3D11ShaderResourceView>	shaderView = nullptr;
-	Microsoft::WRL::ComPtr<ID3D11SamplerState>			samplerState = nullptr;
-	unsigned int				width = 0;
-	unsigned int				height = 0;
+	TextureData*	textureData = nullptr;
 
 #ifdef _DEBUG
 
 public:
 	virtual auto	ImGuiUpdate() -> void {}
+
+private:
 
 #endif // _DEBU
 };

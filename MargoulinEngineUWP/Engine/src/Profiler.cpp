@@ -53,7 +53,7 @@ auto	Profiler::DumpToLog() -> void
 
 #ifdef _DEBUG
 
-#include <imgui.h>
+#include <imgui/imgui.h>
 
 auto	Profiler::ImGuiUpdate() -> void
 {

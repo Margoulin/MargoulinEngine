@@ -3,7 +3,10 @@
 
 #include "GraphicComponent.hpp"
 #include <MUtils/Maths/Vector.hpp>
+
+#ifndef VITA
 #include "PolygonRenderResource.hpp"
+#endif
 
 class Renderer2DComponent : public GraphicComponent
 {
@@ -49,7 +52,9 @@ private:
 	Vector2F		linePoint;
 	Vector2F		linePoint2;
 
+#ifndef VITA
 	PolygonRenderResource	polygon;
+#endif
 
 #ifdef _DEBUG
 public:

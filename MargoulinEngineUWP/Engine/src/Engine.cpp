@@ -1,5 +1,6 @@
 #include "Engine.hpp"
 
+#include "MemoryMacro.hpp"
 #include "Scene.hpp"
 #include "Service.hpp"
 #include "ServiceApplication.hpp"
@@ -9,10 +10,14 @@
 
 #include "MaterialResource.hpp"
 #include "MeshComponent.hpp"
-#include <imgui.h>
+#include <imgui/imgui.h>
 
+#ifndef VITA
 #include "imgui_impl_dx11.h"
+#endif // VITA
+
 #include "Timer.hpp"
+#include "Clock.hpp"
 
 #include <algorithm>
 #include "Logger.hpp"
@@ -28,6 +33,16 @@
 #include <MUtils/Maths/Math.hpp>
 
 Engine* Engine::instance = nullptr;
+
+Engine::Engine()
+{
+	engineClock = NEW Clock();
+}
+
+Engine::~Engine()
+{
+	DEL(engineClock);
+}
 
 auto	Engine::GetInstance() -> Engine*
 {
@@ -63,13 +78,13 @@ auto	Engine::Initialize(Window* window) -> void
 	inputManager->SetUpdateOrderIndex(2);
 	AddService("Input Manager", (Service*)inputManager);
 
-#ifndef UWP
+#ifdef WIN32
 	Window::eventCallback = [&value = (*inputManager)](HWND hwnd, UINT uint, WPARAM wparam, LPARAM lparam) { return value.MessageHandler(hwnd, uint, wparam, lparam);};
 #endif
 
 	currentScene = NEW Scene();	
 
-	engineClock.SetFramerateLimit(60);
+	engineClock->SetFramerateLimit(60);
 	initialized = true;
 
 #ifdef _DEBUG
@@ -107,7 +122,7 @@ auto	Engine::Shutdown() -> void
 
 auto	Engine::Update() -> bool
 {
-	if (!engineClock.CanUpdate())
+	if (!engineClock->CanUpdate())
 		return false;
 
 	std::vector<Service*>	tempServices;
@@ -250,7 +265,11 @@ auto	Engine::DrawImGui() -> void
 {
 	Timer	timer;
 	timer.Start();
+
+#ifndef VITA
 	ImGui_ImplDX11_NewFrame();
+#endif
+
 	ImGuiIO& io = ImGui::GetIO();
 
 	for (unsigned int pos = 0; pos < 49; pos++)
@@ -259,7 +278,7 @@ auto	Engine::DrawImGui() -> void
 		frametimes[pos] = frametimes[pos + 1];
 	}
 	framerates[49] = io.Framerate;
-	frametimes[49] = engineClock.GetDeltaTime() * 1000.0f;	
+	frametimes[49] = engineClock->GetDeltaTime() * 1000.0f;	
 
 	ImGui::Begin("Margoulin Engine", &windowOpened, ImGuiWindowFlags_MenuBar);
 	if (ImGui::BeginMenuBar())
@@ -285,10 +304,10 @@ auto	Engine::DrawImGui() -> void
 		}
 		ImGui::EndMenuBar();
 	}
-	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", engineClock.GetDeltaTime() * 1000.0f, ImGui::GetIO().Framerate);
+	ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", engineClock->GetDeltaTime() * 1000.0f, ImGui::GetIO().Framerate);
 	ImGui::Text("ImGui Render Duration %.5f ms", lastImGuiRenderDuration);
 	ImGui::PlotLines("Framerate", framerates, 50, 0, "", 0.0f, 90.0f, ImVec2(0.0f, 80.0f));// , values_offset, "avg 0.0", -1.0f, 1.0f, ImVec2(0, 80));
-	ImGui::PlotLines("FrameTimes", frametimes, 50, 0, "", engineClock.GetMinFrametimeRange() * 1000.0f, engineClock.GetMaxFrametimeRange() * 1000.0f, ImVec2(0.0f, 80.0f));// , values_offset, "avg 0.0", -1.0f, 1.0f, ImVec2(0, 80));
+	ImGui::PlotLines("FrameTimes", frametimes, 50, 0, "", engineClock->GetMinFrametimeRange() * 1000.0f, engineClock->GetMaxFrametimeRange() * 1000.0f, ImVec2(0.0f, 80.0f));// , values_offset, "avg 0.0", -1.0f, 1.0f, ImVec2(0, 80));
 	
 	ImGui::DragFloat3("Editor Camera Position", &editorCameraPosition.x);
 	ImGui::DragFloat3("Editor Camera Rotation", (float*)(&editorCameraRotation.x), 0.5f, -360.0f, 360.0f);

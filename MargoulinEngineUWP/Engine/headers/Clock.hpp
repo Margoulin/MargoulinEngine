@@ -1,7 +1,11 @@
 #ifndef __CLOCK_HPP__
 #define __CLOCK_HPP__
 
+#ifndef VITA
 #include <Windows.h>
+#else
+#include <psp2/rtc.h>
+#endif
 
 class Clock
 {
@@ -28,8 +32,13 @@ public:
 protected:
 
 private:
+#ifndef VITA
 	LARGE_INTEGER	previousTime;
 	LARGE_INTEGER	frequency;
+#else
+	float		frequency;
+	SceRtcTick	previousTime;
+#endif
 	unsigned int	framerateLimit = 0;
 	float			deltaTime = 0.0f;
 	float			tempDeltaTime = 0.0f;

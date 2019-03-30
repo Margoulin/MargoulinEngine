@@ -6,6 +6,7 @@
 #include "GraphicComponent.hpp"
 #include "Engine.hpp"
 #include "ObjectManager.hpp"
+#include <algorithm>
 
 Node::Node() :transformation(this) {}
 
@@ -66,7 +67,7 @@ auto	Node::DetachComponent(Component* value) -> void
 	components.erase(it);
 }
 
-#include <imgui.h>
+#include <imgui/imgui.h>
 #ifdef _DEBUG
 
 auto	Node::ImGuiUpdate() -> void

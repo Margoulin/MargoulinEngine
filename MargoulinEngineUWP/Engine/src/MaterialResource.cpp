@@ -4,10 +4,11 @@
 
 auto	MaterialResource::Shutdown() -> void
 {
+	materialData->Shutdown();
 	DEL(materialData);
 }
 
-#include <imgui.h>
+#include <imgui/imgui.h>
 #ifdef _DEBUG
 
 auto	MaterialResource::ImGuiUpdate() -> void

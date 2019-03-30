@@ -1,0 +1,173 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|PSVita">
+      <Configuration>Debug</Configuration>
+      <Platform>PSVita</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|PSVita">
+      <Configuration>Release</Configuration>
+      <Platform>PSVita</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{48CD8EAB-7B26-4265-849E-ED592CA3F5E6}</ProjectGuid>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|PSVita'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|PSVita'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <PropertyGroup Condition="'$(DebuggerFlavor)'=='PSVitaDebugger'" Label="OverrideDebuggerDefaults">
+    <!--LocalDebuggerCommand>$(TargetPath)</LocalDebuggerCommand-->
+    <!--LocalDebuggerReboot>false</LocalDebuggerReboot-->
+    <!--LocalDebuggerCommandArguments></LocalDebuggerCommandArguments-->
+    <!--LocalDebuggerTarget></LocalDebuggerTarget-->
+    <!--LocalDebuggerWorkingDirectory>$(ProjectDir)</LocalDebuggerWorkingDirectory-->
+    <!--LocalMappingFile></LocalMappingFile-->
+    <!--LocalRunCommandLine></LocalRunCommandLine-->
+  </PropertyGroup>
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|PSVita'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|PSVita'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|PSVita'">
+    <ClCompile>
+      <PreprocessorDefinitions>VITA;NDEBUG;%(PreprocessorDefinitions);</PreprocessorDefinitions>
+      <OptimizationLevel>Level2</OptimizationLevel>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <AdditionalIncludeDirectories>C:\Vita\MargoulinEngine\MargoulinEngineUWP\EngineVita\headers;C:\Vita\MargoulinEngine\MargoulinEngineUWP\MUtils;C:\Vita\MargoulinEngine\MargoulinEngineUWP\Engine\external;..\Engine\headers;C:/Vita/VitaIncludes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|PSVita'">
+    <ClCompile>
+      <PreprocessorDefinitions>VITA;_DEBUG;%(PreprocessorDefinitions);</PreprocessorDefinitions>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <AdditionalIncludeDirectories>C:\Vita\MargoulinEngine\MargoulinEngineUWP\EngineVita\headers;C:\Vita\MargoulinEngine\MargoulinEngineUWP\MUtils;C:\Vita\MargoulinEngine\MargoulinEngineUWP\Engine\external;..\Engine\headers;C:/Vita/VitaIncludes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Engine\external\cereal\access.hpp" />
+    <ClInclude Include="..\Engine\external\cereal\cereal.hpp" />
+    <ClInclude Include="..\Engine\external\cereal\CustomTypes.hpp" />
+    <ClInclude Include="..\Engine\external\cereal\macros.hpp" />
+    <ClInclude Include="..\Engine\external\ImGui\imconfig.h" />
+    <ClInclude Include="..\Engine\external\ImGui\imgui.h" />
+    <ClInclude Include="..\Engine\external\ImGui\imgui_internal.h" />
+    <ClInclude Include="..\Engine\external\ImGui\stb_rect_pack.h" />
+    <ClInclude Include="..\Engine\external\ImGui\stb_textedit.h" />
+    <ClInclude Include="..\Engine\external\ImGui\stb_truetype.h" />
+    <ClInclude Include="..\Engine\external\OpenFBX\miniz.h" />
+    <ClInclude Include="..\Engine\external\OpenFBX\ofbx.h" />
+    <ClInclude Include="..\Engine\external\tiny_obj_loader.h" />
+    <ClInclude Include="..\Engine\headers\CameraComponent.hpp" />
+    <ClInclude Include="..\Engine\headers\Clock.hpp" />
+    <ClInclude Include="..\Engine\headers\Component.hpp" />
+    <ClInclude Include="..\Engine\headers\Context.hpp" />
+    <ClInclude Include="..\Engine\headers\CoreMacros.hpp" />
+    <ClInclude Include="..\Engine\headers\CoreMinimal.hpp" />
+    <ClInclude Include="..\Engine\headers\Engine.hpp" />
+    <ClInclude Include="..\Engine\headers\FBXLoader.hpp" />
+    <ClInclude Include="..\Engine\headers\FragmentShader.hpp" />
+    <ClInclude Include="..\Engine\headers\Gamepad.hpp" />
+    <ClInclude Include="..\Engine\headers\GPUBuffer.hpp" />
+    <ClInclude Include="..\Engine\headers\GPUBufferFactory.hpp" />
+    <ClInclude Include="..\Engine\headers\GraphicalLibrary.hpp" />
+    <ClInclude Include="..\Engine\headers\GraphicComponent.hpp" />
+    <ClInclude Include="..\Engine\headers\InputManager.hpp" />
+    <ClInclude Include="..\Engine\headers\Logger.hpp" />
+    <ClInclude Include="..\Engine\headers\Material.hpp" />
+    <ClInclude Include="..\Engine\headers\MaterialResource.hpp" />
+    <ClInclude Include="..\Engine\headers\MemoryMacro.hpp" />
+    <ClInclude Include="..\Engine\headers\Mesh.hpp" />
+    <ClInclude Include="..\Engine\headers\MeshComponent.hpp" />
+    <ClInclude Include="..\Engine\headers\MeshResource.hpp" />
+    <ClInclude Include="..\Engine\headers\Node.hpp" />
+    <ClInclude Include="..\Engine\headers\NodeTransform.hpp" />
+    <ClInclude Include="..\Engine\headers\Object.hpp" />
+    <ClInclude Include="..\Engine\headers\ObjectManager.hpp" />
+    <ClInclude Include="..\Engine\headers\ObjectTypes.hpp" />
+    <ClInclude Include="..\Engine\headers\ObjLoader.hpp" />
+    <ClInclude Include="..\Engine\headers\PolygonRenderResource.hpp" />
+    <ClInclude Include="..\Engine\headers\Profiler.hpp" />
+    <ClInclude Include="..\Engine\headers\Renderer2DComponent.hpp" />
+    <ClInclude Include="..\Engine\headers\RendererPipeline.hpp" />
+    <ClInclude Include="..\Engine\headers\Resource.hpp" />
+    <ClInclude Include="..\Engine\headers\ResourcesManager.hpp" />
+    <ClInclude Include="..\Engine\headers\Scene.hpp" />
+    <ClInclude Include="..\Engine\headers\Service.hpp" />
+    <ClInclude Include="..\Engine\headers\ServiceApplication.hpp" />
+    <ClInclude Include="..\Engine\headers\Shader.hpp" />
+    <ClInclude Include="..\Engine\headers\ShaderFactory.hpp" />
+    <ClInclude Include="..\Engine\headers\SkeletalMesh.hpp" />
+    <ClInclude Include="..\Engine\headers\SkeletalMeshComponent.hpp" />
+    <ClInclude Include="..\Engine\headers\SkeletalMeshResource.hpp" />
+    <ClInclude Include="..\Engine\headers\SubMeshData.hpp" />
+    <ClInclude Include="..\Engine\headers\TextureLoader.hpp" />
+    <ClInclude Include="..\Engine\headers\TextureResource.hpp" />
+    <ClInclude Include="..\Engine\headers\Timer.hpp" />
+    <ClInclude Include="..\Engine\headers\VertexShader.hpp" />
+    <ClInclude Include="..\Engine\headers\Window.hpp" />
+    <ClInclude Include="headers\GXMBuffer.hpp" />
+    <ClInclude Include="headers\GXMBufferFactory.hpp" />
+    <ClInclude Include="headers\GXMContext.hpp" />
+    <ClInclude Include="headers\GXMRenderer.hpp" />
+    <ClInclude Include="headers\GXMShaderFactory.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Engine\headers\ObjectHandle.inl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\Engine\external\ImGui\imgui.cpp" />
+    <ClCompile Include="..\Engine\external\ImGui\imgui_draw.cpp" />
+    <ClCompile Include="..\Engine\external\OpenFBX\miniz.c" />
+    <ClCompile Include="..\Engine\external\OpenFBX\ofbx.cpp" />
+    <ClCompile Include="..\Engine\src\CameraComponent.cpp" />
+    <ClCompile Include="..\Engine\src\Clock.cpp" />
+    <ClCompile Include="..\Engine\src\Component.cpp" />
+    <ClCompile Include="..\Engine\src\Engine.cpp" />
+    <ClCompile Include="..\Engine\src\FBXLoader.cpp" />
+    <ClCompile Include="..\Engine\src\Gamepad.cpp" />
+    <ClCompile Include="..\Engine\src\GraphicalLibrary.cpp" />
+    <ClCompile Include="..\Engine\src\InputManager.cpp" />
+    <ClCompile Include="..\Engine\src\Logger.cpp" />
+    <ClCompile Include="..\Engine\src\Material.cpp" />
+    <ClCompile Include="..\Engine\src\MaterialResource.cpp" />
+    <ClCompile Include="..\Engine\src\Mesh.cpp" />
+    <ClCompile Include="..\Engine\src\MeshComponent.cpp" />
+    <ClCompile Include="..\Engine\src\MeshResource.cpp" />
+    <ClCompile Include="..\Engine\src\Node.cpp" />
+    <ClCompile Include="..\Engine\src\NodeTransform.cpp" />
+    <ClCompile Include="..\Engine\src\ObjectManager.cpp" />
+    <ClCompile Include="..\Engine\src\ObjLoader.cpp" />
+    <ClCompile Include="..\Engine\src\PolygonRenderResource.cpp" />
+    <ClCompile Include="..\Engine\src\Profiler.cpp" />
+    <ClCompile Include="..\Engine\src\Renderer2DComponent.cpp" />
+    <ClCompile Include="..\Engine\src\RendererPipeline.cpp" />
+    <ClCompile Include="..\Engine\src\ResourcesManager.cpp" />
+    <ClCompile Include="..\Engine\src\Scene.cpp" />
+    <ClCompile Include="..\Engine\src\Shader.cpp" />
+    <ClCompile Include="..\Engine\src\ShaderFactory.cpp" />
+    <ClCompile Include="..\Engine\src\SkeletalMesh.cpp" />
+    <ClCompile Include="..\Engine\src\SkeletalMeshComponent.cpp" />
+    <ClCompile Include="..\Engine\src\TextureLoader.cpp" />
+    <ClCompile Include="..\Engine\src\TextureResource.cpp" />
+    <ClCompile Include="..\Engine\src\Timer.cpp" />
+    <ClCompile Include="..\Engine\src\Window.cpp" />
+    <ClCompile Include="src\GXMContext.cpp" />
+  </ItemGroup>
+  <Import Condition="'$(ConfigurationType)' == 'Makefile' and Exists('$(VCTargetsPath)\Platforms\$(Platform)\SCE.Makefile.$(Platform).targets')" Project="$(VCTargetsPath)\Platforms\$(Platform)\SCE.Makefile.$(Platform).targets" />
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

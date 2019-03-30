@@ -2,9 +2,12 @@
 #define __WINDOW_HPP__
 
 #include "CoreMinimal.hpp"
+
+#ifndef VITA
 #include <Windows.h>
 #include <functional>
 #include <wrl/client.h>
+#endif
 #include <MUtils/Maths/Vector.hpp>
 
 struct IUnknown;
@@ -17,14 +20,14 @@ public:
 	Window(Window&&) = delete;
 	~Window() = default;
 
-#ifndef UWP 
+#ifdef WIN32
 	static	auto	CreateWindowInstance(WNDPROC wndProc) -> Window*;
 	static	std::function<LRESULT(HWND, UINT, WPARAM, LPARAM)>	eventCallback;
 
 	auto	SetWindowTitle(MString const& value) -> void;
 
 	auto	GetWindow() const -> HWND { return winInstance; }
-#else
+#elif UWP
 	auto	UpdateHandle(IUnknown* value) -> void { window = value; }
 	
 	auto	SetDPI(float const value) -> void { dpi = value; }
@@ -44,11 +47,11 @@ public:
 protected:
 
 private:
-#ifndef UWP 
+#ifdef WIN32 
 	HWND		winInstance;
 	WNDCLASS	wc;
 	MWString	className;
-#else
+#elif UWP
 	Microsoft::WRL::ComPtr<IUnknown>	window;
 #endif
 	float			dpi = 256.0f;

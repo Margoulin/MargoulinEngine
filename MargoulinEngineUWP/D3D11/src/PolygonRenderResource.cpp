@@ -53,7 +53,7 @@ auto	PolygonRenderResource::ClearGeometry() -> void
 	polygonGeometry = nullptr;
 }
 
-#include <imgui.h>
+#include <imgui/imgui.h>
 #ifdef _DEBUG
 
 auto	PolygonRenderResource::ImGuiUpdate() -> void

@@ -3,7 +3,10 @@
 #include "Engine.hpp"
 #include "GraphicalLibrary.hpp"
 #include "RendererPipeline.hpp"
+
+#ifndef VITA
 #include "PolygonRenderResource.hpp"
+#endif
 
 auto	Renderer2DComponent::Draw() -> void
 {
@@ -37,10 +40,12 @@ auto	Renderer2DComponent::Draw() -> void
 		}
 		case POLYGON:
 		{
+#ifndef VITA
 			if (filled)
 				lib->GetRenderPipeline()->DrawFilledGeometry(&polygon, color);
 			else
 				lib->GetRenderPipeline()->DrawGeometry(&polygon, color);
+#endif
 			break;
 		}
 		default:
@@ -48,7 +53,7 @@ auto	Renderer2DComponent::Draw() -> void
 	}
 }
 
-#include <imgui.h>
+#include <imgui/imgui.h>
 #ifdef _DEBUG
 
 auto	Renderer2DComponent::ImGuiUpdate() -> void
@@ -76,12 +81,14 @@ auto	Renderer2DComponent::ImGuiUpdate() -> void
 		ImGui::DragFloat2("First Point", (float*)&linePoint);
 		ImGui::DragFloat2("Second Point", (float*)&linePoint2);
 	}
+#ifndef VITA
 	else if (currentType == Renderer2DType::POLYGON)
 	{
 		polygon.ImGuiUpdate();
 	}
 	if (currentType != Renderer2DType::POLYGON)
 		polygon.ClearGeometry();
+#endif
 }
 
 #endif

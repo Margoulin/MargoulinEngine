@@ -1,6 +1,10 @@
 #include "InputManager.hpp"
 
+#ifndef VITA
 #include "imgui_impl_dx11.h"
+#endif
+
+#include "MemoryMacro.hpp"
 #include "Engine.hpp"
 #include "GraphicalLibrary.hpp"
 #include "RendererPipeline.hpp"
@@ -90,7 +94,7 @@ auto	InputManager::OnKeyDown(unsigned int value) -> void
 		io.KeysDown[value] = 1;
 }
 
-#else
+#elif WIN32
 
 auto	InputManager::MessageHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) -> LRESULT
 {
@@ -158,7 +162,7 @@ auto	InputManager::MessageHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lPa
 
 #endif
 
-#include <imgui.h>
+#include <imgui/imgui.h>
 #ifdef _DEBUG
 
 auto	InputManager::ImGuiUpdate() -> void

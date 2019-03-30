@@ -1,6 +1,6 @@
 #include "Window.hpp"
 
-#ifndef UWP 
+#ifdef WIN32
 
 std::function<LRESULT(HWND, UINT, WPARAM, LPARAM)>	Window::eventCallback = nullptr;
 
@@ -41,18 +41,20 @@ auto	Window::SetWindowTitle(MString const& value) -> void
 
 auto	Window::Shutdown() -> void
 {
-#ifndef UWP
+#ifdef WIN32
 	UnregisterClass(className.Str(), wc.hInstance);
 #endif
 }
 
-#include <imgui.h>
 #ifdef _DEBUG
+
+#include <imgui/imgui.h>
+
 auto	Window::ImGuiUpdate() -> void
 {
 	ImGui::InputFloat2("Size", &size.x, -1, ImGuiInputTextFlags_ReadOnly);
 
-#ifndef UWP
+#ifdef WIN32
 	ImGui::InputText("Window Name", newWindowNameBuffer, 50);
 	if (ImGui::Button("Change Name"))
 	{

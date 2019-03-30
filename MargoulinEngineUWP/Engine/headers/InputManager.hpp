@@ -4,7 +4,10 @@
 #include "Service.hpp"
 
 #include <MUtils/Maths/Vector.hpp>
+
+#ifndef VITA
 #include <Windows.h>
+#endif
 
 class Gamepad;
 
@@ -33,7 +36,7 @@ public:
 	auto	OnMiddleClick(bool pressed) -> void;
 	auto	OnPointerMoved(float x, float y) -> void;
 	auto	OnKeyDown(unsigned int value) -> void;
-#else
+#elif WIN32
 	auto	MessageHandler(HWND, UINT, WPARAM, LPARAM) -> LRESULT;
 #endif
 

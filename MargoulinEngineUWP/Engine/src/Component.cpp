@@ -4,7 +4,7 @@
 #include "ObjectManager.hpp"
 
 #include "Node.hpp"
-#include <imgui.h>
+#include <imgui/imgui.h>
 
 auto	Component::DestroyComponent(bool removeFromNode) -> void
 {

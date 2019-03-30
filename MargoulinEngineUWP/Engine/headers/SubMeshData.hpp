@@ -7,7 +7,6 @@
 #include "GPUBuffer.hpp"
 
 #include "cereal/CustomTypes.hpp"
-#include "D3D11Buffer.hpp"
 
 class SubMeshData
 {
@@ -19,9 +18,9 @@ public:
 
 	auto	Shutdown() -> void 
 	{
-		((D3D11Buffer*)indexBuffer)->Shutdown();
+		indexBuffer->Shutdown();
 		DEL(indexBuffer);
-		((D3D11Buffer*)vertexBuffer)->Shutdown();
+		vertexBuffer->Shutdown();
 		DEL(vertexBuffer);
 	}
 

@@ -1,6 +1,6 @@
 #include "FBXLoader.hpp"
 
-#include "../OpenFBX/ofbx.h"
+#include "OpenFBX/ofbx.h"
 #include <iostream>
 
 #include "Mesh.hpp"
@@ -21,7 +21,11 @@ auto	FBXLoader::LoadFBXFromFile(MString const& filename) -> void
 	};
 
 	FILE* fp;
+#ifdef VITA
+	fp = fopen(filename.Str(), "rb");
+#else
 	fopen_s(&fp, filename.Str(), "rb");
+#endif
 	if (!fp) 
 		return;
 

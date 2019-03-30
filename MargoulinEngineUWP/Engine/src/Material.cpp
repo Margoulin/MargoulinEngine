@@ -1,26 +1,21 @@
 #include "Material.hpp"
 
-#include "D3D11PixelShader.hpp"
+#include "Context.hpp"
+#include "GPUBuffer.hpp"
 
-auto	Material::Initialize(ID3D11Device* device) -> void
+auto	Material::Bind(Context* context) -> void
 {
-	CD3D11_BUFFER_DESC unlitColorConstantBufferDesc(sizeof(Vector4F), D3D11_BIND_CONSTANT_BUFFER);
-	device->CreateBuffer(&unlitColorConstantBufferDesc, nullptr, &unlitColorConstantBuffer);
+	unlitColorBuffer->UpdateBufferData(context, &unlitColor.x);
+	unlitColorBuffer->BindBuffer(context);
 }
 
 auto	Material::Shutdown() -> void
 {
-	*unlitColorConstantBuffer.ReleaseAndGetAddressOf() = nullptr;
+	unlitColorBuffer->Shutdown();
+	DEL(unlitColorBuffer);
 }
 
-auto	Material::Bind(ID3D11DeviceContext* context) -> void
-{
-	context->UpdateSubresource(unlitColorConstantBuffer.Get(), 0, NULL,
-		&unlitColor, 0, 0);
-	context->VSSetConstantBuffers(3, 1, unlitColorConstantBuffer.GetAddressOf());
-}
-
-#include <imgui.h>
+#include <imgui/imgui.h>
 
 #ifdef _DEBUG
 

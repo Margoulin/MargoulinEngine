@@ -1,8 +1,6 @@
 #ifndef __SCENE_HPP__
 #define __SCENE_HPP__
 
-#include <d3d11.h>
-
 class Node;
 
 class Scene
@@ -18,7 +16,6 @@ public:
 
 	auto	GetRoot() -> Node* { return root; }
 
-	auto	Initialize(ID3D11Device* device) -> void;
 	auto	Shutdown() -> void;
 	auto	Update() -> void {}
 

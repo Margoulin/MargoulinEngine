@@ -32,7 +32,7 @@ set(VITA_VERSION  "00.90")
 ## Flags and includes for building
 # Note that we make sure not to overwrite previous flags
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall")
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -DVITA")
 # Optional. You can specify more param.sfo flags this way.
 set(VITA_MKSFOEX_FLAGS "${VITA_MKSFOEX_FLAGS} -d PARENTAL_LEVEL=1")
 
@@ -54,7 +54,10 @@ add_executable(${PROJECT_NAME}
 
 # Library to link to (drop the -l prefix). This will mostly be stubs.
 target_link_libraries(${PROJECT_NAME}
+	EngineVita
 	MUtilsVita
+	SceIofilemgr_stub 
+	ScePower_stub
   SceLibKernel_stub # this line is only for demonstration. It's not needed as
                     # the most common stubs are automatically included.
 )

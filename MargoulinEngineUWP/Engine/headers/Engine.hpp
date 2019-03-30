@@ -1,24 +1,24 @@
 #ifndef __ENGINE_HPP__
 #define __ENGINE_HPP__
 
-#include "CoreMinimal.hpp"
+#include <MUtils/String.hpp>
 #include <map>
 #include <vector>
-
-#include "Clock.hpp"
+#include <MUtils/Maths/Vector.hpp>
 
 class Scene;
 class Service;
 class ServiceApplication;
 class Window;
+class Clock;
 
 class Engine
 {
 public:
-	Engine() = default;
+	Engine();
 	Engine(const Engine&) = delete;
 	Engine(Engine&&) = delete;
-	~Engine() = default;
+	~Engine();
 
 	static auto	GetInstance() -> Engine*;
 
@@ -60,7 +60,7 @@ public:
 private:
 	static Engine*					instance;
 	
-	Clock							engineClock;
+	Clock*							engineClock;
 	std::map<MString, Service*>	services;
 	Scene*							currentScene;
 	Vector3F						editorCameraPosition;

@@ -19,7 +19,7 @@ auto	CameraComponent::GetViewMatrix() const -> Matrix4x4F
 	return Matrix4x4F::LookAt(position, up, position + forward);
 }
 
-#include <imgui.h>
+#include <imgui/imgui.h>
 
 #ifdef _DEBUG
 

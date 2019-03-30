@@ -464,9 +464,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ProjectReference Include="C:\Users\Remi\Documents\Projects\UsefullRepo\DirectXTex\DirectXTex_Windows10_2015.vcxproj">
-      <Project>{fb3f52b5-bfe8-43fd-836f-363735dab738}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\MathUWP\MathUWP.vcxproj">
       <Project>{2425cb36-aca8-4b2d-b90d-7c70f201ca29}</Project>
     </ProjectReference>

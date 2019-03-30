@@ -118,7 +118,7 @@ auto	ResourcesManager::addResource(Resource* res) -> unsigned int
 	return totID - 1;
 }
 
-#include <imgui.h>
+#include <imgui/imgui.h>
 
 #ifdef _DEBUG
 

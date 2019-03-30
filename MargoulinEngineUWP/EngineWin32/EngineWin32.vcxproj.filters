@@ -13,17 +13,32 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\ImGui">
+    <Filter Include="Header Files\D3D11">
+      <UniqueIdentifier>{c701e33e-8520-4dc6-a23b-84feaf2d2811}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\D3D11">
+      <UniqueIdentifier>{a70dcb6c-e450-4f75-822d-88e8e4ad2a43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\external">
+      <UniqueIdentifier>{ac5b8c4c-df64-4ee9-a129-4141cc4904ae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\external\ImGui">
       <UniqueIdentifier>{f21e4e10-b547-4c61-a572-d26d7286833c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\ImGui">
-      <UniqueIdentifier>{22d31efd-2942-42e0-b533-d2d6d1445cf1}</UniqueIdentifier>
+    <Filter Include="Header Files\external\cereal">
+      <UniqueIdentifier>{4fd5be41-f93b-4bcd-a267-b4f2a2ca6ab9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="OpenFBX">
+    <Filter Include="Header Files\external\OpenFBX">
       <UniqueIdentifier>{bb80e161-4dbf-463a-b494-f25fb051f5f9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\cereal">
-      <UniqueIdentifier>{4fd5be41-f93b-4bcd-a267-b4f2a2ca6ab9}</UniqueIdentifier>
+    <Filter Include="Source Files\external">
+      <UniqueIdentifier>{ff212989-14ca-4062-acc6-0cf589a25d89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\external\ImGui">
+      <UniqueIdentifier>{22d31efd-2942-42e0-b533-d2d6d1445cf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\external\OpenFBX">
+      <UniqueIdentifier>{4a81b0a5-5e78-4483-9e36-d099054ec622}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -31,31 +46,31 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Engine\ImGui\imconfig.h">
-      <Filter>Header Files\ImGui</Filter>
+      <Filter>Header Files\external\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="..\Engine\ImGui\imgui.h">
-      <Filter>Header Files\ImGui</Filter>
+      <Filter>Header Files\external\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="..\Engine\ImGui\imgui_impl_dx11.h">
-      <Filter>Header Files\ImGui</Filter>
+      <Filter>Header Files\external\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="..\Engine\ImGui\imgui_internal.h">
-      <Filter>Header Files\ImGui</Filter>
+      <Filter>Header Files\external\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="..\Engine\ImGui\stb_rect_pack.h">
-      <Filter>Header Files\ImGui</Filter>
+      <Filter>Header Files\external\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="..\Engine\ImGui\stb_textedit.h">
-      <Filter>Header Files\ImGui</Filter>
+      <Filter>Header Files\external\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="..\Engine\ImGui\stb_truetype.h">
-      <Filter>Header Files\ImGui</Filter>
+      <Filter>Header Files\external\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="..\Engine\OpenFBX\miniz.h">
-      <Filter>OpenFBX</Filter>
+      <Filter>Header Files\external\OpenFBX</Filter>
     </ClInclude>
     <ClInclude Include="..\Engine\OpenFBX\ofbx.h">
-      <Filter>OpenFBX</Filter>
+      <Filter>Header Files\external\OpenFBX</Filter>
     </ClInclude>
     <ClInclude Include="..\Engine\headers\Clock.hpp">
       <Filter>Header Files</Filter>
@@ -64,15 +79,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Engine\headers\Context.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\headers\D3D11Context.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\headers\D3D11Renderer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\headers\DirectXHelper.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Engine\headers\Engine.hpp">
@@ -126,9 +132,6 @@
     <ClInclude Include="..\Engine\headers\ObjLoader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Engine\headers\PolygonRenderResource.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\Engine\headers\Renderer2DComponent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -160,7 +163,7 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Engine\cereal\CustomTypes.hpp">
-      <Filter>Header Files\cereal</Filter>
+      <Filter>Header Files\external\cereal</Filter>
     </ClInclude>
     <ClInclude Include="..\Engine\headers\CameraComponent.hpp">
       <Filter>Header Files</Filter>
@@ -175,12 +178,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Engine\headers\SkeletalMeshComponent.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\headers\D3D11PixelShader.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\headers\D3D11VertexShader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Engine\headers\FragmentShader.hpp">
@@ -216,48 +213,54 @@
     <ClInclude Include="..\Engine\headers\ShaderFactory.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Engine\headers\D3D11ShaderFactory.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\headers\D3D11Buffer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\Engine\headers\GPUBuffer.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\headers\D3D11BufferFactory.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\Engine\headers\GPUBufferFactory.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\D3D11\headers\D3D11Buffer.hpp">
+      <Filter>Header Files\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\D3D11\headers\D3D11BufferFactory.hpp">
+      <Filter>Header Files\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\D3D11\headers\D3D11Context.hpp">
+      <Filter>Header Files\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\D3D11\headers\D3D11PixelShader.hpp">
+      <Filter>Header Files\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\D3D11\headers\D3D11Renderer.hpp">
+      <Filter>Header Files\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\D3D11\headers\D3D11ShaderFactory.hpp">
+      <Filter>Header Files\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\D3D11\headers\D3D11VertexShader.hpp">
+      <Filter>Header Files\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\D3D11\headers\DirectXHelper.hpp">
+      <Filter>Header Files\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\external\tiny_obj_loader.h">
+      <Filter>Header Files\external</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Engine\headers\TextureData.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\D3D11\headers\D3D11TextureData.hpp">
+      <Filter>Header Files\D3D11</Filter>
+    </ClInclude>
+    <ClInclude Include="..\D3D11\headers\PolygonRenderResource.hpp">
+      <Filter>Header Files\D3D11</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\Engine\ImGui\imgui.cpp">
-      <Filter>Source Files\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Engine\ImGui\imgui_draw.cpp">
-      <Filter>Source Files\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Engine\ImGui\imgui_impl_dx11.cpp">
-      <Filter>Source Files\ImGui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Engine\OpenFBX\miniz.c">
-      <Filter>OpenFBX</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Engine\OpenFBX\ofbx.cpp">
-      <Filter>OpenFBX</Filter>
-    </ClCompile>
     <ClCompile Include="..\Engine\src\Engine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Engine\src\Clock.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Engine\src\D3D11Context.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Engine\src\D3D11Renderer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Engine\src\FBXLoader.cpp">
@@ -299,9 +302,6 @@
     <ClCompile Include="..\Engine\src\ObjLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Engine\src\PolygonRenderResource.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\Engine\src\Renderer2DComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -332,12 +332,6 @@
     <ClCompile Include="..\Engine\src\SkeletalMeshComponent.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Engine\src\D3D11VertexShader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Engine\src\D3D11PixelShader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\Engine\src\TextureLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -347,20 +341,53 @@
     <ClCompile Include="..\Engine\src\Profiler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Engine\src\D3D11ShaderFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\Engine\src\ShaderFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Engine\src\D3D11BufferFactory.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Engine\src\D3D11Buffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\Engine\src\SkeletalMesh.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\D3D11\src\D3D11Buffer.cpp">
+      <Filter>Source Files\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\D3D11\src\D3D11BufferFactory.cpp">
+      <Filter>Source Files\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\D3D11\src\D3D11Context.cpp">
+      <Filter>Source Files\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\D3D11\src\D3D11PixelShader.cpp">
+      <Filter>Source Files\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\D3D11\src\D3D11Renderer.cpp">
+      <Filter>Source Files\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\D3D11\src\D3D11ShaderFactory.cpp">
+      <Filter>Source Files\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\D3D11\src\D3D11VertexShader.cpp">
+      <Filter>Source Files\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\external\ImGui\imgui.cpp">
+      <Filter>Source Files\external\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\external\ImGui\imgui_draw.cpp">
+      <Filter>Source Files\external\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\D3D11\src\imgui_impl_dx11.cpp">
+      <Filter>Source Files\external\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\external\OpenFBX\miniz.c">
+      <Filter>Source Files\external\OpenFBX</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Engine\external\OpenFBX\ofbx.cpp">
+      <Filter>Source Files\external\OpenFBX</Filter>
+    </ClCompile>
+    <ClCompile Include="..\D3D11\src\D3D11TextureData.cpp">
+      <Filter>Source Files\D3D11</Filter>
+    </ClCompile>
+    <ClCompile Include="..\D3D11\src\PolygonRenderResource.cpp">
+      <Filter>Source Files\D3D11</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
