@@ -9,6 +9,11 @@
 #include "D3D11VertexShader.hpp"
 #include "D3D11PixelShader.hpp"
 
+
+static int			FeatureLevelIndex = 2;
+static char const* VsTargets[] = { "vs_5_0", "vs_4_1", "vs_4_0", "vs_3_0" };
+static char const* PsTargets[] = { "ps_5_0", "ps_4_1", "ps_4_0", "ps_3_0" };
+
 auto	D3D11ShaderFactory::CreateVertexTextureShader() -> Shader*
 {
 	MString vertexShader =

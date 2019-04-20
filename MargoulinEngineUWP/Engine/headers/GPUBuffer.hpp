@@ -40,6 +40,7 @@ class GPUBuffer
 {
 public:
 	GPUBuffer() = default;
+	GPUBuffer(BufferType const& type) { bufferType = type; }
 	GPUBuffer(const GPUBuffer&) = delete;
 	GPUBuffer(GPUBuffer&&) = delete;
 	~GPUBuffer() = default;

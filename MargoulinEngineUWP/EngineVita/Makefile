@@ -1,11 +1,14 @@
 TARGET          := libEngineVita
-SOURCES         := ../Engine/src ../Engine/OpenFBX ../Engine/cereal
+SOURCES         := ../Engine/src src ../Engine/OpenFBX ../Engine/cereal
+
+SHADERS := shaders
 
 INCLUDES := -I../Engine/headers  -I../Engine/external -I../EngineVita/headers
 
 CFILES   := $(foreach dir,$(SOURCES), $(wildcard $(dir)/*.c))
 CXXFILES   := $(foreach dir,$(SOURCES), $(wildcard $(dir)/*.cpp))
-OBJS     := $(CFILES:.c=.o) $(CXXFILES:.cpp=.o)
+GXPFILES := $(foreach dir,$(SHADERS), $(wildcard $(dir)/*.gxp))
+OBJS     := $(CFILES:.c=.o) $(CXXFILES:.cpp=.o) $(GXPFILES:.gxp=.o)
 
 PREFIX  = arm-vita-eabi
 CC      = $(PREFIX)-gcc
@@ -22,6 +25,9 @@ $(TARGET).a: $(OBJS)
 
 %.o : %.cpp
 	arm-vita-eabi-g++ $(CXXFLAGS) -c -o $@ $<	
+	
+%.o : %.gxp
+	$(PREFIX)-ld -r -b binary -o $@ $^
 	
 install: all
 	@mkdir -p $(VITASDK)/$(PREFIX)/lib/

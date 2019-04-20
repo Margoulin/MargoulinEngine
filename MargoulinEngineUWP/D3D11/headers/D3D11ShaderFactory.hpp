@@ -14,6 +14,9 @@ public:
 	D3D11ShaderFactory(D3D11ShaderFactory&&) = delete;
 	~D3D11ShaderFactory() = default;
 
+	virtual auto	Initialize() -> void {}
+	virtual auto	Shutdown() -> void {}
+
 	virtual auto	CreateVertexTextureShader() -> Shader* override;
 	virtual auto	CreatePixelTextureShader() -> Shader* override;
 	virtual auto	CreateBasicVertexShader() -> Shader* override;

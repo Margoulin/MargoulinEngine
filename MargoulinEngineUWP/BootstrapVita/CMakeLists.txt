@@ -56,8 +56,12 @@ add_executable(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME}
 	EngineVita
 	MUtilsVita
+	SceGxm_stub
+	SceDisplay_stub
 	SceIofilemgr_stub 
 	ScePower_stub
+	SceCtrl_stub
+	SceCommonDialog_stub
   SceLibKernel_stub # this line is only for demonstration. It's not needed as
                     # the most common stubs are automatically included.
 )

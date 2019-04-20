@@ -13,7 +13,7 @@ public:
 	ShaderFactory() = default;
 	ShaderFactory(const ShaderFactory&) = delete;
 	ShaderFactory(ShaderFactory&&) = delete;
-	~ShaderFactory() = default;
+	virtual ~ShaderFactory() = default;
 
 	virtual auto	SetContext(Context* value) -> void { context = value; }
 

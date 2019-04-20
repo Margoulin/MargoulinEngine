@@ -13,16 +13,16 @@ public:
 
 	virtual auto	SetContext(Context* value) -> void override {}
 
-	virtual auto	GenerateVertexBuffer(SubMeshData* meshData, bool dynamic = false) -> GPUBuffer* { return nullptr; }
-	virtual auto	GenerateVertexBuffer(SkeletalMesh* meshData, bool dynamic = false) -> GPUBuffer* { return nullptr; }
-	virtual auto	GenerateVertexBuffer(unsigned int bufferSize, unsigned int stride, void* adress, bool dynamic = false) -> GPUBuffer* { return nullptr; }
-	virtual auto	GenerateIndexBuffer(SubMeshData* meshData) -> GPUBuffer* { return nullptr; }
-	virtual auto	GenerateIndexBuffer(SkeletalMesh* meshData) -> GPUBuffer* { return nullptr; }
-	virtual auto	GenerateBuffer(unsigned int size) -> GPUBuffer* { return nullptr; }
+	virtual auto	GenerateVertexBuffer(SubMeshData* meshData, bool dynamic = false) -> GPUBuffer*;
+	virtual auto	GenerateVertexBuffer(SkeletalMesh* meshData, bool dynamic = false) -> GPUBuffer*;
+	virtual auto	GenerateVertexBuffer(unsigned int bufferSize, unsigned int stride, void* adress, bool dynamic = false) -> GPUBuffer*;
+	virtual auto	GenerateIndexBuffer(SubMeshData* meshData) -> GPUBuffer*;
+	virtual auto	GenerateIndexBuffer(SkeletalMesh* meshData) -> GPUBuffer*;
+	virtual auto	GenerateBuffer(unsigned int size) -> GPUBuffer*;
 
 	virtual auto	GenerateVertexBufferArray(unsigned int bufferCount, SkeletalMesh* mesh) -> GPUBufferArray* { return nullptr; }
 
-	virtual auto	DeleteBuffer(GPUBuffer* buffer) -> void {}
+	virtual auto	DeleteBuffer(GPUBuffer* buffer) -> void;
 
 	auto	operator = (const GXMBufferFactory&)->GXMBufferFactory& = delete;
 	auto	operator = (GXMBufferFactory&&)->GXMBufferFactory& = delete;

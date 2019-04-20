@@ -38,6 +38,8 @@
 #include "SkeletalMesh.hpp"
 #include "SkeletalMeshResource.hpp"
 
+#include "Logger.hpp"
+
 auto	GraphicalLibrary::Initialize(Window* window) -> void
 {
 	this->window = window;
@@ -93,6 +95,15 @@ auto	GraphicalLibrary::Initialize(Window* window) -> void
 	GXMRenderer* pipe = NEW GXMRenderer();
 	pipeline = pipe;
 	pipe->SetContext(gxmContext);
+
+	GXMBufferFactory* buffFact = NEW GXMBufferFactory();
+	bufferFactory = buffFact;
+
+	GXMVertexShader* clearVtxShad = (GXMVertexShader*)(shadFactory->CreateClearVertexShader());
+	pipe->SetClearVertexShader(clearVtxShad);
+	GXMFragmentShader* clearFragShad = (GXMFragmentShader*)(shadFactory->CreateClearFragmentShader());
+	pipe->SetClearFragmentShader(clearFragShad);
+
 #endif /*VITA*/
 
 	shaders.push_back(shaderFactory->CreateBasicVertexShader());
@@ -117,6 +128,13 @@ auto	GraphicalLibrary::Initialize(Window* window) -> void
 	shaders.push_back(shaderFactory->CreatePixelTextureShader());
 	shaders.push_back(shaderFactory->CreateVertexSkinningShader());
 	shaders.push_back(shaderFactory->CreateLineVertexShader());
+
+#ifdef VITA
+
+	shaders.push_back((Shader*)clearVtxShad);
+	shaders.push_back((Shader*)clearFragShad);
+
+#endif
 
 #ifdef _DEBUG
 	//d11Context->MarkD3D11ObjectName(newMat->GetConstantBuffer(), MString("Default Vertex Shader"));

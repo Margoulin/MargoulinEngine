@@ -3,41 +3,42 @@
   <ItemGroup>
     <Filter Include="Source Files">
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cxx;cc;s;asm</Extensions>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hpp</Extensions>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Header Files\external">
-      <UniqueIdentifier>{bea6a9ba-bc78-41ed-b567-c58186883718}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\external\OpenFBX">
-      <UniqueIdentifier>{73a03a4b-cdfb-46e3-a28c-b377abc28703}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\external\imgui">
-      <UniqueIdentifier>{a1b78f80-6754-4708-9ffb-cb5516c81dd1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\external\cereal">
-      <UniqueIdentifier>{c5e53091-f836-46cc-bf09-95d23522d6e3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\external">
-      <UniqueIdentifier>{2a8f8353-31fe-498b-b88c-0636d77d7187}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\external\OpenFBX">
-      <UniqueIdentifier>{216c7e85-fac0-4f45-b810-362d0859dc9f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\external\imgui">
-      <UniqueIdentifier>{969640b2-ee82-48a2-b30b-f782093f497a}</UniqueIdentifier>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
     <Filter Include="Header Files\GXM">
-      <UniqueIdentifier>{8f1d8d33-8cc4-4ca4-ae9b-6391ecde2902}</UniqueIdentifier>
+      <UniqueIdentifier>{54c71bb1-827b-4594-86b0-3bb81866aeca}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\GXM">
-      <UniqueIdentifier>{7fc45d44-0424-4983-97d8-7ac586a19cb0}</UniqueIdentifier>
+      <UniqueIdentifier>{88af1ae9-5448-4517-a548-cab133d7f859}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="headers\GXMBuffer.hpp">
+      <Filter>Header Files\GXM</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\GXMBufferFactory.hpp">
+      <Filter>Header Files\GXM</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\GXMContext.hpp">
+      <Filter>Header Files\GXM</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\GXMRenderer.hpp">
+      <Filter>Header Files\GXM</Filter>
+    </ClInclude>
+    <ClInclude Include="headers\GXMShaderFactory.hpp">
+      <Filter>Header Files\GXM</Filter>
+    </ClInclude>
     <ClInclude Include="..\Engine\headers\CameraComponent.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -122,9 +123,6 @@
     <ClInclude Include="..\Engine\headers\ObjLoader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Engine\headers\PolygonRenderResource.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\Engine\headers\Profiler.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -167,6 +165,9 @@
     <ClInclude Include="..\Engine\headers\SubMeshData.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\Engine\headers\TextureData.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
     <ClInclude Include="..\Engine\headers\TextureLoader.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -182,58 +183,16 @@
     <ClInclude Include="..\Engine\headers\Window.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Engine\external\ImGui\imconfig.h">
-      <Filter>Header Files\external\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\external\ImGui\imgui.h">
-      <Filter>Header Files\external\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\external\ImGui\imgui_internal.h">
-      <Filter>Header Files\external\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\external\ImGui\stb_rect_pack.h">
-      <Filter>Header Files\external\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\external\ImGui\stb_textedit.h">
-      <Filter>Header Files\external\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\external\ImGui\stb_truetype.h">
-      <Filter>Header Files\external\imgui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\external\OpenFBX\miniz.h">
-      <Filter>Header Files\external\OpenFBX</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\external\OpenFBX\ofbx.h">
-      <Filter>Header Files\external\OpenFBX</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\external\cereal\access.hpp">
-      <Filter>Header Files\external\cereal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\external\cereal\cereal.hpp">
-      <Filter>Header Files\external\cereal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\external\cereal\CustomTypes.hpp">
-      <Filter>Header Files\external\cereal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\external\cereal\macros.hpp">
-      <Filter>Header Files\external\cereal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\Engine\external\tiny_obj_loader.h">
-      <Filter>Header Files\external</Filter>
-    </ClInclude>
-    <ClInclude Include="headers\GXMContext.hpp">
+    <ClInclude Include="headers\GPUMemoryManager.hpp">
       <Filter>Header Files\GXM</Filter>
     </ClInclude>
-    <ClInclude Include="headers\GXMBuffer.hpp">
+    <ClInclude Include="headers\GXMFragmentShader.hpp">
       <Filter>Header Files\GXM</Filter>
     </ClInclude>
-    <ClInclude Include="headers\GXMBufferFactory.hpp">
+    <ClInclude Include="headers\GXMVertexShader.hpp">
       <Filter>Header Files\GXM</Filter>
     </ClInclude>
-    <ClInclude Include="headers\GXMRenderer.hpp">
-      <Filter>Header Files\GXM</Filter>
-    </ClInclude>
-    <ClInclude Include="headers\GXMShaderFactory.hpp">
+    <ClInclude Include="headers\GXMShaderParameter.hpp">
       <Filter>Header Files\GXM</Filter>
     </ClInclude>
   </ItemGroup>
@@ -297,9 +256,6 @@
     <ClCompile Include="..\Engine\src\ObjLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Engine\src\PolygonRenderResource.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\Engine\src\Profiler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -339,19 +295,22 @@
     <ClCompile Include="..\Engine\src\Window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\Engine\external\OpenFBX\miniz.c">
-      <Filter>Source Files\external\OpenFBX</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Engine\external\OpenFBX\ofbx.cpp">
-      <Filter>Source Files\external\OpenFBX</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Engine\external\ImGui\imgui.cpp">
-      <Filter>Source Files\external\imgui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\Engine\external\ImGui\imgui_draw.cpp">
-      <Filter>Source Files\external\imgui</Filter>
-    </ClCompile>
     <ClCompile Include="src\GXMContext.cpp">
+      <Filter>Source Files\GXM</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GPUMemoryManager.cpp">
+      <Filter>Source Files\GXM</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GXMShaderFactory.cpp">
+      <Filter>Source Files\GXM</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GXMBufferFactory.cpp">
+      <Filter>Source Files\GXM</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GXMBuffer.cpp">
+      <Filter>Source Files\GXM</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GXMRenderer.cpp">
       <Filter>Source Files\GXM</Filter>
     </ClCompile>
   </ItemGroup>

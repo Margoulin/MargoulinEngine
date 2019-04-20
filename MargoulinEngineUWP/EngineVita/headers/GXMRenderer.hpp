@@ -3,25 +3,34 @@
 
 #include "RendererPipeline.hpp"
 
+#include "GPUMemoryManager.hpp"
+#include <psp2/gxm.h>
+
 #include <MUtils/Maths/Matrix.hpp>
 
 class GXMContext;
+class GXMFragmentShader;
+class GXMVertexShader;
+class GPUBuffer;
+class GXMBuffer;
 
 class GXMRenderer : public RendererPipeline
 {
 public:
-	GXMRenderer() = default;
+	GXMRenderer();
 	GXMRenderer(const GXMRenderer&) = delete;
 	GXMRenderer(GXMRenderer&&) = delete;
-	~GXMRenderer() = default;
+	~GXMRenderer();
 
-	virtual auto	BeginRender() -> void {}
-	virtual auto	EndRender() -> void {}
-	virtual auto	Present() -> void {}
+	virtual auto	BeginRender() -> void;
+	virtual auto	EndRender() -> void;
+	virtual auto	Present() -> void;
 	virtual auto	BindCamera(Matrix4x4F const& projectionMatrix, Matrix4x4F const& viewMatrix) -> void {}
 	virtual auto	RebindCamera() -> void {}
 
 	auto	SetContext(GXMContext* value) -> void { context = value; }
+	auto	SetClearVertexShader(GXMVertexShader* shad) -> void { clearVtxShader = shad; }
+	auto	SetClearFragmentShader(GXMFragmentShader* shad) -> void { clearFragShader = shad; }
 
 	virtual auto	DrawRectangle(Vector2F const& screenPosition, Vector2F const& size, Vector4F const& color) -> void {}
 	virtual auto	DrawFilledRectangle(Vector2F const& screenPosition, Vector2F const& size, Vector4F const& color) -> void {}
@@ -45,8 +54,12 @@ private:
 	virtual auto	drawTexture(Vector4F const& screenRect, SubMeshData* texMesh, TextureRenderDataBase const& renderData) -> void {}
 
 private:
-	GXMContext* context = nullptr;
+	GXMContext*					context = nullptr;
+	GXMVertexShader*			clearVtxShader = nullptr;
+	GXMFragmentShader*			clearFragShader = nullptr;
+	GPUAdress<Vector2F>*		clearVertices = nullptr;
+	GPUAdress<unsigned int>*	clearIndices = nullptr;
+	float						clearColor[4]{ 1.0f, 0.0f, 1.0f, 1.0f };
 };
-
 
 #endif /*__GXM_RENDERER_HPP__*/
